@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rose</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:    #26221e;
+      --ink-3:  #8a7f70;
+      --rule:   rgba(38, 34, 30, 0.12);
+      --num:    #ded26e;
+    }
+
+    html, body {
+      min-height: 100%;
+      /* 💡 제미나이 기본 UI 스타일: 기호 무드를 살린 뒤, 한글과 본문은 가장 깔끔한 시스템 고딕 체계로 매칭 */
+      font-family: 'Apple Symbols', 'AppleSymbols', 'Apple Symbol', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased; /* 글자를 조금 더 선명하고 얇게 다듬어주는 옵션 */
+    }
+
+    body {
+      background: radial-gradient(120% 90% at 50% 0%, #f6f1e6 0%, #ece3d2 55%, #e3d8c2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 56px 24px 120px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.10;
+      mix-blend-mode: multiply;
+      background-image:
+        radial-gradient(rgba(70,55,40,0.18) 1px, transparent 1px),
+        radial-gradient(rgba(70,55,40,0.1)  1px, transparent 1px);
+      background-size: 3px 3px, 7px 7px;
+      background-position: 0 0, 1px 2px;
+      z-index: 0;
+    }
+
+    .sheet {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: flex-end;
+      padding-bottom: 56px;
+    }
+
+    .back {
+      font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .back:hover { color: var(--ink); }
+
+    /* ── Entries ───────────────────────────────────── */
+    .entries {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    .entry-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .entry-meta .num,
+    .entry-meta .day {
+      font-size: 55px;
+      line-height: 1;
+      letter-spacing: -1px;
+      font-weight: normal;
+    }
+
+    .entry-meta .num { color: var(--num); }
+    .entry-meta .day { color: var(--ink); }
+
+    .entry-meta .rest {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-style: italic;
+    }
+
+    .entry-body {
+      font-size: 15px;
+      line-height: 28px;
+      color: var(--ink);
+      white-space: pre-wrap;
+      font-weight: 400;
+      letter-spacing: -0.2px; /* 자간을 미세하게 좁혀 제미나이 특유의 단정함을 유도 */
+    }
+
+    /* most recent = full ; rest faded */
+    .entries article:not(:first-child) {
+      opacity: 0.3;
+    }
+
+    .empty {
+      text-align: center;
+      font-size: 12px;
+      font-style: italic;
+      color: var(--ink-3);
+      letter-spacing: 2px;
+      padding: 80px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sheet">
+
+    <header class="top">
+      <a href="index.html" class="back">← Index</a>
+    </header>
+
+    <section class="entries" id="entries"></section>
+
+  </div>
+
+<script>
+// ============================================================
+//  ▼ 여기에 글을 추가하세요. (위쪽이 최신)
+//    날짜 형식: YYYY-MM-DD
+// ============================================================
+const ENTRIES = [
+  {
+    date: '2026-06-21',
+    text: `그는 마치 안으로 들어오는 문이 3개인 7평짜리 공간처럼`
+  },
+  {
+    date: '2026-06-18',
+    text: ``
+  },
+  {
+    date: '2026-06-15',
+    text: `읽다`
+  },
+];
+// ============================================================
+
+(() => {
+  const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const WEEKDAYS = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
+  const $list = document.getElementById('entries');
+
+  if (!ENTRIES.length) {
+    $list.innerHTML = '<div class="empty">no entries yet.</div>';
+    return;
+  }
+
+  const sortedAsc = [...ENTRIES].sort((a, b) => a.date.localeCompare(b.date));
+  sortedAsc.forEach((e, i) => { e.__num = i + 1; });
+
+  const sortedDesc = [...sortedAsc].reverse();
+
+  function fmt(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    const dt = new Date(y, m - 1, d);
+    return {
+      day:  String(d).padStart(2, '0'),
+      rest: `${MONTHS[m - 1]} ${y} · ${WEEKDAYS[dt.getDay()]}`
+    };
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    })[c]);
+  }
+
+  $list.innerHTML = sortedDesc.map(e => {
+    const { day, rest } = fmt(e.date);
+    return `
+      <article>
+        <div class="entry-meta">
+          <span class="num">${String(e.__num).padStart(2, '0')}</span>
+          <span class="day">${day}</span>
+          <span class="rest">${rest}</span>
+        </div>
+        <div class="entry-body">${escapeHtml(e.text)}</div>
+      </article>
+    `;
+  }).join('');
+})();
+</script>
+</body>
+</html>

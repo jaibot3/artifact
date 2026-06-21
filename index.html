@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Stipple Spinning Top v2 - Strict Hover Physics</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
+      background: radial-gradient(120% 90% at 50% 0%, #f6f1e6 0%, #ece3d2 55%, #e3d8c2 100%);
+      font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    }
+
+    /* ============================================================
+       좌측 텍스트 메뉴 레이아웃 (Work, Work, Ficciones)
+       ============================================================ */
+    .menu-container {
+      position: absolute;
+      left: 12%;
+      top: 23%;
+      display: flex;
+      flex-direction: column;
+      gap: 0px; 
+      user-select: none;
+      z-index: 2;
+    }
+    .menu-item {
+      font-size: 76px;
+      font-weight: 700;
+      color: #ded26e; 
+      text-decoration: none;
+      line-height: 1.1;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .menu-item:hover {
+      opacity: 0.7;
+      transform: translateX(4px); 
+    }
+
+    /* ============================================================
+       하단 네모 입력창 (Weather...)
+       ============================================================ */
+    .input-container {
+      position: absolute;
+      left: 12%;
+      top: 62%;
+      z-index: 2;
+    }
+    .weather-input {
+      background: transparent;
+      border: 1px solid #9c9586; 
+      color: #38221e;
+      font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      font-size: 16px;
+      padding: 6px 14px;
+      width: 230px;
+      outline: none;
+      letter-spacing: 0.5px;
+    }
+    .weather-input::placeholder {
+      color: #bfae99;
+    }
+
+    /* ============================================================
+       우하단 팽이 캔버스
+       ============================================================ */
+    #top-canvas {
+      position: fixed; right: 24px; bottom: 24px;
+      width: 280px; height: 360px;
+      pointer-events: none; 
+      z-index: 5; user-select: none; touch-action: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="menu-container">
+    <a href="/Users/jaeyoonlim/artifact/work1.html" class="menu-item">Work</a>
+    <a href="/Users/jaeyoonlim/artifact/work2.html" class="menu-item">Work</a>
+    <a href="/Users/jaeyoonlim/artifact/ficciones.html" class="menu-item">Ficciones</a>
+  </div>
+
+  <div class="input-container">
+    <input type="text" class="weather-input" placeholder="Weather...">
+  </div>
+
+  <canvas id="top-canvas"></canvas>
+
+<script>
+(() => {
+  // ---------- 정밀 세팅 변수 ----------
+  const LINK        = '/Users/jaeyoonlim/artifact/rose.html'; 
+  const INK         = '38,34,30';   
+  const SCALE       = 86;
+  const PERSP       = 4.0;
+  const TILT        = 0.20;
+  const HOVER_R     = 130; // 마우스 오버 감지 반경
+
+  // 회전 속도 파트
+  const SPIN_BASE   = 1.4;      // 오버 시 천천히 도는 기본 속도
+  const SPIN_MAX    = 35;       // 드래그 최대 속도 제한
+
+  // 물리 계수
+  const FRICTION    = 0.993;    // 고속 회전 시 감속률
+  const BRAKE_DECAY = 0.14;     // 클릭 시 제동력 곡선
+  const DRAG_IMPULSE= 0.015;    // 드래그 가속 민감도
+
+  const FLOAT_X     = 10, FLOAT_Y = 13;
+  const DENSITY     = 1.6;           
+  // ----------------------------------
+
+  const cv=document.getElementById('top-canvas'), ctx=cv.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rand=(a,b)=>a+Math.random()*(b-a);
+  const D=n=>Math.round(n*DENSITY);
+
+  let W,H,cx,cy,dpr;
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=cv.clientWidth; H=cv.clientHeight;
+    cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    cx=W*0.5; cy=H*0.40;
+  }
+  resize(); addEventListener('resize',resize);
+
+  // 입자 생성 루틴 (기존 유지)
+  const body=[];
+  function cone(y0,r0,y1,r1,n,oMul=1){
+    for(let i=0;i<D(n);i++){
+      const t=Math.random(), y=y0+(y1-y0)*t, r=r0+(r1-r0)*t, a=Math.random()*6.283;
+      body.push({x:Math.cos(a)*r,z:Math.sin(a)*r,y,s:rand(0.6,1.6),o:rand(0.45,0.95)*oMul});
+    }
+  }
+  function ring(y,r,n,jit,oMul=1){
+    for(let i=0;i<D(n);i++){
+      const a=Math.random()*6.283, rr=r+rand(-jit,jit);
+      body.push({x:Math.cos(a)*rr,z:Math.sin(a)*rr,y:y+rand(-jit,jit),s:rand(0.8,1.8),o:rand(0.6,1)*oMul});
+    }
+  }
+  function blob(yc,R,n,oMul=1){            
+    for(let i=0;i<D(n);i++){
+      const th=Math.random()*6.283, ph=Math.acos(rand(-1,1)), rr=R*Math.cbrt(Math.random());
+      body.push({x:rr*Math.sin(ph)*Math.cos(th),z:rr*Math.sin(ph)*Math.sin(th),
+                 y:yc+rr*Math.cos(ph),s:rand(0.7,1.6),o:rand(0.5,0.95)*oMul});
+    }
+  }
+  cone( 1.32, 0.015, 0.65, 0.08, 100);  cone( 0.65, 0.08,  0.40, 0.18, 85);   
+  cone( 0.40, 0.18,  0.25, 0.45, 110);  cone( 0.25, 0.45,  0.12, 0.98, 130);  
+  cone( 0.12, 0.882, -0.02, 0.882, 100); ring( 0.12, 0.882, 120, 0.02, 1.0);    
+  cone(-0.02, 0.882, -0.12, 0.648, 130); cone(-0.12, 0.648, -0.25, 0.405, 110); 
+  cone(-0.25, 0.45, -0.38, 0.25, 90);   cone(-0.38, 0.25, -0.504, 0.15, 80);  
+  blob(-0.552, 0.15, 90, 0.95);         
+
+  const RIPPLE_Y=258, SQUASH=0.34, R_LIFE=2.6, R_MAXR=1.45, R_PERIOD=1.3;
+  const dust=[];
+  for(let i=0;i<D(60);i++){
+    const a=Math.random()*6.283, rr=rand(0.2,0.9);
+    dust.push({x:Math.cos(a)*rr,z:Math.sin(a)*rr,s:rand(0.4,1.1),o:rand(0.1,0.35)});
+  }
+  const rings=[]; let spawnT=0;
+
+  // 인터랙션 플래그
+  let angle=0, spin=0, t=0, hover=false;
+  let mx=-9999,my=-9999, dragging=false, lastX=0;
+  let isBraking = false; 
+
+  const near=()=>{ const c=cv.getBoundingClientRect();
+    return Math.hypot(mx-(c.left+cx), my-(c.top+cy)) < HOVER_R; };
+
+  // 이벤트 핸들러
+  addEventListener('pointerdown',e=>{ mx=e.clientX; my=e.clientY;
+    if(near()){ 
+      dragging = true; 
+      isBraking = true; 
+      lastX = e.clientX; 
+    } 
+  });
+
+  addEventListener('pointermove',e=>{
+    mx=e.clientX; my=e.clientY;
+    if(dragging){
+      const deltaX = e.clientX - lastX;
+      if (Math.abs(deltaX) > 1) { isBraking = false; }
+      if (!isBraking) {
+        spin += deltaX * DRAG_IMPULSE * 60;
+        spin = Math.max(-SPIN_MAX, Math.min(SPIN_MAX, spin)); 
+      }
+      lastX = e.clientX;
+    }
+  });
+
+  addEventListener('pointerup',()=>{ dragging = false; isBraking = false; });
+  addEventListener('dblclick',e=>{ mx=e.clientX; my=e.clientY; if(near()) location.href=LINK; });          
+
+  // ---------- 메인 루프 ----------
+  function frame(dt){
+    t+=dt;
+    // 둥둥 떠다니는 모션은 상시 유지 (회전 유무와 무관)
+    const fx=FLOAT_X*Math.sin(t*0.6), fy=FLOAT_Y*Math.sin(t*0.85+1.3);
+    const roll=0.045*Math.sin(t*0.7);
+    const tiltDyn=TILT+0.05*Math.sin(t*0.5), tcd=Math.cos(tiltDyn), tsd=Math.sin(tiltDyn);
+    const rc=Math.cos(roll), rs=Math.sin(roll);
+
+    hover = near();
+    const fpsFactor = Math.min(dt * 60, 3); 
+
+    // 💡 확연한 차이를 만드는 회전 통제 파트
+    if (isBraking) {
+      // 1. 클릭 브레이크 작동 시
+      spin += (0.2 - spin) * BRAKE_DECAY * fpsFactor;
+      if (Math.abs(spin) < 0.05) spin = 0.2;
+    } 
+    else if (!dragging) {
+      // 2. 마우스를 대지 않은 일반 상태
+      if (hover) {
+        // [A] 마우스 오버 상태일 때만 회전 허용
+        if (Math.abs(spin) > SPIN_BASE) {
+          spin *= Math.pow(FRICTION, fpsFactor); // 고속 드래그 후 점진적 감속
+        } else {
+          const currentDir = spin >= 0 ? 1 : -1;
+          const targetSpin = currentDir * SPIN_BASE;
+          spin += (targetSpin - spin) * 0.08 * fpsFactor; // 베이스 속도로 수렴 후 계속 회전
+        }
+      } else {
+        // [B] 💡 마우스가 벗어난 순간 즉시 회전 중단 (0 고정)
+        spin = 0.2;
+      }
+    }
+
+    angle+=spin*dt;
+    const ca=Math.cos(angle), sa=Math.sin(angle);
+
+    ctx.clearRect(0,0,W,H);
+    const warp=(sx,sy)=>{const dx=sx-cx,dy=sy-cy;return[cx+dx*rc-dy*rs+fx, cy+dx*rs+dy*rc+fy];};
+
+    for(const p of dust){
+      const[sx,sy]=warp(cx+p.x*SCALE, RIPPLE_Y+p.z*SCALE*SQUASH);
+      ctx.fillStyle=`rgba(${INK},${p.o})`; ctx.beginPath(); ctx.arc(sx,sy,p.s,0,6.283); ctx.fill();
+    }
+    spawnT-=dt; if(spawnT<=0){ rings.push({age:0}); spawnT=R_PERIOD; }
+    for(let i=rings.length-1;i>=0;i--){
+      const rg=rings[i]; rg.age+=dt; const pr=rg.age/R_LIFE;
+      if(pr>=1){ rings.splice(i,1); continue; }
+      const r=0.12+pr*R_MAXR, op=(1-pr)*Math.min(pr*5,1)*0.55;
+      const nd=Math.floor(22+r*70);
+      for(let k=0;k<nd;k++){
+        const a=k/nd*6.283+rg.age, rr=r+rand(-0.015,0.015);
+        const[sx,sy]=warp(cx+Math.cos(a)*rr*SCALE, RIPPLE_Y+Math.sin(a)*rr*SCALE*SQUASH);
+        ctx.fillStyle=`rgba(${INK},${op*rand(0.6,1)})`; ctx.beginPath(); ctx.arc(sx,sy,rand(0.5,1.1),0,6.283); ctx.fill();
+      }
+    }
+    const proj=[];
+    for(const p of body){
+      const x=p.x*ca-p.z*sa, z=p.x*sa+p.z*ca;
+      const y2=p.y*tcd-z*tsd, z2=p.y*tsd+z*tcd, f=PERSP/(PERSP-z2);
+      const[sx,sy]=warp(cx+x*SCALE*f, cy-y2*SCALE*f);
+      proj.push({sx,sy,r:p.s*f,o:p.o*(0.40+0.60*((z2+1.4)/2.8)),d:z2});
+    }
+    proj.sort((a,b)=>a.d-b.d);
+    for(const p of proj){ ctx.fillStyle=`rgba(${INK},${Math.min(p.o,1)})`; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.r,0,6.283); ctx.fill(); }
+  }
+
+  if(reduce){ frame(0); return; }
+  let last=performance.now();
+  (function loop(now){ const dt=Math.min((now-last)/1000,0.05); last=now; frame(dt); requestAnimationFrame(loop); })(last);
+
+  // 인풋 엔터키 이벤트 감지 구조
+  document.querySelector('.weather-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      const value = e.target.value.trim();
+      if (value) { console.log("입력된 값:", value); }
+    }
+  });
+})();
+</script>
+</body>
+</html>
