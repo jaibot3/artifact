@@ -127,8 +127,9 @@
   // ---------- 정밀 세팅 변수 ----------
   const LINK        = 'rose.html'; 
   const INK         = '38,34,30';   
-  let   SCALE;            // 화면 크기별로 resize()에서 설정 (모바일에서 더 크게)
-  let   RIPPLE_Y;         // 캔버스 높이 비율로 계산 (모바일에서 캔버스 밖으로 안 나가게)
+  let   SCALE;
+  let   RIPPLE_Y;
+  let   DOT_SCALE = 1;   // 모바일에서 점 크기 줄이는 배수
   const PERSP       = 4.0;
   const TILT        = 0.20;
   const HOVER_R     = 130; // 마우스 오버 감지 반경
@@ -157,8 +158,9 @@
     W=cv.clientWidth; H=cv.clientHeight;
     cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
     const mobile = window.innerWidth <= 640;
-    SCALE    = Math.min(W,H) * (mobile ? 0.32 : 0.307);
-    RIPPLE_Y = H * 0.718;   // 258/360 ≈ 0.718 — 캔버스 크기 바뀌어도 비율 유지
+    SCALE     = Math.min(W,H) * (mobile ? 0.32 : 0.307);
+    RIPPLE_Y  = H * 0.718;
+    DOT_SCALE = mobile ? 0.8 : 1;
     cx=W*0.5; cy=H*(mobile ? 0.44 : 0.40);
   }
   resize(); addEventListener('resize',resize);
@@ -297,7 +299,7 @@
       proj.push({sx,sy,r:p.s*f,o:p.o*(0.40+0.60*((z2+1.4)/2.8)),d:z2});
     }
     proj.sort((a,b)=>a.d-b.d);
-    for(const p of proj){ ctx.fillStyle=`rgba(${INK},${Math.min(p.o,1)})`; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.r,0,6.283); ctx.fill(); }
+    for(const p of proj){ ctx.fillStyle=`rgba(${INK},${Math.min(p.o,1)})`; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.r*DOT_SCALE,0,6.283); ctx.fill(); }
   }
 
   if(reduce){ frame(0); return; }
