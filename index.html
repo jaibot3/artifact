@@ -59,7 +59,7 @@
     }
     .weather-input {
       background: transparent;
-      border: 1px solid #9c9586; 
+      border: 1px solid #bfae99;
       color: #38221e;
       font-family: 'Jost', 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
       font-size: 16px;
@@ -101,6 +101,8 @@
     }
     @media (max-width: 640px) {
       #top-canvas { width: 160px; height: 210px; right: 12px; bottom: 16px; }
+      .menu-item   { font-size: 53px; }
+      .weather-input { width: min(210px, 50vw); padding: 4px 10px; }
     }
   </style>
 </head>
@@ -113,7 +115,7 @@
   </div>
 
   <div class="input-container">
-    <input type="text" class="weather-input" placeholder="weather : rain / fog ">
+    <input type="text" class="weather-input" placeholder="weather : rain / fog">
   </div>
 
   <canvas id="rain-canvas"></canvas>
@@ -126,6 +128,7 @@
   const LINK        = 'rose.html'; 
   const INK         = '38,34,30';   
   let   SCALE;            // 화면 크기별로 resize()에서 설정 (모바일에서 더 크게)
+  let   RIPPLE_Y;         // 캔버스 높이 비율로 계산 (모바일에서 캔버스 밖으로 안 나가게)
   const PERSP       = 4.0;
   const TILT        = 0.20;
   const HOVER_R     = 130; // 마우스 오버 감지 반경
@@ -153,8 +156,9 @@
     dpr=Math.min(window.devicePixelRatio||1,2);
     W=cv.clientWidth; H=cv.clientHeight;
     cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-    const mobile = window.innerWidth <= 640;             // 모바일에선 팽이 크기 조정
-    SCALE = Math.min(W,H) * (mobile ? 0.32 : 0.307);     // 캔버스 줄였으니 비율도 재조정
+    const mobile = window.innerWidth <= 640;
+    SCALE    = Math.min(W,H) * (mobile ? 0.32 : 0.307);
+    RIPPLE_Y = H * 0.718;   // 258/360 ≈ 0.718 — 캔버스 크기 바뀌어도 비율 유지
     cx=W*0.5; cy=H*(mobile ? 0.44 : 0.40);
   }
   resize(); addEventListener('resize',resize);
@@ -187,7 +191,7 @@
   cone(-0.25, 0.45, -0.38, 0.25, 90);   cone(-0.38, 0.25, -0.504, 0.15, 80);  
   blob(-0.552, 0.15, 90, 0.95);         
 
-  const RIPPLE_Y=258, SQUASH=0.34, R_LIFE=2.6, R_MAXR=1.45, R_PERIOD=1.3;
+  const SQUASH=0.34, R_LIFE=2.6, R_MAXR=1.45, R_PERIOD=1.3;
   const dust=[];
   for(let i=0;i<D(60);i++){
     const a=Math.random()*6.283, rr=rand(0.2,0.9);
