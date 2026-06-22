@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap" rel="stylesheet">
   <title>Stipple Spinning Top v2 - Strict Hover Physics</title>
   <style>
     html, body {
@@ -12,7 +15,7 @@
     }
     body {
       background: radial-gradient(120% 90% at 50% 0%, #f6f1e6 0%, #ece3d2 55%, #e3d8c2 100%);
-      font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      font-family: 'Jost', 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
     }
@@ -58,10 +61,10 @@
       background: transparent;
       border: 1px solid #9c9586; 
       color: #38221e;
-      font-family: 'AppleGothic', CenturyGothic, AppleGothic, sans-serif;
+      font-family: 'Jost', 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
       font-size: 16px;
       padding: 6px 14px;
-      width: 300px;
+      width: min(300px, 72vw);
       outline: none;
       letter-spacing: 0.5px;
     }
@@ -96,6 +99,9 @@
       pointer-events: none; 
       z-index: 5; user-select: none; touch-action: none;
     }
+    @media (max-width: 640px) {
+      #top-canvas { width: 160px; height: 210px; right: 12px; bottom: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -107,7 +113,7 @@
   </div>
 
   <div class="input-container">
-    <input type="text" class="weather-input" placeholder="weather - rain / fog">
+    <input type="text" class="weather-input" placeholder="weather:rain, fog, enter">
   </div>
 
   <canvas id="rain-canvas"></canvas>
@@ -147,9 +153,9 @@
     dpr=Math.min(window.devicePixelRatio||1,2);
     W=cv.clientWidth; H=cv.clientHeight;
     cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-    const mobile = window.innerWidth <= 640;             // 모바일에선 팽이 크게
-    SCALE = Math.min(W,H) * (mobile ? 0.42 : 0.307);     // 데스크탑은 기존(≈86) 유지
-    cx=W*0.5; cy=H*(mobile ? 0.46 : 0.40);               // 커진 꼭지 안 잘리게 살짝 아래로
+    const mobile = window.innerWidth <= 640;             // 모바일에선 팽이 크기 조정
+    SCALE = Math.min(W,H) * (mobile ? 0.32 : 0.307);     // 캔버스 줄였으니 비율도 재조정
+    cx=W*0.5; cy=H*(mobile ? 0.44 : 0.40);
   }
   resize(); addEventListener('resize',resize);
 
