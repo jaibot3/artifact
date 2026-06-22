@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
   <title>Stipple Spinning Top v2 - Strict Hover Physics</title>
   <style>
     html, body {
@@ -12,6 +13,8 @@
     body {
       background: radial-gradient(120% 90% at 50% 0%, #f6f1e6 0%, #ece3d2 55%, #e3d8c2 100%);
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     /* ============================================================
@@ -57,12 +60,30 @@
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
       font-size: 16px;
       padding: 6px 14px;
-      width: 230px;
+      width: 300px;
       outline: none;
       letter-spacing: 0.5px;
     }
     .weather-input::placeholder {
       color: #bfae99;
+    }
+
+    /* ============================================================
+       비 캔버스 (모든 것 위에, 클릭 통과)
+       ============================================================ */
+    #rain-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 6;
+    }
+
+    /* ============================================================
+       안개 캔버스 (최상단, 모든 것을 뿌옇게 덮음)
+       ============================================================ */
+    #fog-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 7;
     }
 
     /* ============================================================
@@ -79,23 +100,25 @@
 <body>
 
   <div class="menu-container">
-    <a href="work1.html" class="menu-item">Work</a>
-    <a href="diary.html" class="menu-item">Work</a>
-    <a href="ficciones.html" class="menu-item">Ficciones</a>
+    <a href="/Users/jaeyoonlim/artifact/work1.html" class="menu-item">Work</a>
+    <a href="/Users/jaeyoonlim/artifact/work2.html" class="menu-item">Work</a>
+    <a href="/Users/jaeyoonlim/artifact/ficciones.html" class="menu-item">Ficciones</a>
   </div>
 
   <div class="input-container">
-    <input type="text" class="weather-input" placeholder="Weather...">
+    <input type="text" class="weather-input" placeholder="type your weather… rain, fog, enter">
   </div>
 
+  <canvas id="rain-canvas"></canvas>
+  <canvas id="fog-canvas"></canvas>
   <canvas id="top-canvas"></canvas>
 
 <script>
 (() => {
   // ---------- 정밀 세팅 변수 ----------
-  const LINK        = 'rose.html'; 
+  const LINK        = '/Users/jaeyoonlim/artifact/rose.html'; 
   const INK         = '38,34,30';   
-  const SCALE       = 86;
+  let   SCALE;            // 화면 크기별로 resize()에서 설정 (모바일에서 더 크게)
   const PERSP       = 4.0;
   const TILT        = 0.20;
   const HOVER_R     = 130; // 마우스 오버 감지 반경
@@ -123,7 +146,9 @@
     dpr=Math.min(window.devicePixelRatio||1,2);
     W=cv.clientWidth; H=cv.clientHeight;
     cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
-    cx=W*0.5; cy=H*0.40;
+    const mobile = window.innerWidth <= 640;             // 모바일에선 팽이 크게
+    SCALE = Math.min(W,H) * (mobile ? 0.42 : 0.307);     // 데스크탑은 기존(≈86) 유지
+    cx=W*0.5; cy=H*(mobile ? 0.46 : 0.40);               // 커진 꼭지 안 잘리게 살짝 아래로
   }
   resize(); addEventListener('resize',resize);
 
@@ -275,6 +300,213 @@
       const value = e.target.value.trim();
       if (value) { console.log("입력된 값:", value); }
     }
+  });
+})();
+</script>
+
+<!-- ============================================================
+     RAIN — 'rain' 입력 시 비. 글씨/마우스/팽이를 고체로 인식해
+     윗면에 부딪혀 튕기고(splash), 그 아래엔 비 그림자가 생김.
+     바닥엔 빗방울 물결. ('clear'/'stop' 으로 끔)
+     ============================================================ -->
+<script>
+(() => {
+  const INK='38,34,30';
+  const WIND=26;          // 바람(가로 흐름, px/s) → 빗줄기 기울기
+  const GRAV=900;         // splash 입자 중력
+  const MOUSE_R=42;       // 마우스 충돌 반경
+  const SPAWN=10;         // 프레임당 생성량(밀도)
+  const MAX_DROPS=320;
+
+  const cv=document.getElementById('rain-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const rand=(a,b)=>a+Math.random()*(b-a);
+
+  let W,H,dpr;
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=cv.clientWidth; H=cv.clientHeight;
+    cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize(); addEventListener('resize',resize);
+
+  let mx=-9999,my=-9999;
+  addEventListener('pointermove',e=>{ mx=e.clientX; my=e.clientY; });
+  addEventListener('pointerout',()=>{ mx=-9999; my=-9999; });
+
+  // 장애물 수집(매 프레임): 메뉴 글씨 rect + 마우스 원 + 팽이 타원
+  function obstacles(){
+    const rects=[];
+    document.querySelectorAll('.menu-item').forEach(el=>{
+      const r=el.getBoundingClientRect();
+      if(r.width&&r.height) rects.push({l:r.left,t:r.top,r:r.right,b:r.bottom});
+    });
+    let mouse=null;
+    if(mx>-9000) mouse={x:mx,y:my,r:MOUSE_R};
+    let top=null;
+    const tc=document.getElementById('top-canvas');
+    if(tc){ const r=tc.getBoundingClientRect();
+      top={x:r.left+r.width*0.5, y:r.top+r.height*0.42, rx:r.width*0.30, ry:r.height*0.26}; }
+    return {rects,mouse,top};
+  }
+
+  const drops=[];     // {x,y,vy,len}
+  const parts=[];     // splash 입자 {x,y,vx,vy,age,ttl}
+  const ripples=[];   // 물결 {x,y,age,ttl,maxr}
+  let active=false;
+
+  function splash(x,y,big){
+    const n = big?6:4;
+    for(let i=0;i<n;i++)
+      parts.push({x,y,vx:rand(-70,70),vy:rand(-150,-40),age:0,ttl:rand(.25,.5)});
+    if(big) ripples.push({x,y,age:0,ttl:.55,maxr:rand(10,18)});
+  }
+
+  function hitTest(x,y,ob){
+    for(const r of ob.rects) if(x>=r.l&&x<=r.r&&y>=r.t&&y<=r.b) return {x,y:r.t,big:false};
+    if(ob.mouse){ const m=ob.mouse; if((x-m.x)**2+(y-m.y)**2 < m.r*m.r) return {x,y,big:false}; }
+    if(ob.top){ const o=ob.top; if(((x-o.x)/o.rx)**2+((y-o.y)/o.ry)**2 < 1) return {x,y,big:true}; }
+    return null;
+  }
+
+  let last=performance.now();
+  function loop(now){
+    const dt=Math.min((now-last)/1000,0.05); last=now;
+    const ob=obstacles();
+
+    // 생성
+    if(active && drops.length<MAX_DROPS){
+      for(let i=0;i<SPAWN;i++)
+        drops.push({x:rand(-40,W+40), y:rand(-H*0.3,0), vy:rand(620,820), len:rand(12,22)});
+    }
+
+    ctx.clearRect(0,0,W,H);
+
+    // 빗줄기
+    ctx.lineWidth=1.1; ctx.lineCap='round';
+    for(let i=drops.length-1;i>=0;i--){
+      const d=drops[i];
+      d.y+=d.vy*dt; d.x+=WIND*dt;
+      // 충돌 → splash 후 소멸
+      const hit=hitTest(d.x,d.y,ob);
+      if(hit){ splash(hit.x,hit.y,hit.big); drops.splice(i,1); continue; }
+      // 바닥 → 물결
+      if(d.y>=H-2){ splash(d.x,H-2,true); drops.splice(i,1); continue; }
+      const tailX=d.x-WIND*0.05, tailY=d.y-d.len;
+      ctx.strokeStyle=`rgba(${INK},0.28)`;
+      ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(tailX,tailY); ctx.stroke();
+    }
+
+    // splash 입자
+    for(let i=parts.length-1;i>=0;i--){
+      const p=parts[i]; p.age+=dt;
+      if(p.age>=p.ttl){ parts.splice(i,1); continue; }
+      p.vy+=GRAV*dt; p.x+=p.vx*dt; p.y+=p.vy*dt;
+      ctx.fillStyle=`rgba(${INK},${0.45*(1-p.age/p.ttl)})`;
+      ctx.beginPath(); ctx.arc(p.x,p.y,1.1,0,6.283); ctx.fill();
+    }
+
+    // 물결(납작한 타원 링)
+    for(let i=ripples.length-1;i>=0;i--){
+      const r=ripples[i]; r.age+=dt; const k=r.age/r.ttl;
+      if(k>=1){ ripples.splice(i,1); continue; }
+      const rr=r.maxr*k, op=0.32*(1-k);
+      ctx.strokeStyle=`rgba(${INK},${op})`; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.ellipse(r.x,r.y,rr,rr*0.34,0,0,6.283); ctx.stroke();
+    }
+
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // 'rain' 입력 → 켜기 / 'clear','stop','sun' → 끄기
+  const input=document.querySelector('.weather-input');
+  if(input) input.addEventListener('keydown',e=>{
+    if(e.key!=='Enter') return;
+    const v=e.target.value.trim().toLowerCase();
+    if(v==='rain') active=true;
+    else if(v==='clear'||v==='stop'||v==='sun'||v==='') active=false;
+  });
+})();
+</script>
+<!-- ============================================================
+     FOG — 'fog' 입력 시 흰 안개. 부드러운 구름 덩어리가 바람 따라
+     흐르며 둥실둥실 + 숨쉬듯 팽창. 글씨/팽이/비 다 뿌옇게 덮음.
+     ('clear'/'stop'/'sun' 으로 끔)
+     ============================================================ -->
+<script>
+(() => {
+  const cv=document.getElementById('fog-canvas'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const rand=(a,b)=>a+Math.random()*(b-a);
+
+  // 부드러운 흰 덩어리 스프라이트(가장자리로 갈수록 투명)
+  const sprite=document.createElement('canvas'); sprite.width=sprite.height=256;
+  { const s=sprite.getContext('2d');
+    const g=s.createRadialGradient(128,128,0,128,128,128);
+    g.addColorStop(0,'rgba(255,255,255,1)');
+    g.addColorStop(0.5,'rgba(255,255,255,0.85)');
+    g.addColorStop(1,'rgba(255,255,255,0)');
+    s.fillStyle=g; s.fillRect(0,0,256,256); }
+
+  let W,H,dpr,clouds=[];
+  function build(){
+    clouds=[];
+    const n=Math.round((W*H)/230000)+3;        // 덩어리 수(적게 → 사이사이 배경 보임)
+    for(let i=0;i<n;i++){
+      const rx=rand(195,390), ry=rx*rand(0.42,0.6);   // 가로로 퍼진 덩어리 (1.3배 키움)
+      const lobes=[];
+      const m=Math.round(rand(6,11));
+      for(let j=0;j<m;j++){
+        const ang=rand(0,6.28), rad=Math.sqrt(Math.random());
+        const dx=Math.cos(ang)*rx*rad;
+        const dy=Math.sin(ang)*ry*rad*0.7 - ry*0.12;   // 바닥은 평평, 위로 몽글
+        const lr=rand(0.5,0.95)*ry*(1.1-rad*0.4);      // 가운데 크고 가장자리 작게
+        lobes.push({dx, dy, r:lr, a:rand(0.13,0.24),
+                    bob:rand(0.6,1.4), ph:rand(0,6.28)});
+      }
+      clouds.push({ x:rand(-rx,W+rx), y:rand(H*0.05,H*0.85), rx, lobes,
+                    vx:rand(5,13), bob:rand(0.15,0.4), ph:rand(0,6.28) });
+    }
+  }
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=cv.clientWidth; H=cv.clientHeight;
+    cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    build();
+  }
+  resize(); addEventListener('resize',resize);
+
+  let cur=0, target=0, t=0, last=performance.now();
+  function loop(now){
+    const dt=Math.min((now-last)/1000,0.05); last=now; t+=dt;
+    cur += (target-cur)*Math.min(1,dt*1.2);      // 부드럽게 켜짐/꺼짐
+    ctx.clearRect(0,0,W,H);
+    if(cur>0.003){
+      for(const c of clouds){
+        c.x += c.vx*dt;
+        const cy=c.y + Math.sin(t*c.bob+c.ph)*14;          // 덩어리 전체 둥실
+        if(c.x - c.rx*1.8 > W){ c.x=-c.rx*1.8; c.y=rand(H*0.05,H*0.85); }
+        for(const l of c.lobes){
+          const ly=cy + l.dy + Math.sin(t*l.bob+l.ph)*5;    // 표면 몽글 움직임
+          const lr=l.r*(1+Math.sin(t*0.5+l.ph)*0.05);       // 숨쉬듯
+          ctx.globalAlpha=l.a*cur;
+          ctx.drawImage(sprite, c.x+l.dx-lr, ly-lr, lr*2, lr*2);
+        }
+      }
+      ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  const input=document.querySelector('.weather-input');
+  if(input) input.addEventListener('keydown',e=>{
+    if(e.key!=='Enter') return;
+    const v=e.target.value.trim().toLowerCase();
+    if(v==='fog') target=1;
+    else if(v==='clear'||v==='stop'||v==='sun'||v==='') target=0;
   });
 })();
 </script>
