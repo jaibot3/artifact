@@ -119,6 +119,16 @@
       letter-spacing: -0.2px; /* 자간을 미세하게 좁혀 제미나이 특유의 단정함을 유도 */
     }
 
+    /* 💧 글자 흩어짐(물결) 효과 — 한 글자씩 span으로 쪼갠 뒤 transform/blur/opacity 트랜지션.
+       cubic-bezier로 밀려났다가 천천히 제자리로 돌아오게 해서, 커서가 지나갈 때 물결치듯 보임. */
+    .entry-body .ch {
+      display: inline-block;
+      transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  filter   0.55s ease,
+                  opacity  0.55s ease;
+      will-change: transform, filter, opacity;
+    }
+
     /* most recent = full ; rest faded */
     .entries article:not(:first-child) {
       opacity: 0.07;
@@ -257,6 +267,92 @@ e. cheers.
       </article>
     `;
   }).join('');
+
+  // ============================================================
+  //  💧 글자 흩어짐(물결 + 뿌옇게) 효과
+  //  커서 주변 글자를 방사형으로 밀어내고 + blur + opacity 감소.
+  //  반경 안에서 가까울수록 강해지고(제곱 가속), 빠져나가면 천천히 복귀.
+  // ============================================================
+  function activateScatter(body) {
+    // 1) 본문을 한 글자씩 span으로 분해. 공백/줄바꿈은 텍스트 노드로 그대로 둬서
+    //    pre-wrap 레이아웃(들여쓰기·줄바꿈)을 깨지 않게 한다.
+    const text = body.textContent;
+    body.textContent = '';
+    const chars = [];
+    for (const ch of text) {
+      if (ch === ' ' || ch === '\n' || ch === '\t' || ch === '\r') {
+        body.appendChild(document.createTextNode(ch));
+      } else {
+        const span = document.createElement('span');
+        span.className = 'ch';
+        span.textContent = ch;
+        body.appendChild(span);
+        chars.push(span);
+      }
+    }
+    if (!chars.length) return;
+
+    const RADIUS = 95;   // 영향 반경(px)
+    const PUSH   = 34;   // 최대 밀어내는 거리(px)
+    const BLUR   = 3.4;  // 최대 흐림(px)
+
+    let centers = [];    // 글자별 '원래' 중심좌표 캐시(transform 적용 전 기준)
+    let raf = null;
+    let pending = null;
+
+    function cache() {
+      centers = chars.map(c => {
+        const r = c.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      });
+    }
+
+    function render() {
+      raf = null;
+      if (!pending) return;
+      const { mx, my } = pending;
+      for (let i = 0; i < chars.length; i++) {
+        const c = centers[i];
+        if (!c) continue;
+        const dx = c.x - mx, dy = c.y - my;
+        const dist = Math.hypot(dx, dy);
+        if (dist < RADIUS) {
+          const f = 1 - dist / RADIUS;   // 0~1, 가까울수록 1
+          const e = f * f;               // 제곱 가속 → 가까울수록 급격히 흩어짐
+          const inv = dist || 1;
+          const tx = (dx / inv) * PUSH * e;
+          const ty = (dy / inv) * PUSH * e;
+          chars[i].style.transform = `translate(${tx}px, ${ty}px)`;
+          chars[i].style.filter = `blur(${(BLUR * e).toFixed(2)}px)`;
+          chars[i].style.opacity = (1 - 0.85 * e).toFixed(3);
+        } else if (chars[i].style.transform) {
+          chars[i].style.transform = '';
+          chars[i].style.filter = '';
+          chars[i].style.opacity = '';
+        }
+      }
+    }
+
+    body.addEventListener('mouseenter', cache);
+    body.addEventListener('mousemove', ev => {
+      pending = { mx: ev.clientX, my: ev.clientY };
+      if (!raf) raf = requestAnimationFrame(render);
+    });
+    body.addEventListener('mouseleave', () => {
+      pending = null;
+      for (const c of chars) {
+        c.style.transform = '';
+        c.style.filter = '';
+        c.style.opacity = '';
+      }
+    });
+    window.addEventListener('scroll', cache, { passive: true });
+    window.addEventListener('resize', cache);
+  }
+
+  // 가장 최신(맨 위) 글에만 적용 — 나머지는 흐려서 pointer-events:none 상태.
+  const firstBody = $list.querySelector('article:first-child .entry-body');
+  if (firstBody) activateScatter(firstBody);
 })();
 </script>
 </body>
