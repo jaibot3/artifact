@@ -147,14 +147,14 @@
   const INK         = '38,34,30';   
   let   SCALE;
   let   RIPPLE_Y;
-  let   DOT_SCALE = 1;   // 모바일에서 점 크기 줄이는 배수
+  let   DOT_SCALE = 0.7;   // 모바일에서 점 크기 줄이는 배수
   const PERSP       = 4.0;
   const TILT        = 0.20;
   const HOVER_R     = 130; // 마우스 오버 감지 반경
 
   // 회전 속도 파트
   const SPIN_BASE   = 1.4;      // 오버 시 천천히 도는 기본 속도
-  const SPIN_MAX    = 35;       // 드래그 최대 속도 제한
+  const SPIN_MAX    = 25;       // 드래그 최대 속도 제한
 
   // 물리 계수
   const FRICTION    = 0.993;    // 고속 회전 시 감속률
