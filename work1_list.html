@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Project</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      min-height: 100%;
+      background: #f7f6f3;
+      font-family: 'Jost', 'Century Gothic', CenturyGothic, sans-serif;
+      color: #38221e;
+      -webkit-text-size-adjust: 100%;
+    }
+    .top {
+      display: flex;
+      justify-content: flex-end;
+      padding: 36px 6% 0;
+    }
+    .back {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #8a7f70;
+      text-decoration: none;
+      transition: color .3s;
+    }
+    .back:hover { color: #38221e; }
+    .page-title {
+      font-size: 76px;
+      font-weight: 700;
+      color: #ded26e;
+      line-height: 1;
+      letter-spacing: 0.5px;
+      position: fixed;
+      top: 0; left: 0;
+    }
+    .content-wrap { padding-top: 96px; }
+
+    /* 첫 번째: 이미지 70% + 오른쪽 텍스트 */
+    .hero {
+      display: grid;
+      grid-template-columns: 70% 1fr;
+      padding: 0 6%;
+      margin-bottom: 24px;
+      align-items: stretch;
+    }
+    .hero img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      background: #d8cfbf;
+    }
+    .hero .img-placeholder-inner {
+      width: 100%;
+    }
+    .hero-text {
+      padding: 0 0 0 36px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .hero-text-top {
+      flex: 3;
+      text-align: right;
+      padding-right: 0;
+    }
+    .hero-text-top p {
+      font-size: 14px;
+      line-height: 26px;
+      color: #474039;
+      letter-spacing: -0.1px;
+    }
+    .hero-text-bottom {
+      flex: 7;
+      text-align: justify;
+    }
+    .hero-text-bottom p {
+      font-size: 14px;
+      line-height: 26px;
+      color: #474039;
+      letter-spacing: -0.1px;
+    }
+
+    .img-block { width: 100%; margin-bottom: 3px; padding: 0 6%; }
+    .img-block img {
+      width: 100%; display: block;
+      object-fit: cover; background: #d8cfbf;
+    }
+
+    /* ── 플레이스홀더 (실제 이미지 없을 때 표시) ── */
+    .img-placeholder {
+      width: 100%;
+      padding: 0 6%;
+      margin-bottom: 3px;
+    }
+    .img-placeholder-inner {
+      background: #e8e4dc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #9c9586;
+      border: 1.5px dashed #c4bdb0;
+      width: 100%;
+    }
+    .img-placeholder .ph-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .img-placeholder .ph-filename {
+      font-size: 12px;
+      color: #bfae99;
+      letter-spacing: 1px;
+    }
+
+    /* 텍스트 설명 */
+    .text-block {
+      padding: 56px 6%;
+      max-width: 640px;
+    }
+    .text-block p {
+      font-size: 15px;
+      line-height: 28px;
+      color: #474039;
+      letter-spacing: -0.1px;
+    }
+
+    @media (max-width: 640px) {
+      .page-title { font-size: 53px; }
+      .content-wrap { padding-top: 72px; }
+      .text-block { padding: 40px 5%; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-text { padding: 20px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top">
+    <a href="work1.html" class="back">← Work</a>
+  </div>
+  <h1 class="page-title">Work</h1>
+
+  <div class="content-wrap">
+
+    <!-- 첫 번째 이미지 (70%) + 오른쪽 설명 텍스트 -->
+    <div class="hero">
+      <div class="img-placeholder-inner" style="aspect-ratio:3/2">
+        <span class="ph-label">image</span>
+        <span class="ph-filename">project1_01.jpg</span>
+      </div>
+      <div class="hero-text">
+        <div class="hero-text-top">
+          <p>프로젝트명<br>연도</p>
+        </div>
+        <div class="hero-text-bottom">
+          <p>프로젝트 설명을 여기에 써주세요. 양쪽 정렬로 본문이 들어갑니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 이미지 2 — 세로형 (3:4) -->
+    <div class="img-placeholder">
+      <div class="img-placeholder-inner" style="aspect-ratio:3/4">
+        <span class="ph-label">image</span>
+        <span class="ph-filename">project1_02.jpg</span>
+      </div>
+    </div>
+
+    <!-- 이미지 3 — 정사각 (1:1) -->
+    <div class="img-placeholder">
+      <div class="img-placeholder-inner" style="aspect-ratio:1/1">
+        <span class="ph-label">image</span>
+        <span class="ph-filename">project1_03.jpg</span>
+      </div>
+    </div>
+
+    <!-- 텍스트 설명 -->
+    <div class="text-block">
+      <p>프로젝트 설명을 여기에 써주세요. 이미지 사이 원하는 위치에 넣으면 돼.</p>
+    </div>
+
+    <!-- 이미지 4 -->
+    <div class="img-placeholder">
+      <div class="img-placeholder-inner" style="aspect-ratio:16/9">
+        <span class="ph-label">image</span>
+        <span class="ph-filename">project1_04.jpg</span>
+      </div>
+    </div>
+
+    <!-- 이미지 5 -->
+    <div class="img-placeholder">
+      <div class="img-placeholder-inner" style="aspect-ratio:3/4">
+        <span class="ph-label">image</span>
+        <span class="ph-filename">project1_05.jpg</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
