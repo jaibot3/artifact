@@ -7,22 +7,18 @@
   <title>A Million Roses</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --ink:    #474039;
       --ink-3:  #8a7f70;
       --rule:   rgba(38, 34, 30, 0.12);
       --num:    #ded36ebb;
     }
-
     html, body {
       min-height: 100%;
-      /* 💡 무ㅓㄹ 보십니까?? 이것까지 lol. 귀엽군요. 제미나이 기본 UI 스타일입니다. 기호 무드를 살린 뒤, 한글과 본문은 가장 깔끔한 시스템 고딕 체계로 매칭 */
       font-family: 'Apple Symbols', 'AppleSymbols', 'Apple Symbol', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       color: var(--ink);
-      -webkit-font-smoothing: antialiased; /* 글자를 조금 더 선명하고 얇게 다듬어주는 옵션 */
+      -webkit-font-smoothing: antialiased;
     }
-
     body {
       background: radial-gradient(120% 90% at 50% 0%, #f6f1e6 0%, #ece3d2 55%, #e3d8c2 100%);
       min-height: 100vh;
@@ -30,7 +26,6 @@
       justify-content: center;
       padding: 56px 24px 120px;
     }
-
     body::before {
       content: '';
       position: fixed;
@@ -45,83 +40,32 @@
       background-position: 0 0, 1px 2px;
       z-index: 0;
     }
-
-    .sheet {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 720px;
-    }
-
-    .top {
-      display: flex;
-      justify-content: flex-end;
-      padding-bottom: 56px;
-    }
-
+    .sheet { position: relative; z-index: 1; width: 100%; max-width: 720px; }
+    .top { display: flex; justify-content: flex-end; padding-bottom: 56px; }
     .back {
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      text-decoration: none;
-      transition: color 0.3s ease;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink-3); text-decoration: none; transition: color 0.3s ease;
     }
     .back:hover { color: var(--ink); }
-
-    /* ── Entries ───────────────────────────────────── */
-    .entries {
-      display: flex;
-      flex-direction: column;
-      gap: 80px;
+    .entries { display: flex; flex-direction: column; gap: 80px; }
+    .entry-meta { display: flex; align-items: baseline; gap: 22px; margin-bottom: 22px; }
+    .entry-meta .num {
+      font-size: 42px; line-height: 1; letter-spacing: -1px;
+      font-weight: normal; color: var(--num);
     }
-
-    .entry-meta {
-      display: flex;
-      align-items: baseline;
-      gap: 22px;
-      margin-bottom: 22px;
+    .entry-meta .day {
+      font-size: 30px; line-height: 0.7; letter-spacing: -1px;
+      font-weight: normal; color: var(--ink);
     }
-
-   .entry-meta .num {
-  font-size: 42px; /* 번호 크기 */
-  line-height: 1;
-  letter-spacing: -1px;
-  font-weight: normal;
-  color: var(--num);
-}
-
-.entry-meta .day {
-  font-size: 30px; /* 날짜 크기 */
-  line-height: 0.7;
-  letter-spacing: -1px;
-  font-weight: normal;
-  color: var(--ink);
-}
-
-    .entry-meta .num { color: var(--num); }
-    .entry-meta .day { color: var(--ink); }
-
     .entry-meta .rest {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      font-style: italic;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--ink-3); font-style: italic;
     }
-
     .entry-body {
-      font-size: 15px;
-      line-height: 28px;
-      color: var(--ink);
-      white-space: pre-wrap;
-      font-weight: 400;
-      letter-spacing: -0.2px; /* 자간을 미세하게 좁혀 제미나이 특유의 단정함을 유도 */
+      font-size: 15px; line-height: 28px; color: var(--ink);
+      white-space: pre-wrap; font-weight: 400; letter-spacing: -0.2px;
     }
-
-    /* 💧 글자 흩어짐(물결) 효과 — 한 글자씩 span으로 쪼갠 뒤 transform/blur/opacity 트랜지션.
-       cubic-bezier로 밀려났다가 천천히 제자리로 돌아오게 해서, 커서가 지나갈 때 물결치듯 보임. */
     .entry-body .ch {
       display: inline-block;
       transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -129,49 +73,26 @@
                   opacity  0.55s ease;
       will-change: transform, filter, opacity;
     }
-
-    /* most recent = full ; rest faded */
-    .entries article:not(:first-child) {
-      opacity: 0.1; 
-      pointer-events: none;
-    }
-
-    /* 전체 텍스트 선택/복사 방지 */
-    .entry-body {
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
+    .entries article:not(:first-child) { opacity: 0.1; pointer-events: none; }
+    .entry-body { user-select: none; -webkit-user-select: none; }
     .empty {
-      text-align: center;
-      font-size: 12px;
-      font-style: italic;
-      color: var(--ink-3);
-      letter-spacing: 2px;
-      padding: 80px 0;
+      text-align: center; font-size: 12px; font-style: italic;
+      color: var(--ink-3); letter-spacing: 2px; padding: 80px 0;
     }
   </style>
 </head>
 <body oncontextmenu="return false" oncopy="return false">
-
   <div class="sheet">
-
     <header class="top">
       <a href="index.html" class="back">← Index</a>
     </header>
-
     <section class="entries" id="entries"></section>
-
   </div>
 
 <script>
-// ============================================================
-//  ▼ 여기에 글을 추가하세요. (위쪽이 최신)
-//    날짜 형식: YYYY-MM-DD
-// ============================================================
 const ENTRIES = [
-    {
-    date: '2026-06-27',
+  {
+    date: '2026-06-28',
     text: `Nothing last. 
 
     `
@@ -189,7 +110,7 @@ const ENTRIES = [
 내가 더이상 []을 요구하지 않는 것이 마치
 타이머 버튼을 누른 관계인 것 같아. 
 
-결과가 되고싶은 건 나의 순진한… “……”
+결과가 되고싶은 건 나의 순진한… "……"
 []와의 인연에 감사해. 우리는 그럴 인연이었나봐. 
 
 
@@ -280,37 +201,25 @@ e. cheers.
 ​`
   },
 ];
-// ============================================================
 
 (() => {
   const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   const WEEKDAYS = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-
   const $list = document.getElementById('entries');
 
-  if (!ENTRIES.length) {
-    $list.innerHTML = '<div class="empty">no entries yet.</div>';
-    return;
-  }
+  if (!ENTRIES.length) { $list.innerHTML = '<div class="empty">no entries yet.</div>'; return; }
 
   const sortedAsc = [...ENTRIES].sort((a, b) => a.date.localeCompare(b.date));
   sortedAsc.forEach((e, i) => { e.__num = i + 1; });
-
   const sortedDesc = [...sortedAsc].reverse();
 
   function fmt(iso) {
     const [y, m, d] = iso.split('-').map(Number);
     const dt = new Date(y, m - 1, d);
-    return {
-      day:  String(d).padStart(2, '0'),
-      rest: `${MONTHS[m - 1]} ${y} · ${WEEKDAYS[dt.getDay()]}`
-    };
+    return { day: String(d).padStart(2, '0'), rest: `${MONTHS[m-1]} ${y} · ${WEEKDAYS[dt.getDay()]}` };
   }
-
   function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, c => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    })[c]);
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   }
 
   $list.innerHTML = sortedDesc.map(e => {
@@ -318,7 +227,7 @@ e. cheers.
     return `
       <article>
         <div class="entry-meta">
-          <span class="num">${String(e.__num).padStart(2, '0')}</span>
+          <span class="num">${String(e.__num).padStart(2,'0')}</span>
           <span class="day">${day}</span>
           <span class="rest">${rest}</span>
         </div>
@@ -327,14 +236,7 @@ e. cheers.
     `;
   }).join('');
 
-  // ============================================================
-  //  💧 글자 흩어짐(물결 + 뿌옇게) 효과
-  //  커서 주변 글자를 방사형으로 밀어내고 + blur + opacity 감소.
-  //  반경 안에서 가까울수록 강해지고(제곱 가속), 빠져나가면 천천히 복귀.
-  // ============================================================
   function activateScatter(body) {
-    // 1) 본문을 한 글자씩 span으로 분해. 공백/줄바꿈은 텍스트 노드로 그대로 둬서
-    //    pre-wrap 레이아웃(들여쓰기·줄바꿈)을 깨지 않게 한다.
     const text = body.textContent;
     body.textContent = '';
     const chars = [];
@@ -351,11 +253,11 @@ e. cheers.
     }
     if (!chars.length) return;
 
-    const RADIUS = 95;   // 영향 반경(px)
-    const PUSH   = 34;   // 최대 밀어내는 거리(px)
-    const BLUR   = 3.4;  // 최대 흐림(px)
+    const RADIUS = 95;
+    const PUSH   = 34;
+    const BLUR   = 3.4;
 
-    let centers = [];    // 글자별 '원래' 중심좌표 캐시(transform 적용 전 기준)
+    let centers = [];
     let raf = null;
     let pending = null;
 
@@ -376,19 +278,16 @@ e. cheers.
         const dx = c.x - mx, dy = c.y - my;
         const dist = Math.hypot(dx, dy);
         if (dist < RADIUS) {
-          const f = 1 - dist / RADIUS;   // 0~1, 가까울수록 1
-          const e = f * f;               // 제곱 가속 → 가까울수록 급격히 흩어짐
+          const f = 1 - dist / RADIUS;
+          const e = f * f;
           const inv = dist || 1;
           const tx = (dx / inv) * PUSH * e;
           const ty = (dy / inv) * PUSH * e;
           chars[i].style.transform = `translate(${tx}px, ${ty}px)`;
-          chars[i].style.filter = `blur(${(BLUR * e).toFixed(2)}px)`;
-          chars[i].style.opacity = (1 - 0.85 * e).toFixed(3);
-        } else if (chars[i].style.transform) {
-          chars[i].style.transform = '';
-          chars[i].style.filter = '';
-          chars[i].style.opacity = '';
+          chars[i].style.filter    = `blur(${(BLUR * e).toFixed(2)}px)`;
+          chars[i].style.opacity   = (1 - 0.85 * e).toFixed(3);
         }
+        // ← mouseleave 리셋 없음: 한번 퍼진 글자는 그 자리에 유지
       }
     }
 
@@ -397,19 +296,11 @@ e. cheers.
       pending = { mx: ev.clientX, my: ev.clientY };
       if (!raf) raf = requestAnimationFrame(render);
     });
-    body.addEventListener('mouseleave', () => {
-      pending = null;
-      for (const c of chars) {
-        c.style.transform = '';
-        c.style.filter = '';
-        c.style.opacity = '';
-      }
-    });
+    // mouseleave 리셋 제거 — 효과 영구 유지
     window.addEventListener('scroll', cache, { passive: true });
     window.addEventListener('resize', cache);
   }
 
-  // 가장 최신(맨 위) 글에만 적용 — 나머지는 흐려서 pointer-events:none 상태.
   const firstBody = $list.querySelector('article:first-child .entry-body');
   if (firstBody) activateScatter(firstBody);
 })();
