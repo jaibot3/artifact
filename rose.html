@@ -174,7 +174,7 @@
     
     .entries article:not(:first-child) { 
       opacity: 0.5; 
-      pointer-events: none; 
+      /* 마우스 오버 이벤트를 막고 있던 요소 제거 */
     }
     
     .empty {
@@ -485,8 +485,10 @@ e. cheers.`
     window.addEventListener('resize', cache);
   }
 
-  const firstBody = $list.querySelector('article:first-child .entry-body');
-  if (firstBody) activateScatter(firstBody);
+  // 모든 entry-body 요소에 activateScatter 효과 적용
+  const allBodies = $list.querySelectorAll('.entry-body');
+  allBodies.forEach(body => activateScatter(body));
+
 })();
 </script>
 </body>
