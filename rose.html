@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <title>A Million Roses</title>
+  
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
-  <title>A Million Roses</title>
+  
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --ink:    #474039;
-      --ink-3:  #8a7f70;
-      --rule:   rgba(38, 34, 30, 0.12);
-      --num:    #ded36ebb;
+    /* Reset & Base Variables */
+    *, *::before, *::after { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
     }
+    
+    :root {
+      --ink: #474039;
+      --ink-3: #8a7f70;
+      --rule: rgba(38, 34, 30, 0.12);
+      --num: #ded36ebb;
+    }
+    
     html, body {
       min-height: 100%;
       font-family: 'Apple Symbols', 'AppleSymbols', 'Apple Symbol', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
     }
+    
     body {
       background: radial-gradient(120% 90% at 50% 0%, #F2F5E8 0%, #e8e9e4 55%, #e8e9e4 100%);
       min-height: 100vh;
@@ -29,6 +39,7 @@
       justify-content: center;
       padding: 112px 24px 120px;
     }
+    
     body::before {
       content: '';
       position: fixed;
@@ -38,17 +49,32 @@
       mix-blend-mode: multiply;
       background-image:
         radial-gradient(rgba(70,55,40,0.18) 1px, transparent 1px),
-        radial-gradient(rgba(70,55,40,0.1)  1px, transparent 1px);
+        radial-gradient(rgba(70,55,40,0.1) 1px, transparent 1px);
       background-size: 3px 3px, 7px 7px;
       background-position: 0 0, 1px 2px;
       z-index: 0;
     }
-    .sheet { position: relative; z-index: 1; width: 100%; max-width: 720px; }
-    .top { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 56px; }
+    
+    /* Layout & Header */
+    .sheet { 
+      position: relative; 
+      z-index: 1; 
+      width: 100%; 
+      max-width: 720px; 
+    }
+    
+    .top { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: flex-start; 
+      padding-bottom: 56px; 
+    }
+    
     .page-header {
       font-family: 'Jost', 'Apple Symbols', -apple-system, sans-serif;
       text-align: left;
     }
+    
     .ph-verse {
       font-size: 30px;
       font-weight: 700;
@@ -57,6 +83,7 @@
       color: #ded26e;
       white-space: pre-wrap;
     }
+    
     .ph-src {
       margin-top: 12px;
       font-size: 12px;
@@ -65,6 +92,7 @@
       letter-spacing: 1px;
       color: var(--ink-3);
     }
+    
     .ph-sub {
       margin-top: 16px;
       font-size: 15px;
@@ -72,46 +100,95 @@
       letter-spacing: 0.5px;
       color: #ded26e;
     }
+    
     .back {
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
-      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--ink-3); text-decoration: none; transition: color 0.3s ease;
+      font-size: 10px; 
+      letter-spacing: 3px; 
+      text-transform: uppercase;
+      color: var(--ink-3); 
+      text-decoration: none; 
+      transition: color 0.3s ease;
     }
-    .back:hover { color: var(--ink); }
-    .entries { display: flex; flex-direction: column; gap: 80px; }
-    .entry-meta { display: flex; align-items: baseline; gap: 22px; margin-bottom: 22px; }
+    
+    .back:hover { 
+      color: var(--ink); 
+    }
+    
+    /* Entries Section */
+    .entries { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 80px; 
+    }
+    
+    .entry-meta { 
+      display: flex; 
+      align-items: baseline; 
+      gap: 22px; 
+      margin-bottom: 22px; 
+    }
+    
     .entry-meta .num {
-      font-size: 42px; line-height: 1; letter-spacing: -1px;
-      font-weight: normal; color: var(--num);
+      font-size: 42px; 
+      line-height: 1; 
+      letter-spacing: -1px;
+      font-weight: normal; 
+      color: var(--num);
     }
+    
     .entry-meta .day {
-      font-size: 30px; line-height: 0.7; letter-spacing: -1px;
-      font-weight: normal; color: var(--ink);
+      font-size: 30px; 
+      line-height: 0.7; 
+      letter-spacing: -1px;
+      font-weight: normal; 
+      color: var(--ink);
     }
+    
     .entry-meta .rest {
-      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-      color: var(--ink-3); font-style: italic;
+      font-size: 11px; 
+      letter-spacing: 4px; 
+      text-transform: uppercase;
+      color: var(--ink-3); 
+      font-style: italic;
     }
+    
     .entry-body {
-      font-size: 15px; line-height: 28px; color: var(--ink);
-      white-space: pre-wrap; font-weight: 400; letter-spacing: -0.2px;
+      font-size: 15px; 
+      line-height: 28px; 
+      color: var(--ink);
+      white-space: pre-wrap; 
+      font-weight: 400; 
+      letter-spacing: -0.2px;
+      user-select: none; 
+      -webkit-user-select: none; 
     }
+    
     .entry-body .ch {
       display: inline-block;
       transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  filter   0.55s ease,
-                  opacity  0.55s ease;
+                  filter 0.55s ease,
+                  opacity 0.55s ease;
       will-change: transform, filter, opacity;
     }
-    .entries article:not(:first-child) { opacity: 0.1; pointer-events: none; }
-    .entry-body { user-select: none; -webkit-user-select: none; }
+    
+    .entries article:not(:first-child) { 
+      opacity: 0.1; 
+      pointer-events: none; 
+    }
+    
     .empty {
-      text-align: center; font-size: 12px; font-style: italic;
-      color: var(--ink-3); letter-spacing: 2px; padding: 80px 0;
+      text-align: center; 
+      font-size: 12px; 
+      font-style: italic;
+      color: var(--ink-3); 
+      letter-spacing: 2px; 
+      padding: 80px 0;
     }
   </style>
 </head>
 <body oncontextmenu="return false" oncopy="return false">
+
   <div class="sheet">
     <header class="top">
       <div class="page-header">
@@ -173,8 +250,7 @@ const ENTRIES = [
   },
   {
     date: '2026-07-01',
-    text: `
-분명 그때 있잖아, 내가. 
+    text: `분명 그때 있잖아, 내가. 
 어? 여기 있었네. 꼭 찾으면 없더라니…
 하고 분명, 그 검은색 플라스틱 반질반질한 거기. 
 
@@ -192,226 +268,4 @@ const ENTRIES = [
 잊은 건지 잃은 건지 말이야…
 
 찾기 전까지는 잃어버렸고,
-찾았으니 잊혀진 거. 
-
-아무튼 이상하다. 아무리 찾아봐도 여기밖에 기억에 없는데
-
-근데 내가 한 말밖에 기억이 안 난다니까…
-    `
-  },
-  {
-    date: '2026-06-28',
-    text: `Nothing last. 
-
-    `
-  },
-  {
-    date: '2026-06-27',
-    text: ` How could I not love you. 
-    너는 너, 나는 나. 
-
-인연이라는 게 참 희한해. 
-시기가 아니면 맞물릴 수 없나봐. 
-우리는 언젠가 끊어질 것 같아. 
-
-너가 나에게 []를 주지 않는 것과
-내가 더이상 []을 요구하지 않는 것이 마치
-타이머 버튼을 누른 관계인 것 같아. 
-
-결과가 되고싶은 건 나의 순진한… "……"
-[]와의 인연에 감사해. 우리는 그럴 인연이었나봐. 
-
-
-타이머가 켜진 이상 나는 너를 더 사랑할거야. 
-아마 너는 모르겠지. 
-너에게 가장 따뜻한 이별을 주고싶었어. 
-
-하지만 난 역시 오바하고 있나봐. 
-
-
-
-너무나 여리고 닳고 닳은 우리에게 소중한 추억을 허락해주세요. 
-
-    
-    `
-  },
-  {
-    date: '2026-06-26',
-    text: ` [] - 개,고양이,사과,계란,복숭아, 자작나무.
-
-    [] 버클 15미리 짜리 
-    
-    
-    
-    a "한국에 마지막 연탄 공장이 문을 닫는데... 혹시 모르니까 연탄을 좀 사둘까?"
-    b "요즘 텔레그램에 안락사 약도 판다더라, 무슨 연탄을 사"
-    
-    a "그럼 그 약을 미리 사 놓을까?"
-    b "괜히 미리 사놨다가 유통기한 지나면 죽지도 않고 병신될지 몰라. 그냥 그때 사"
-    
-    `
-  },
-  {
-    date: '2026-06-24',
-    text: `[]을 나는 몇번을 갔을까?
-    []은 언제나 같았나?
-    `
-  },
-  {
-    date: '2026-06-23',
-    text: `나는 부끄러워서 네 눈을 쳐다보지 못했고, 너는 우스워했지. 
-    
-붐비는 지하철 인파에 떠밀려 너를 안으면- 
-네가 나에게 사랑한다 하고- 나는 고개를 떨구었다 다시 고개를 들어 귓속말로 "나도"라고 속삭이곤 했는데. 밉살스런 표정으로-
-내 볼에 닿아있는 너의 목에서 나는 냄새. 향기. 체취. 
-만나면서 항상 
-언제나 항상 너를. 모든 순간에 사랑하지 않은 적이 없어. 
-그리고 그거면 충분해. 미안해 (2017.03.10)
-`
-  },
-  {
-    date: '2026-06-22',
-    text: `모르지.`
-  },
-  {
-    date: '2026-06-18',
-    text: ``
-  },
-  {
-    date: '2026-06-12',
-    text: `a. 술래를 잡으러 다가오듯 사방에서 나를 향해 아주 조금씩 그리고 점점 밀도있게 조여오는 느낌. 
-얼굴을 가렸던 손을 내리면 언제나 편안하고 인자한 웃음과 함께 "무궁화 꽃이 피었습니다." 
-b. 그 책장이 나를 거부한 날, 미처 그곳에서 내 자존심을  꺼내들고 오지 못했다.
-c. 그는 마치 안으로 들어오는 문이 3개인 7평짜리 공간처럼
-사람들의 여러 다리가 우수수수 안으로 들어왔다가 머물렀다가 나가고 또 들어왔다가 나갔다. 
-d. 맡잡은 손은 질척이는 지렁이처럼 그의 손목을 타고 피부속으로 들어가 기어이
-
-기어이 그 훵한 공허를 해집어 놓았다. 공허라 해집어놓을 것도 없어 웃긴 소리지만
-
-집요하게. 뭘 쫓았지?
-
-마치 분명 들고나간 적 없는데 집안에서 사라진 () 물건을 찾듯이. '이상하다.' 
-
-'왜 없지?' 
-
-[뭐가] 있어야했나... 
-
-​
-
-[ 청량함과 담백함은 사라지고
-
-온 몸을 가득 메울,
-
-목구멍으로 꾸덕꾸덕 넘어 가득차는 괴로움을 ]
-
-e. cheers.
-
-​`
-  },
-];
-
-(() => {
-  const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-  const WEEKDAYS = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const $list = document.getElementById('entries');
-
-  if (!ENTRIES.length) { $list.innerHTML = '<div class="empty">no entries yet.</div>'; return; }
-
-  const sortedAsc = [...ENTRIES].sort((a, b) => a.date.localeCompare(b.date));
-  sortedAsc.forEach((e, i) => { e.__num = i + 1; });
-  const sortedDesc = [...sortedAsc].reverse();
-
-  function fmt(iso) {
-    const [y, m, d] = iso.split('-').map(Number);
-    const dt = new Date(y, m - 1, d);
-    return { day: String(d).padStart(2, '0'), rest: `${MONTHS[m-1]} ${y} · ${WEEKDAYS[dt.getDay()]}` };
-  }
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
-  }
-
-  $list.innerHTML = sortedDesc.map(e => {
-    const { day, rest } = fmt(e.date);
-    return `
-      <article>
-        <div class="entry-meta">
-          <span class="num">${String(e.__num).padStart(2,'0')}</span>
-          <span class="day">${day}</span>
-          <span class="rest">${rest}</span>
-        </div>
-        <div class="entry-body">${escapeHtml(e.text)}</div>
-      </article>
-    `;
-  }).join('');
-
-  function activateScatter(body) {
-    const text = body.textContent;
-    body.textContent = '';
-    const chars = [];
-    for (const ch of text) {
-      if (ch === ' ' || ch === '\n' || ch === '\t' || ch === '\r') {
-        body.appendChild(document.createTextNode(ch));
-      } else {
-        const span = document.createElement('span');
-        span.className = 'ch';
-        span.textContent = ch;
-        body.appendChild(span);
-        chars.push(span);
-      }
-    }
-    if (!chars.length) return;
-
-    const RADIUS = 95;
-    const PUSH   = 34;
-    const BLUR   = 3.4;
-
-    let centers = [];
-    let raf = null;
-    let pending = null;
-
-    function cache() {
-      centers = chars.map(c => {
-        const r = c.getBoundingClientRect();
-        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-      });
-    }
-
-    function render() {
-      raf = null;
-      if (!pending) return;
-      const { mx, my } = pending;
-      for (let i = 0; i < chars.length; i++) {
-        const c = centers[i];
-        if (!c) continue;
-        const dx = c.x - mx, dy = c.y - my;
-        const dist = Math.hypot(dx, dy);
-        if (dist < RADIUS) {
-          const f = 1 - dist / RADIUS;
-          const e = f * f;
-          const inv = dist || 1;
-          const tx = (dx / inv) * PUSH * e;
-          const ty = (dy / inv) * PUSH * e;
-          chars[i].style.transform = `translate(${tx}px, ${ty}px)`;
-          chars[i].style.filter    = `blur(${(BLUR * e).toFixed(2)}px)`;
-          chars[i].style.opacity   = (1 - 0.85 * e).toFixed(3);
-        }
-        // ← mouseleave 리셋 없음: 한번 퍼진 글자는 그 자리에 유지
-      }
-    }
-
-    body.addEventListener('mouseenter', cache);
-    body.addEventListener('mousemove', ev => {
-      pending = { mx: ev.clientX, my: ev.clientY };
-      if (!raf) raf = requestAnimationFrame(render);
-    });
-    // mouseleave 리셋 제거 — 효과 영구 유지
-    window.addEventListener('scroll', cache, { passive: true });
-    window.addEventListener('resize', cache);
-  }
-
-  const firstBody = $list.querySelector('article:first-child .entry-body');
-  if (firstBody) activateScatter(firstBody);
-})();
-</script>
-</body>
-</html>
+찾았으니 잊혀
