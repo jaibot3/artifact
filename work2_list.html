@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Project</title>
+  <style>
+    /* CSS 변수 선언: 유지보수를 위한 기본 세팅 */
+    :root {
+      --bg-color: #f7f6f3;
+      --text-main: #474039;
+      --text-dark: #38221e;
+      --accent: #ded26e;
+      --link-color: #8a7f70;
+      --img-placeholder: #d8cfbf;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html, body {
+      min-height: 100%;
+      background: var(--bg-color);
+      font-family: 'Jost', 'Century Gothic', CenturyGothic, sans-serif;
+      color: var(--text-dark);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* Header 영역 */
+    header.top {
+      display: flex;
+      justify-content: flex-end;
+      padding: 36px 6% 0;
+    }
+
+    .back {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--link-color);
+      text-decoration: none;
+      transition: color .3s;
+    }
+    .back:hover { color: var(--text-dark); }
+
+    .page-title {
+      font-size: 76px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: 0.5px;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 10;
+    }
+
+    /* Main Content 영역 */
+    main.content-wrap { 
+      padding-top: 96px; 
+    }
+
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: 70% 1fr;
+      padding: 0 6%;
+      margin-bottom: 24px;
+      align-items: stretch;
+      gap: 36px; /* 텍스트와 이미지 사이 간격 명시 */
+    }
+
+    .hero img {
+      width: 100%;
+      display: block;
+      background: var(--img-placeholder);
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 40px; /* flex 비율 대신 확실한 간격(gap) 사용 */
+    }
+
+    .hero-text-top {
+      text-align: right;
+    }
+
+    .hero-text-bottom {
+      text-align: justify;
+    }
+
+    .hero-text p {
+      font-size: 14px;
+      line-height: 26px;
+      color: var(--text-main);
+      letter-spacing: -0.1px;
+      white-space: pre-wrap;
+    }
+
+    /* 미디어 블록 (이미지, 비디오 공통) */
+    .media-block { 
+      width: 100%; 
+      margin-bottom: 3px; 
+      padding: 0 6%; 
+    }
+
+    .media-block img { 
+      width: 100%; 
+      display: block; 
+      background: var(--img-placeholder); 
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--img-placeholder);
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* 반응형 */
+    @media (max-width: 640px) {
+      .page-title { font-size: 53px; }
+      .content-wrap { padding-top: 72px; }
+      
+      .hero { 
+        grid-template-columns: 1fr; 
+        gap: 20px;
+      }
+      .hero-text-top {
+        text-align: left; /* 모바일에서는 좌측 정렬이 가독성에 유리함 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top">
+    <a href="work1.html" class="back">← Work</a>
+  </header>
+  
+  <h1 class="page-title">Work</h1>
+
+  <main class="content-wrap">
+    
+    <section class="hero">
+      <img src="mlf.jpg" alt="AOLADO muffler" loading="lazy">
+      
+      <article class="hero-text">
+        <div class="hero-text-top">
+          <p>AOLADO<br>2024</p>
+        </div>
+        <div class="hero-text-bottom">
+          <p>
+            
+        </div>
+      </article>
+    </section>
+
+    <section class="media-block">
+      <img src="bag_aola.jpg" alt="Performance detail 1" loading="lazy">
+    </section>
+
+    <section class="media-block">
+      <img src="project1_03.jpg" alt="Performance detail 2" loading="lazy">
+    </section>
+
+    <section class="media-block">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/VIDEO_ID"
+          title="Lethe, Still Shimmering"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
