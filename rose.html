@@ -37,7 +37,7 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 48px 24px 120px; /* 상단 여백을 112px에서 48px로 줄여 위로 붙임 */
+      padding: 0 24px 120px; /* 상단 여백은 헤더가 아닌 .sheet에서 관리 */
     }
     
     body::before {
@@ -55,22 +55,12 @@
       z-index: 0;
     }
     
-    /* Layout & Header */
-    .sheet { 
-      position: relative; 
-      z-index: 1; 
-      width: 100%; 
-      max-width: 720px; 
-    }
-    
-    .top { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: flex-start; 
-      padding-bottom: 56px; 
-    }
-    
+    /* ── 왼쪽 상단 고정 (Work1 타이틀 위치) ── */
     .page-header {
+      position: fixed;
+      top: 36px;
+      left: 6%;
+      z-index: 10;
       font-family: 'Jost', 'Apple Symbols', -apple-system, sans-serif;
       text-align: left;
     }
@@ -78,7 +68,7 @@
     .ph-verse {
       font-size: 30px;
       font-weight: 700;
-      line-height: 35px; /* 글자가 서로 겹치지 않도록 적정 행간으로 수정 */
+      line-height: 42px;
       letter-spacing: 0.5px;
       color: #ded26e;
       white-space: pre-wrap;
@@ -101,7 +91,21 @@
       color: #ded26e;
     }
     
+    /* ── 오른쪽 상단 고정 (Work1 Index 위치) ── */
+    .top {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 36px 6% 0;
+      z-index: 100;
+      pointer-events: none; /* 밑에 깔린 일기 본문의 스크롤/마우스 인식 방해 금지 */
+    }
+    
     .back {
+      pointer-events: auto; /* 링크만 클릭 가능하도록 활성화 */
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
       font-size: 10px; 
       letter-spacing: 3px; 
@@ -115,7 +119,15 @@
       color: var(--ink); 
     }
     
-    /* Entries Section */
+    /* ── 중앙 본문 ── */
+    .sheet { 
+      position: relative; 
+      z-index: 1; 
+      width: 100%; 
+      max-width: 720px; 
+      padding-top: 240px; /* 고정된 시 구절과 글이 겹치지 않게 여백 확보 */
+    }
+    
     .entries { 
       display: flex; 
       flex-direction: column; 
@@ -184,20 +196,45 @@
       letter-spacing: 2px; 
       padding: 80px 0;
     }
+
+    /* ── 반응형 모바일 ── */
+    @media (max-width: 768px) {
+      .page-header {
+        position: absolute; /* 모바일에서는 화면이 좁으니 스크롤할 때 위로 밀려 올라가도록 변경 */
+        top: 36px;
+        left: 5%;
+        right: 5%;
+      }
+      .ph-verse {
+        font-size: 24px;
+        line-height: 34px;
+      }
+      .top {
+        padding: 36px 5% 0;
+      }
+      .sheet {
+        padding-top: 200px;
+      }
+    }
   </style>
 </head>
 <body oncontextmenu="return false" oncopy="return false">
 
-  <div class="sheet">
-    <header class="top">
-      <div class="page-header">
-        <p class="ph-verse">백만송이 꽃은 피고
+  <!-- 왼쪽 상단 고정: 시 구절 -->
+  <div class="page-header">
+    <p class="ph-verse">백만송이 꽃은 피고
 그립고 아름다운 내 별나라로 갈 수 있다네</p>
-        <p class="ph-src">— from <em>A Million Roses</em></p>
-        <p class="ph-sub">so, still blooming my million.</p>
-      </div>
-      <a href="index.html" class="back">← Index</a>
-    </header>
+    <p class="ph-src">— from <em>A Million Roses</em></p>
+    <p class="ph-sub">so, still blooming my million.</p>
+  </div>
+
+  <!-- 오른쪽 상단 고정: Index 링크 -->
+  <div class="top">
+    <a href="index.html" class="back">← Index</a>
+  </div>
+
+  <!-- 중앙 스크롤 본문 -->
+  <div class="sheet">
     <section class="entries" id="entries"></section>
   </div>
 
