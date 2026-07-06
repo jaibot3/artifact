@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-.page-header {
-  text-align: center;
-  font-size: 13px;
-  line-height: 26px;
-  letter-spacing: 1px;
-  color: var(--ink-3);
-  padding-bottom: 56px;
-  white-space: pre-wrap;
-}
 <html lang="ko">
 <head>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
   <title>A Million Roses</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,7 +23,7 @@
       -webkit-font-smoothing: antialiased;
     }
     body {
-      background: radial-gradient(120% 90% at 50% 0%, #0%, #F2F5E8 0%, #e8e9e4 55%, #e8e9e4 100%);
+      background: radial-gradient(120% 90% at 50% 0%, #F2F5E8 0%, #e8e9e4 55%, #e8e9e4 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -51,6 +45,21 @@
     }
     .sheet { position: relative; z-index: 1; width: 100%; max-width: 720px; }
     .top { display: flex; justify-content: flex-end; padding-bottom: 56px; }
+    .page-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 28px 0 0 28px;
+      font-family: 'Jost', 'Apple Symbols', -apple-system, sans-serif;
+      text-align: left;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: 2px;
+      color: #ded26e;
+      white-space: pre-wrap;
+      z-index: 5;
+    }
     .back {
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
       font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
@@ -94,8 +103,6 @@
   <div class="sheet">
     <header class="top">
       <div class="page-header">
-미워하는, 미워하는, 미워하는 마음없이
-아낌없이, 아낌없이 사랑을 주기만 할 때
 수백만송이, 백만송이, 백만송이 꽃은 피고
 그립고 아름다운 내 별나라로 갈 수 있다네</div>
       <a href="index.html" class="back">← Index</a>
