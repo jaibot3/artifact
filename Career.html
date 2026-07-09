@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <title>JaeyLim</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html, body {
+      min-height: 100%;
+      background: #f7f6f3;
+      font-family: 'Google Sans', 'Jost', 'Century Gothic', CenturyGothic, sans-serif;
+      color: #38221e;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ── 상단: ← Index / Email, 세로 스택 + 우측정렬 (work1.html top 구조 유지) ── */
+    .top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      padding: 36px 6% 0;
+    }
+    .back, .mail {
+      font-family: 'Google Sans', 'Jost', 'Century Gothic', CenturyGothic, sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #8a7f70;
+      text-decoration: none;
+      transition: color .3s;
+    }
+    .back:hover, .mail:hover { color: #38221e; }
+
+    /* ── 타이틀: work1.html "Work"와 동일 구조, 텍스트/치수만 교체 ── */
+    .page-title {
+      font-size: 70px;
+      font-weight: 700;
+      color: #ded26e;
+      line-height: 1;
+      letter-spacing: 0.5px;
+      padding: 0px 0 40px 4%;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    /* fixed title 아래로 본문 밀기 */
+    .content-wrap {
+      padding-top: 230px;
+    }
+
+    /* ── 커리어 목록: 타이틀과 같은 글씨체·글씨크기로 나열 (1차 드래프트) ── */
+    .career-list {
+      padding: 0 6% 120px 4%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .career-item {
+      font-family: 'Jost', 'Century Gothic', CenturyGothic, sans-serif;
+      font-size: 70px;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: 0.5px;
+      color: #38221e;
+    }
+
+    /* ── 모바일 ── */
+    @media (max-width: 640px) {
+      .top { padding: 28px 5% 0; }
+      .page-title { font-size: 46px; padding: 64px 0 28px 5%; }
+      .content-wrap { padding-top: 150px; }
+      .career-list { padding: 0 5% 80px 5%; gap: 6px; }
+      .career-item { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 오른쪽 상단: Index / Email -->
+  <div class="top">
+    <a href="index.html" class="back">← Index</a>
+    <a href="mailto:[email]" class="mail">[email]</a>
+  </div>
+
+  <!-- 타이틀: index.html 메뉴 라벨과 동일하게 "Jaeyoon Lim" -->
+  <h1 class="page-title">Jaeyoon Lim</h1>
+
+  <div class="content-wrap">
+    <!-- ▼▼▼ 커리어 목록 (일단 텍스트만 나열) ▼▼▼ -->
+    <div class="career-list">
+      <p class="career-item">Central Saint Martins, UAL</p>
+      <p class="career-item">Project Runway Korea</p>
+      <p class="career-item">SAKK — Founder</p>
+      <p class="career-item">ébauche — Sub-line</p>
+      <p class="career-item">Goldsmiths, MA Branding — 예정</p>
+    </div>
+    <!-- ▲▲▲ 여기까지 ▲▲▲ -->
+  </div>
+
+</body>
+</html>
