@@ -2,13 +2,13 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ficciones</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -17,7 +17,6 @@
     html, body {
       min-height: 100%;
       background: #eff2f0;
-      /* 명조체 제거, 구글 기본 산세리프 폰트로 변경 */
       font-family: 'Google Sans', 'Jost', 'Noto Sans KR', sans-serif;
       color: #38221e;
       -webkit-text-size-adjust: 100%;
@@ -30,7 +29,7 @@
       justify-content: flex-end;
       padding: 36px 6% 0;
       position: relative;
-      z-index: 10; /* 타이틀보다 위에서 클릭 가능하게 */
+      z-index: 10;
     }
     .back {
       font-size: 10px;
@@ -42,33 +41,32 @@
     }
     .back:hover { color: #38221e; }
 
-    /* ── ficciones 타이틀 (work1 메뉴와 동일한 위치/스타일) ── */
+    /* ── ficciones 타이틀 (고정) ── */
     .page-title {
       font-size: 70px;
       font-weight: 700;
       color: #ded26e;
-      line-height: 1.1; /* 문장이 길어질 경우를 대비한 줄간격 조정 */
+      line-height: 1.1;
       letter-spacing: 0.5px;
-      padding: 36px 6% 0; /* 화면 가장자리에 붙지 않도록 top과 동일한 패딩 적용 */
+      padding: 36px 6% 0;
       position: fixed;
       top: 0;
       left: 0;
-      pointer-events: none; /* 고정 타이틀이 아래 본문 클릭을 방해하지 않도록 설정 */
+      pointer-events: none;
       z-index: 1;
     }
 
     /* ── 본문 레이아웃 (좌측 정렬) ── */
     .content-wrap {
-      /* 고정된 타이틀 길이를 고려하여 충분히 아래로 밀어냄 */
-      padding-top: 220px; 
+      padding-top: 220px;
       padding-left: 6%;
       padding-right: 6%;
-      max-width: 800px; /* 텍스트 라인 길이가 너무 길어지지 않게 통제 */
+      max-width: 800px;
     }
 
     article {
       margin-bottom: 120px;
-      text-align: left; /* 요청한 왼쪽 정렬 */
+      text-align: left;
     }
 
     .post-title {
@@ -79,15 +77,13 @@
       letter-spacing: -0.5px;
     }
 
-    /* ── 메타 데이터 텍스트박스 설정 ── */
+    /* ── 메타 데이터 (날짜 | 카테고리) ── */
     .post-meta {
       display: inline-flex;
-      align-items: center;
+      align-items: center;              /* 'left'는 무효값이라 center로 수정 */
       gap: 16px;
-      background: #ffffff; /* 배경과 대비되는 박스 색상 */
-      border: 0px solid #d8cfbf; /* 옅은 테두리 */
+      background: #ffffff;
       padding: 6px 16px;
-      border-radius: 0px; /* 약간의 둥근 모서리로 박스 형태 강조 */
       font-size: 12px;
       font-weight: 500;
       color: #36332f;
@@ -101,20 +97,20 @@
       line-height: 1.8;
       color: #38221e;
     }
-    
+
     .post-body p {
       margin-bottom: 24px;
     }
 
-    /* ── 모바일 반응형 (work1과 동일) ── */
+    /* ── 모바일 반응형 ── */
     @media (max-width: 640px) {
       .top { padding: 28px 5% 0; }
-      .page-title { 
-        font-size: 53px; 
-        padding: 20px 5% 32px; 
+      .page-title {
+        font-size: 53px;
+        padding: 20px 5% 32px;
       }
-      .content-wrap { 
-        padding-top: 180px; 
+      .content-wrap {
+        padding-top: 180px;
         padding-left: 5%;
         padding-right: 5%;
       }
@@ -124,3 +120,62 @@
   </style>
 </head>
 <body>
+
+  <div class="top">
+    <a href="index.html" class="back">← Index</a>
+  </div>
+
+  <h1 class="page-title">Fiction. Reality if you insist.</h1>
+
+  <div class="content-wrap">
+    <main>
+
+      <!-- ═══════════════════════════════════════════════
+           글 하나 = <article> 블록 하나.
+           복사해서 아래에 붙이면 글이 늘어남.
+           수정할 곳은 딱 3군데:
+             1) post-title  → 제목
+             2) time의 datetime="..."  → 쓴 날짜 (예: 2026-07-10 14:30)
+             3) post-cat  → 카테고리 (Critique / Essay 등)
+      ════════════════════════════════════════════════ -->
+      <article>
+        <h2 class="post-title">Man I know</h2>
+
+        <div class="post-meta">
+          <!-- 날짜: 여기 datetime 값만 "YYYY-MM-DD HH:MM"으로 넣으면 자동 포맷 & 고정 -->
+          <time class="post-date" datetime="2026-07-10 14:30"></time>
+          <span>|</span>
+          <!-- 카테고리 여기 수정 -->
+          <span class="post-cat">Critique</span>
+        </div>
+
+        <div class="post-body">
+          <p>그는 블라블라</p>
+        </div>
+      </article>
+
+    </main>
+  </div>
+
+  <script>
+    // 각 글의 datetime 속성을 읽어 "July 10, 2026 14:30 KST" 형식으로 변환.
+    // 방문자 시간대와 무관하게, 적어둔 숫자를 그대로(=KST 벽시계) 표시한다.
+    (function () {
+      const months = ["January","February","March","April","May","June",
+                      "July","August","September","October","November","December"];
+
+      document.querySelectorAll('.post-date').forEach(function (el) {
+        const raw = (el.getAttribute('datetime') || '').trim();
+        const m = raw.match(/(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2}))?/);
+        if (!m) return;
+
+        const year = +m[1], monthIdx = +m[2] - 1, day = +m[3];
+        let out = months[monthIdx] + ' ' + day + ', ' + year;
+        if (m[4] != null) out += ' ' + m[4] + ':' + m[5] + ' KST';
+        el.textContent = out;
+      });
+    })();
+  </script>
+
+</body>
+</html>
