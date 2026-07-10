@@ -4,8 +4,97 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ficciones</title>
+  <style>
+    /* 1. Structural Variables: 유지보수와 확장을 위한 변수화 */
+    :root {
+      --bg-color: #fcfbf9; /* 눈의 피로를 최소화하는 미세한 웜톤 */
+      --text-main: #111111;
+      --text-sub: #555555;
+      --font-heading: 'Helvetica Neue', 'Arial', sans-serif; /* 구조적이고 단단한 고딕 */
+      --font-body: 'KoPub Batang', 'RIDIBatang', 'AppleMyungjo', serif; /* 활자의 호흡을 위한 명조 */
+    }
+
+    /* 2. Base Reset */
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.8;
+      word-break: keep-all;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 3. Layout: 활자 집중도를 극대화하는 좁은 폭 */
+    .container {
+      width: 100%;
+      max-width: 640px; 
+      padding: 80px 20px;
+    }
+
+    /* 4. 네가 제시한 원본 Header 스타일링 */
+    h1 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin: 0 0 60px 0;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #111; /* 글의 시작을 알리는 단호한 경계선 */
+    }
+
+    /* 5. Blogger Post Layout (글이 들어갈 자리) */
+    article {
+      margin-bottom: 80px;
+    }
+    .post-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .post-meta {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 36px;
+    }
+    .post-body p {
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      text-align: justify;
+    }
+    /* 문단 첫 줄 들여쓰기가 필요한 소설/에세이용 클래스 */
+    .post-body.indent p {
+      text-indent: 16px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Fiction. Reality if you insist. </h1>
+  <div class="container">
+    <!-- 네가 명시한 원본 태그 유지 -->
+    <h1>Fiction. Reality if you insist. </h1>
+    
+    <!-- 아래는 Blogger에서 글이 발행될 때 렌더링될 구조적 예시 -->
+    <main>
+      <article>
+        <h2 class="post-title">비평의 자리</h2>
+        <div class="post-meta">July 10, 2026 • Critique</div>
+        <div class="post-body indent">
+          <p>이곳에 네가 쓴 글들이 배치될 거다. 원본의 뼈대를 존중하여 타이틀과 헤더는 그대로 두었지. 제목과 메타데이터는 단단한 고딕체로 뼈대를 잡고, 본문은 호흡이 긴 명조체로 흘러가도록 위계를 분리했다.</p>
+          <p>모든 시각적 소음을 소거했으니, 이제 이 레이아웃을 압도하는 건 오직 네 문장의 예리함과 통찰의 깊이뿐이다. 허구든 현실이든, 네가 고집하는 그 무언가를 텍스트로 증명해 내면 된다.</p>
+        </div>
+      </article>
+    </main>
+  </div>
 </body>
 </html>
