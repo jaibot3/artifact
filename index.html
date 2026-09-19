@@ -7,10 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <title>Stipple Spinning Top v2 - Strict Hover Physics</title>
+  <title>ficciones — index</title>
   <style>
     html, body {
       margin: 0;
@@ -25,31 +23,78 @@
     }
 
     /* ============================================================
-       무ㅓㄹ봐ㅏㅏㅏㅏㅏ ㅋㅋㅋㅋ 좌측 텍스트 메뉴 레이아웃 (Work, Work, Ficciones)
+       엔그레이빙 이미지 + 클릭 오버레이 (좌측 상단)
        ============================================================ */
-    .menu-container {
+    .artwork {
       position: absolute;
       left: 2%;
-      top: 23%;
+      top: 6%;
+      width: min(560px, 44vw);
+      z-index: 2;
+      user-select: none;
+    }
+    .engraving {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;          /* hover 시 커진 부위가 잘리지 않게 */
+    }
+    .engraving image { -webkit-user-drag: none; }
+
+    /* 반응 부위: 각 실루엣 모양으로 판화를 오려낸 조각. 평소엔 판화 그대로,
+       마우스 올리면 그 부위만 떠오르고 커지고 '우웅' 숨쉼 */
+    .piece { cursor: pointer; }
+    .piece g {
+      transform-box: view-box;    /* 변형 기준을 판화 좌표계(0~640, 0~594)로 */
+      transition: transform .55s cubic-bezier(.2,.8,.25,1), filter .55s ease;
+      will-change: transform, filter;
+    }
+    .piece:hover g {
+      animation: breathe 1.6s ease-in-out infinite;
+      filter: drop-shadow(0 6px 11px rgba(30,22,18,0.38));
+    }
+    @keyframes breathe {
+      0%,100% { transform: translateY(-4px) scale(1.05); }
+      50%     { transform: translateY(-8px) scale(1.09); }
+    }
+
+    /* ▼ 각 조각의 '회전/확대 중심점'(부위 중앙). 위치가 어긋나면 여기 px 값 조절 ▼ */
+    .piece-dog   g { transform-origin: 176px 208px; }  /* (1) work */
+    .piece-hand2 g { transform-origin: 357px 178px; }  /* (2) career */
+    .piece-hand3 g { transform-origin: 423px 376px; }  /* (3) ficciones */
+    .piece-nail  g { transform-origin: 322px 320px; }  /* (4) sakk */
+
+    @media (prefers-reduced-motion: reduce) {
+      .piece:hover g { animation: none; transform: scale(1.04); }
+    }
+
+    /* ============================================================
+       좌하단 링크 텍스트 (weather 박스 위)
+       ============================================================ */
+    .legend {
+      position: absolute;
+      left: 2%;
+      bottom: 16%;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;   /* 각 글자 폭에 맞춤 (rain 충돌 영역이 단어별로 정확해짐) */
-      gap: 0px; 
+      align-items: flex-start;
+      gap: 2px;
+      z-index: 3;
       user-select: none;
-      z-index: 2;
     }
-    .menu-item {
-      font-size: 76px;
+    .legend a {
+      font-family: 'Google Sans','Jost', 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      font-size: 22px;
       font-weight: 700;
-      color: #ded26e; 
+      color: #38221e;
       text-decoration: none;
-      line-height: 1.1;
       letter-spacing: 0.5px;
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      line-height: 1.2;
+      transition: opacity .2s ease, transform .2s ease;
     }
-    .menu-item:hover {
-      opacity: 0.7;
-      transform: translateX(5px); 
+    .legend a:hover {
+      opacity: 0.55;
+      transform: translateX(4px);
     }
 
     /* ============================================================
@@ -58,8 +103,8 @@
     .input-container {
       position: absolute;
       left: 2%;
-      top: 70%;
-      z-index: 2;
+      bottom: 7%;
+      z-index: 3;
     }
     .weather-input {
       background: transparent;
@@ -72,37 +117,30 @@
       outline: none;
       letter-spacing: 0.5px;
     }
-    .weather-input::placeholder {
-      color: #bfae99;
-    }
+    .weather-input::placeholder { color: #bfae99; }
     @keyframes blink {
       0%, 100% { opacity: 0.9; }
-      50%       { opacity: 0.15; }
+      50%      { opacity: 0.15; }
     }
     .weather-msg {
       display: none;
       margin-top: 7px;
       font-family: 'Google Sans','Jost', 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
-      font-size: 10px;        /* ← 글씨 크기 여기 */
+      font-size: 10px;
       letter-spacing: 2.5px;
-      text-transform: none;
       color: #bfae99;
       animation: blink 2.4s ease-in-out infinite;
     }
     .weather-msg .blink { animation: none; }
 
     /* ============================================================
-       비 캔버스 (모든 것 위에, 클릭 통과)
+       비 / 안개 캔버스 (클릭 통과)
        ============================================================ */
     #rain-canvas {
       position: fixed; inset: 0;
       width: 100%; height: 100%;
       pointer-events: none; z-index: 6;
     }
-
-    /* ============================================================
-       안개 캔버스 (최상단, 모든 것을 뿌옇게 덮음)
-       ============================================================ */
     #fog-canvas {
       position: fixed; inset: 0;
       width: 100%; height: 100%;
@@ -115,26 +153,84 @@
     #top-canvas {
       position: fixed;
       width: 280px; height: 360px;
-      pointer-events: none; 
+      pointer-events: none;
       z-index: 5; user-select: none; touch-action: none;
       transform-origin: center bottom;
       will-change: transform, left, top;
     }
     @media (max-width: 640px) {
       #top-canvas { width: 160px; height: 210px; }
-      .menu-item   { font-size: 53px; }
+      .artwork    { width: min(320px, 64vw); top: 8%; }
+      .legend a   { font-size: 16px; }
       .weather-input { width: min(210px, 50vw); padding: 4px 10px; }
     }
   </style>
 </head>
 <body>
- 
-  <div class="menu-container">
-    <a href="work1.html" class="menu-item">Work</a>
-    <a href="rose.html" class="menu-item">Ficciones</a>
-    <a href="career.html" class="menu-item" style="margin-left:5px">JayLim</a>
-    <a href="https://www.sakk.co.kr/" class="menu-item" style="font-size:40px; font-style: italic">Syntax of Aesthetic kinetic kinship</a>
+
+  <!-- ===== 엔그레이빙 + 클릭 영역 ===== -->
+  <!--
+    handshadow.png : 피그마에서 손+개 엔그레이빙만(트레이싱한 벡터 레이어는 빼고) PNG 로 export 해서 이 폴더에 넣어.
+    viewBox="0 0 705 730" : ↓ 이 두 숫자를 네 PNG 의 '실제 픽셀 크기(가로 세로)'로 바꿔줘.
+    그래야 아래 붙일 펜-트레이싱 path 좌표가 이미지에 정확히 얹힌다.
+  -->
+  <div class="artwork">
+    <svg class="engraving" viewBox="0 0 640 594"
+         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <!-- ▼ 각 실루엣을 판화 좌표계(640×594)에 앉히는 위치·크기.
+             translate(x,y) = 실루엣 좌상단 위치 / scale = 크기. 어긋나면 여기 숫자만 조절 ▼ -->
+        <clipPath id="clip-dog" clipPathUnits="userSpaceOnUse">
+          <path transform="translate(35,20) scale(1.0)" d="M270.169 311.916L269.169 290.916V281.916L274.669 251.416C276.836 248.082 281.169 240.616 281.169 237.416C281.169 233.416 271.669 234.416 267.169 237.416C262.669 240.416 256.169 250.416 254.169 251.416C252.569 252.216 247.836 272.082 245.669 281.916C243.669 278.416 239.169 270.016 237.169 264.416C235.169 258.816 221.002 228.416 214.169 213.916C213.002 207.416 210.869 193.116 211.669 187.916C212.669 181.416 202.169 151.916 195.669 138.916C189.169 125.916 190.169 118.916 188.169 110.416C186.169 101.916 175.669 65.9157 171.169 59.4157C167.569 54.2158 164.336 45.9157 163.169 42.4157C158.002 31.4157 145.969 8.31572 139.169 3.91572C130.669 -1.58428 114.169 0.415722 96.6691 3.91572C82.6691 6.71572 77.1691 12.7491 76.1691 15.4157C66.1691 14.9157 45.1691 14.2157 41.1691 15.4157C37.1691 16.6157 41.1691 20.2491 43.6691 21.9157L46.1691 27.9157L52.1691 32.9157L61.1691 37.9157C59.6691 39.7491 55.7691 44.6157 52.1691 49.4157C48.5691 54.2157 58.3357 56.0824 63.6691 56.4157C67.0024 56.9157 75.7691 58.2157 84.1691 59.4157C92.5691 60.6157 98.0024 66.5824 99.6691 69.4157L101.169 85.4157L76.1691 97.9157L4.16907 129.916L0.669067 138.916L10.1691 141.416L27.1691 138.916L52.1691 129.916C57.3357 128.416 68.1691 125.516 70.1691 125.916C72.1691 126.316 71.0024 130.416 70.1691 132.416L52.1691 144.416L27.1691 160.916L22.1691 165.416V171.916C24.3357 172.249 31.1691 172.716 41.1691 171.916C51.1691 171.116 63.0024 164.249 67.6691 160.916C71.8357 157.916 81.5691 151.316 87.1691 148.916C92.7691 146.516 95.8357 147.916 96.6691 148.916C98.1691 155.749 101.169 171.716 101.169 180.916C101.169 192.416 129.169 229.416 129.169 231.916C129.169 234.416 157.669 259.916 163.169 268.916C168.669 277.916 165.669 283.916 163.169 290.916C160.669 297.916 156.669 293.916 154.169 294.416C151.669 294.916 141.169 297.416 137.669 297.416H113.669C109.002 297.916 98.5691 299.516 94.1691 301.916C88.6691 304.916 99.6691 311.916 101.169 313.916C102.369 315.516 110.002 316.582 113.669 316.916H146.169C151.169 316.249 161.569 315.316 163.169 316.916C165.169 318.916 156.669 321.916 151.669 322.916C146.669 323.916 134.669 325.416 129.169 325.416H110.169C108.336 325.416 103.669 326.016 99.6691 328.416C94.6691 331.416 99.6691 335.416 99.6691 339.416C99.6691 343.416 102.669 339.416 113.669 341.916C124.669 344.416 137.169 345.916 151.669 345.916C163.269 345.916 165.836 348.249 165.669 349.416C167.336 349.416 172.069 350.316 177.669 353.916C178.469 356.316 197.002 368.916 206.169 374.916C214.002 374.749 231.169 374.216 237.169 373.416C244.669 372.416 260.669 362.416 267.169 356.416C273.669 350.416 271.169 347.916 271.669 339.416C272.069 332.616 270.836 318.249 270.169 311.916Z"/>
+        </clipPath>
+        <clipPath id="clip-hand2" clipPathUnits="userSpaceOnUse">
+          <path transform="translate(255,63) scale(0.967)" d="M131 210.28L130.839 210.132C124.513 204.305 110.83 191.823 106.812 188.609C105.67 187.695 104.74 186.081 103.968 184.02C103.201 181.971 102.614 179.548 102.115 177.088C101.615 174.619 101.214 172.163 100.804 169.993C100.399 167.855 99.9846 165.984 99.457 164.797C98.6352 162.948 96.6076 159.785 94.4375 156.617C92.2795 153.467 89.9503 150.269 88.4453 148.261L76.9707 116.331L76.8516 116H68.4082L68.3232 116.032L49.8232 123.032L49.7676 123.054L49.7188 123.087L37.4014 131.462L17.3018 126.677L21.3516 120.378C25.6916 118.038 32.1382 114.365 37.5225 110.869C40.2365 109.107 42.6941 107.382 44.4775 105.89C45.3678 105.145 46.1044 104.445 46.623 103.819C46.8824 103.506 47.097 103.201 47.248 102.907C47.3973 102.617 47.5 102.309 47.5 102C47.5 101.842 47.6415 101.532 48.1865 101.072C48.7018 100.638 49.4705 100.158 50.4561 99.6484C52.4224 98.6317 55.1624 97.5378 58.2285 96.459C64.3553 94.3032 71.7147 92.2323 76.623 90.9844L76.5 90H57.5C55.051 90 51.1122 90.3029 47.2236 91.2129C43.3556 92.1181 39.4381 93.6463 37.1318 96.1621C36.1236 97.262 34.0048 98.3499 31.1172 99.374C28.2568 100.389 24.7299 101.312 20.9941 102.124C13.779 103.693 5.82895 104.838 0.5 105.438V96.7773L29.2295 78.9453C37.4007 75.6094 49.5615 70.4157 59.54 65.6514C64.5354 63.2663 68.9976 60.9828 72.1396 59.0908C73.7071 58.147 74.9674 57.2876 75.8037 56.5518C76.2195 56.1859 76.5549 55.8293 76.7676 55.4883C76.9736 55.1578 77.1242 54.7413 76.9678 54.3242C76.776 53.813 76.3879 53.3532 75.9014 52.9404C75.4106 52.524 74.7879 52.1289 74.0781 51.7549C72.6585 51.0068 70.8363 50.3146 68.8887 49.6982C65.0162 48.4727 60.5766 47.5228 57.6445 47.0176L47.1973 42.54L46.918 42.4209L46.6836 42.6133C45.7886 43.3456 44.2402 44.4517 42.5264 45.3721C40.7964 46.301 38.9708 47 37.5 47H21.3086L17.1895 38.7617L29.1855 33.9639L30.291 33.5215L29.2012 33.042L16.8232 27.5957L7.59082 14.9619L12.6865 5.69727L28.7412 15.4277L28.8525 15.4951L28.9824 15.5C31.4256 15.5842 35.2634 15.4584 38.8525 14.8047C40.6469 14.4779 42.3959 14.0156 43.8838 13.373C45.3649 12.7334 46.6336 11.8948 47.4092 10.7871C49.0619 8.42604 51.4283 7.22257 54.543 6.55078C57.681 5.87397 61.5017 5.75045 66.0273 5.49902C73.1911 5.10104 87.4377 2.05815 93.8809 0.540039C96.8026 2.78232 103.04 7.74739 106.146 10.8535C109.326 14.0327 123.439 30.8072 130.116 38.8203L130.199 38.9199L130.32 38.9668C136.819 41.4662 150.621 46.7666 153.824 47.9678C153.958 48.0178 154.165 48.1656 154.44 48.4814C154.707 48.7878 155.004 49.2122 155.326 49.749C155.971 50.8217 156.689 52.2962 157.455 54.0654C158.986 57.6014 160.685 62.2589 162.34 67.0996C163.994 71.9377 165.602 76.9487 166.953 81.1904C168.302 85.4253 169.4 88.9072 170.029 90.668C172.021 96.2442 182.169 131.58 187.01 148.605C190.01 165.105 196.309 199.495 197.511 205.104C198.123 207.961 200.521 214.093 203.239 220.544C205.823 226.675 208.722 233.148 210.722 237.5H198.103C193.492 235.493 185.825 232.51 177.658 230.021C169.445 227.519 160.678 225.5 154 225.5H131V210.28Z"/>
+        </clipPath>
+        <clipPath id="clip-hand3" clipPathUnits="userSpaceOnUse">
+          <path transform="translate(312,256) scale(1.12)" d="M183.786 0.5L188.812 2.78418L186.414 12.8574L183.423 21.334L183.417 21.3496L183.412 21.3662C182.993 22.8759 182.365 25.3622 181.842 27.9248C181.321 30.4768 180.895 33.1451 180.895 35C180.895 38.5895 182.488 42.74 183.359 44.543L180.914 52.8594L180.882 52.9688L180.901 53.082C181.736 58.087 183.395 69.5476 183.395 75.5C183.395 77.4427 184.035 80.781 184.97 84.7852C185.909 88.8085 187.161 93.567 188.41 98.376C189.66 103.189 190.909 108.056 191.844 112.311C192.782 116.579 193.395 120.186 193.395 122.5V157C193.395 164.425 196.215 173.658 197.767 177.757L125.779 214.243L120.888 183.422L120.842 183.13L120.564 183.03L97.2021 174.58C95.2271 171.949 89.3506 165.919 80.6182 161.553C76.3935 159.44 74.4654 155.806 73.7734 152.071C73.0788 148.322 73.6407 144.505 74.3721 142.148L74.4023 142.05L74.3916 141.947C74.2231 140.347 73.8446 137.776 73.2559 135.249C72.6725 132.745 71.864 130.197 70.8008 128.709C70.2585 127.95 69.9535 126.692 69.7822 125.034C69.6128 123.394 69.5815 121.467 69.5186 119.422C69.456 117.39 69.3622 115.255 69.0605 113.246C68.7592 111.24 68.2465 109.326 67.3262 107.748C66.5532 106.423 65.005 105.268 63.1025 104.267C61.184 103.256 58.8333 102.365 56.3682 101.598C51.4431 100.065 45.9988 99.0104 42.4795 98.5068C38.7869 97.6687 29.5568 95.804 21.9463 95.0029C18.2456 94.6133 14.1908 92.9006 10.6016 90.8887C7.47801 89.1378 4.74133 87.1794 2.94727 85.7256L11.0283 83.4814L11.2207 83.4287L11.3232 83.2568L15.8232 75.7568L16.0508 75.377L15.7012 75.1055L12.4707 72.5928L70.3652 75.999L70.4766 75.0068L49.4766 71.5068L49.4678 71.5059L49.459 71.5039L19.0088 67.5098C14.6411 65.9969 5.2704 62.6288 2.11816 61.0527C1.2626 60.625 0.817415 59.9723 0.62207 59.1709C0.420744 58.3448 0.484342 57.3498 0.697266 56.2852C0.909108 55.2261 1.25914 54.1435 1.59473 53.1523C1.92267 52.1838 2.25154 51.2638 2.38477 50.5977C2.56212 49.7116 3.21228 48.5778 4.01074 47.4814C4.73441 46.4878 5.54138 45.5811 6.10742 45H88.3945C94.0496 45.0001 102.723 47.4702 110.671 50.1611C114.632 51.5023 118.392 52.8908 121.478 54.0391C124.551 55.1829 126.981 56.0974 128.251 56.4785C130.202 57.064 134.743 59.1664 139.674 61.5859C144.585 63.9959 149.832 66.6939 153.162 68.4424L153.799 68.7773L153.891 68.0635L156.891 44.5635L156.895 44.5322V27.5664C157.478 25.4041 158.492 21.9489 159.655 18.5361C160.835 15.0768 162.154 11.7061 163.323 9.75684C164.456 7.86885 166.946 5.92196 169.682 4.23828C172.353 2.59406 175.18 1.24898 176.996 0.5H183.786Z"/>
+        </clipPath>
+        <clipPath id="clip-nail" clipPathUnits="userSpaceOnUse">
+          <path transform="translate(300,302) scale(2.5)" d="M16.7868 7.28847L13.3653 13.2761C13.1872 13.5877 12.8583 13.7803 12.4994 13.7785C8.67385 13.7585 1.83734 13.54 1.07736 12.78C0.0773579 11.78 0.577358 7.78001 1.07736 5.28001C1.57736 2.78001 3.07736 1.78001 6.07736 0.780007C9.07736 -0.219993 12.0774 1.78001 13.0774 1.78001C13.8036 1.78001 15.6836 4.52702 16.7722 6.28043C16.963 6.58772 16.9663 6.97444 16.7868 7.28847Z"/>
+        </clipPath>
+      </defs>
+
+      <!-- 바탕: 판화 전체 (움직이지 않음) -->
+      <image href="handshadow.png" xlink:href="handshadow.png" x="0" y="0" width="640" height="594"/>
+
+      <!-- (1) 개 → work -->
+      <a class="piece piece-dog" href="work1.html" aria-label="work">
+        <g clip-path="url(#clip-dog)">
+          <image href="handshadow.png" xlink:href="handshadow.png" x="0" y="0" width="640" height="594"/>
+        </g>
+      </a>
+      <!-- (2) 위쪽 손 → career -->
+      <a class="piece piece-hand2" href="career.html" aria-label="career">
+        <g clip-path="url(#clip-hand2)">
+          <image href="handshadow.png" xlink:href="handshadow.png" x="0" y="0" width="640" height="594"/>
+        </g>
+      </a>
+      <!-- (3) 아래쪽 손 → ficciones -->
+      <a class="piece piece-hand3" href="rose.html" aria-label="ficciones">
+        <g clip-path="url(#clip-hand3)">
+          <image href="handshadow.png" xlink:href="handshadow.png" x="0" y="0" width="640" height="594"/>
+        </g>
+      </a>
+      <!-- (4) 접점(손톱) → sakk : 마지막 = 최상단 → 겹치는 곳 클릭 우선 -->
+      <a class="piece piece-nail" href="https://www.sakk.co.kr/" target="_blank" rel="noopener" aria-label="sakk">
+        <g clip-path="url(#clip-nail)">
+          <image href="handshadow.png" xlink:href="handshadow.png" x="0" y="0" width="640" height="594"/>
+        </g>
+      </a>
+    </svg>
   </div>
+
+  <!-- ===== 좌하단 링크 텍스트 (weather 박스 위) ===== -->
+  <nav class="legend">
+    <a class="rain-collide" href="work1.html">(1)work</a>
+    <a class="rain-collide" href="career.html">(2)career</a>
+    <a class="rain-collide" href="rose.html">(3)ficciones</a>
+    <a class="rain-collide" href="https://www.sakk.co.kr/" target="_blank" rel="noopener">(4)sakk</a>
+  </nav>
 
   <div class="input-container">
     <input type="text" class="weather-input" placeholder="weather : rain / fog">
@@ -148,26 +244,24 @@
 <script>
 (() => {
   // ---------- 정밀 세팅 변수 ----------
-  const LINK        = 'rose.html'; 
-  const INK         = '38,34,30';   
+  const LINK        = 'rose.html';
+  const INK         = '38,34,30';
   let   SCALE;
   let   RIPPLE_Y;
-  let   DOT_SCALE = 0.7;   // 모바일에서 점 크기 줄이는 배수
+  let   DOT_SCALE = 0.7;
   const PERSP       = 4.0;
   const TILT        = 0.20;
-  const HOVER_R     = 130; // 마우스 오버 감지 반경
+  const HOVER_R     = 130;
 
-  // 회전 속도 파트
-  const SPIN_BASE   = 1.4;      // 오버 시 천천히 도는 기본 속도
-  const SPIN_MAX    = 25;       // 드래그 최대 속도 제한
+  const SPIN_BASE   = 1.4;
+  const SPIN_MAX    = 25;
 
-  // 물리 계수
-  const FRICTION    = 0.993;    // 고속 회전 시 감속률
-  const BRAKE_DECAY = 0.14;     // 클릭 시 제동력 곡선
-  const DRAG_IMPULSE= 0.015;    // 드래그 가속 민감도
+  const FRICTION    = 0.993;
+  const BRAKE_DECAY = 0.14;
+  const DRAG_IMPULSE= 0.015;
 
   const FLOAT_X     = 10, FLOAT_Y = 13;
-  const DENSITY     = 1.6;           
+  const DENSITY     = 1.6;
   // ----------------------------------
 
   const cv=document.getElementById('top-canvas'), ctx=cv.getContext('2d');
@@ -188,7 +282,6 @@
   }
   resize(); addEventListener('resize',resize);
 
-  // 입자 생성 루틴 (기존 유지)
   const body=[];
   function cone(y0,r0,y1,r1,n,oMul=1){
     for(let i=0;i<D(n);i++){
@@ -202,19 +295,19 @@
       body.push({x:Math.cos(a)*rr,z:Math.sin(a)*rr,y:y+rand(-jit,jit),s:rand(0.8,1.8),o:rand(0.6,1)*oMul});
     }
   }
-  function blob(yc,R,n,oMul=1){            
+  function blob(yc,R,n,oMul=1){
     for(let i=0;i<D(n);i++){
       const th=Math.random()*6.283, ph=Math.acos(rand(-1,1)), rr=R*Math.cbrt(Math.random());
       body.push({x:rr*Math.sin(ph)*Math.cos(th),z:rr*Math.sin(ph)*Math.sin(th),
                  y:yc+rr*Math.cos(ph),s:rand(0.7,1.6),o:rand(0.5,0.95)*oMul});
     }
   }
-  cone( 1.32, 0.015, 0.65, 0.08, 100);  cone( 0.65, 0.08,  0.40, 0.18, 85);   
-  cone( 0.40, 0.18,  0.25, 0.45, 110);  cone( 0.25, 0.45,  0.12, 0.98, 130);  
-  cone( 0.12, 0.882, -0.02, 0.882, 100); ring( 0.12, 0.882, 120, 0.02, 1.0);    
-  cone(-0.02, 0.882, -0.12, 0.648, 130); cone(-0.12, 0.648, -0.25, 0.405, 110); 
-  cone(-0.25, 0.45, -0.38, 0.25, 90);   cone(-0.38, 0.25, -0.504, 0.15, 80);  
-  blob(-0.552, 0.15, 90, 0.95);         
+  cone( 1.32, 0.015, 0.65, 0.08, 100);  cone( 0.65, 0.08,  0.40, 0.18, 85);
+  cone( 0.40, 0.18,  0.25, 0.45, 110);  cone( 0.25, 0.45,  0.12, 0.98, 130);
+  cone( 0.12, 0.882, -0.02, 0.882, 100); ring( 0.12, 0.882, 120, 0.02, 1.0);
+  cone(-0.02, 0.882, -0.12, 0.648, 130); cone(-0.12, 0.648, -0.25, 0.405, 110);
+  cone(-0.25, 0.45, -0.38, 0.25, 90);   cone(-0.38, 0.25, -0.504, 0.15, 80);
+  blob(-0.552, 0.15, 90, 0.95);
 
   const SQUASH=0.34, R_LIFE=2.6, R_MAXR=1.45, R_PERIOD=1.3;
   const dust=[];
@@ -224,12 +317,11 @@
   }
   const rings=[]; let spawnT=0;
 
-  // 인터랙션 플래그
   let angle=0, spin=0, t=0, hover=false;
   let mx=-9999,my=-9999, dragging=false, lastX=0, lastY=0;
   let isBraking = false;
-  let pressScale=1, targetPress=1;   // 클릭 수축
-  let cvLeft, cvTop;                 // 캔버스 위치 (JS 제어)
+  let pressScale=1, targetPress=1;
+  let cvLeft, cvTop;
 
   function initPos(){
     cvLeft = window.innerWidth  - cv.clientWidth  - 24;
@@ -242,15 +334,14 @@
   const near=()=>{ const c=cv.getBoundingClientRect();
     return Math.hypot(mx-(c.left+cx), my-(c.top+cy)) < HOVER_R; };
 
-  // 이벤트 핸들러
   addEventListener('pointerdown',e=>{ mx=e.clientX; my=e.clientY;
-    if(near()){ 
-      dragging = true; 
-      isBraking = true; 
+    if(near()){
+      dragging = true;
+      isBraking = true;
       lastX = e.clientX;
       lastY = e.clientY;
-      targetPress = 0.82;   // 클릭 시 수축
-    } 
+      targetPress = 0.82;
+    }
   });
 
   addEventListener('pointermove',e=>{
@@ -258,16 +349,14 @@
     if(dragging){
       const deltaX = e.clientX - lastX;
       const deltaY = e.clientY - lastY;
-      // 위치 이동
       cvLeft = Math.max(-cv.clientWidth*0.4,  Math.min(window.innerWidth  - cv.clientWidth*0.6,  cvLeft + deltaX));
       cvTop  = Math.max(-cv.clientHeight*0.4, Math.min(window.innerHeight - cv.clientHeight*0.6, cvTop  + deltaY));
       cv.style.left = cvLeft+'px';
       cv.style.top  = cvTop +'px';
-      // 회전 (가로 드래그 방향)
       if (Math.abs(deltaX) > 1) { isBraking = false; }
       if (!isBraking) {
         spin += deltaX * DRAG_IMPULSE * 60;
-        spin = Math.max(-SPIN_MAX, Math.min(SPIN_MAX, spin)); 
+        spin = Math.max(-SPIN_MAX, Math.min(SPIN_MAX, spin));
       }
       lastX = e.clientX;
       lastY = e.clientY;
@@ -275,41 +364,34 @@
   });
 
   addEventListener('pointerup',()=>{ dragging = false; isBraking = false; targetPress = 1.0; });
-  addEventListener('dblclick',e=>{ mx=e.clientX; my=e.clientY; if(near()) location.href=LINK; });          
+  addEventListener('dblclick',e=>{ mx=e.clientX; my=e.clientY; if(near()) location.href=LINK; });
 
-  // ---------- 메인 루프 ----------
   function frame(dt){
     t+=dt;
-    pressScale += (targetPress - pressScale) * Math.min(1, dt * 14);  // 수축 보간
+    pressScale += (targetPress - pressScale) * Math.min(1, dt * 14);
     cv.style.transform = `scale(${pressScale})`;
-    // 둥둥 떠다니는 모션은 상시 유지 (회전 유무와 무관)
     const fx=FLOAT_X*Math.sin(t*0.6), fy=FLOAT_Y*Math.sin(t*0.85+1.3);
     const roll=0.045*Math.sin(t*0.7);
     const tiltDyn=TILT+0.05*Math.sin(t*0.5), tcd=Math.cos(tiltDyn), tsd=Math.sin(tiltDyn);
     const rc=Math.cos(roll), rs=Math.sin(roll);
 
     hover = near();
-    const fpsFactor = Math.min(dt * 60, 3); 
+    const fpsFactor = Math.min(dt * 60, 3);
 
-    // 💡 확연한 차이를 만드는 회전 통제 파트
     if (isBraking) {
-      // 1. 클릭 브레이크 작동 시
       spin += (0.2 - spin) * BRAKE_DECAY * fpsFactor;
       if (Math.abs(spin) < 0.05) spin = 0.2;
-    } 
+    }
     else if (!dragging) {
-      // 2. 마우스를 대지 않은 일반 상태
       if (hover) {
-        // [A] 마우스 오버 상태일 때만 회전 허용
         if (Math.abs(spin) > SPIN_BASE) {
-          spin *= Math.pow(FRICTION, fpsFactor); // 고속 드래그 후 점진적 감속
+          spin *= Math.pow(FRICTION, fpsFactor);
         } else {
           const currentDir = spin >= 0 ? 1 : -1;
           const targetSpin = currentDir * SPIN_BASE;
-          spin += (targetSpin - spin) * 0.08 * fpsFactor; // 베이스 속도로 수렴 후 계속 회전
+          spin += (targetSpin - spin) * 0.08 * fpsFactor;
         }
       } else {
-        // [B] 💡 마우스가 벗어난 순간 즉시 회전 중단 (0 고정)
         spin = 0.2;
       }
     }
@@ -351,7 +433,6 @@
   let last=performance.now();
   (function loop(now){ const dt=Math.min((now-last)/1000,0.05); last=now; frame(dt); requestAnimationFrame(loop); })(last);
 
-  // 인풋 엔터키 → 날씨 커맨드 + 인풋 초기화 + 메시지 표시
   const weatherInput = document.querySelector('.weather-input');
   const weatherMsg   = document.getElementById('weather-msg');
   const MSGS = {
@@ -370,9 +451,8 @@
     if (e.key !== 'Enter') return;
     e.preventDefault();
     const v = e.target.value.trim().toLowerCase();
-    e.target.value = '';          // 입력 글 지우기
-    e.target.blur();              // 키보드 닫기(모바일)
-    // 날씨 이벤트 발행 — rain/fog/clear 스크립트가 구독
+    e.target.value = '';
+    e.target.blur();
     window.dispatchEvent(new CustomEvent('weather', { detail: v }));
     if(v==='clear'||v==='stop'||v==='sun'||v==='') setMsg(null);
     else setMsg(v);
@@ -381,17 +461,15 @@
 </script>
 
 <!-- ============================================================
-     RAIN — 'rain' 입력 시 비. 글씨/마우스/팽이를 고체로 인식해
-     윗면에 부딪혀 튕기고(splash), 그 아래엔 비 그림자가 생김.
-     바닥엔 빗방울 물결. ('clear'/'stop' 으로 끔)
+     RAIN
      ============================================================ -->
 <script>
 (() => {
   const INK='38,34,30';
-  const WIND=36;          // 바람(가로 흐름, px/s) → 빗줄기 기울기
-  const GRAV=900;         // splash 입자 중력
-  const MOUSE_R=42;       // 마우스 충돌 반경
-  const SPAWN=19;         // 프레임당 생성량(밀도)
+  const WIND=36;
+  const GRAV=900;
+  const MOUSE_R=42;
+  const SPAWN=19;
   const MAX_DROPS=320;
 
   const cv=document.getElementById('rain-canvas');
@@ -411,10 +489,10 @@
   addEventListener('pointermove',e=>{ mx=e.clientX; my=e.clientY; });
   addEventListener('pointerout',()=>{ mx=-9999; my=-9999; });
 
-  // 장애물 수집(매 프레임): 메뉴 글씨 rect + 마우스 원 + 팽이 타원
+  // 장애물: 좌하단 링크 텍스트(.rain-collide) + 마우스 + 팽이
   function obstacles(){
     const rects=[];
-    document.querySelectorAll('.menu-item').forEach(el=>{
+    document.querySelectorAll('.rain-collide').forEach(el=>{
       const r=el.getBoundingClientRect();
       if(r.width&&r.height) rects.push({l:r.left,t:r.top,r:r.right,b:r.bottom});
     });
@@ -427,9 +505,9 @@
     return {rects,mouse,top};
   }
 
-  const drops=[];     // {x,y,vy,len}
-  const parts=[];     // splash 입자 {x,y,vx,vy,age,ttl}
-  const ripples=[];   // 물결 {x,y,age,ttl,maxr}
+  const drops=[];
+  const parts=[];
+  const ripples=[];
   let active=false;
 
   function splash(x,y,big){
@@ -451,7 +529,6 @@
     const dt=Math.min((now-last)/1000,0.05); last=now;
     const ob=obstacles();
 
-    // 생성
     if(active && drops.length<MAX_DROPS){
       for(let i=0;i<SPAWN;i++)
         drops.push({x:rand(-40,W+40), y:rand(-H*0.3,0), vy:rand(620,820), len:rand(12,22)});
@@ -459,22 +536,18 @@
 
     ctx.clearRect(0,0,W,H);
 
-    // 빗줄기
     ctx.lineWidth=1.1; ctx.lineCap='round';
     for(let i=drops.length-1;i>=0;i--){
       const d=drops[i];
       d.y+=d.vy*dt; d.x+=WIND*dt;
-      // 충돌 → splash 후 소멸
       const hit=hitTest(d.x,d.y,ob);
       if(hit){ splash(hit.x,hit.y,hit.big); drops.splice(i,1); continue; }
-      // 바닥 → 물결
       if(d.y>=H-2){ splash(d.x,H-2,true); drops.splice(i,1); continue; }
       const tailX=d.x-WIND*0.05, tailY=d.y-d.len;
       ctx.strokeStyle=`rgba(${INK},0.28)`;
       ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(tailX,tailY); ctx.stroke();
     }
 
-    // splash 입자
     for(let i=parts.length-1;i>=0;i--){
       const p=parts[i]; p.age+=dt;
       if(p.age>=p.ttl){ parts.splice(i,1); continue; }
@@ -483,7 +556,6 @@
       ctx.beginPath(); ctx.arc(p.x,p.y,1.1,0,6.283); ctx.fill();
     }
 
-    // 물결(납작한 타원 링)
     for(let i=ripples.length-1;i>=0;i--){
       const r=ripples[i]; r.age+=dt; const k=r.age/r.ttl;
       if(k>=1){ ripples.splice(i,1); continue; }
@@ -496,7 +568,6 @@
   }
   requestAnimationFrame(loop);
 
-  // 'weather' 커스텀 이벤트 구독
   addEventListener('weather', e=>{
     const v=e.detail;
     if(v==='rain') active=true;
@@ -504,10 +575,9 @@
   });
 })();
 </script>
+
 <!-- ============================================================
-     FOG — 'fog' 입력 시 흰 안개. 부드러운 구름 덩어리가 바람 따라
-     흐르며 둥실둥실 + 숨쉬듯 팽창. 글씨/팽이/비 다 뿌옇게 덮음.
-     ('clear'/'stop'/'sun' 으로 끔)
+     FOG
      ============================================================ -->
 <script>
 (() => {
@@ -515,7 +585,6 @@
   const ctx=cv.getContext('2d');
   const rand=(a,b)=>a+Math.random()*(b-a);
 
-  // 부드러운 흰 덩어리 스프라이트(가장자리로 갈수록 투명)
   const sprite=document.createElement('canvas'); sprite.width=sprite.height=256;
   { const s=sprite.getContext('2d');
     const g=s.createRadialGradient(128,128,0,128,128,128);
@@ -527,16 +596,16 @@
   let W,H,dpr,clouds=[];
   function build(){
     clouds=[];
-    const n=Math.round((W*H)/230000)+3;        // 덩어리 수(적게 → 사이사이 배경 보임)
+    const n=Math.round((W*H)/230000)+3;
     for(let i=0;i<n;i++){
-      const rx=rand(195,390), ry=rx*rand(0.42,0.6);   // 가로로 퍼진 덩어리 (1.3배 키움)
+      const rx=rand(195,390), ry=rx*rand(0.42,0.6);
       const lobes=[];
       const m=Math.round(rand(6,11));
       for(let j=0;j<m;j++){
         const ang=rand(0,6.28), rad=Math.sqrt(Math.random());
         const dx=Math.cos(ang)*rx*rad;
-        const dy=Math.sin(ang)*ry*rad*0.7 - ry*0.12;   // 바닥은 평평, 위로 몽글
-        const lr=rand(0.5,0.95)*ry*(1.1-rad*0.4);      // 가운데 크고 가장자리 작게
+        const dy=Math.sin(ang)*ry*rad*0.7 - ry*0.12;
+        const lr=rand(0.5,0.95)*ry*(1.1-rad*0.4);
         lobes.push({dx, dy, r:lr, a:rand(0.13,0.24),
                     bob:rand(0.6,1.4), ph:rand(0,6.28)});
       }
@@ -555,16 +624,16 @@
   let cur=0, target=0, t=0, last=performance.now();
   function loop(now){
     const dt=Math.min((now-last)/1000,0.05); last=now; t+=dt;
-    cur += (target-cur)*Math.min(1,dt*1.2);      // 부드럽게 켜짐/꺼짐
+    cur += (target-cur)*Math.min(1,dt*1.2);
     ctx.clearRect(0,0,W,H);
     if(cur>0.003){
       for(const c of clouds){
         c.x += c.vx*dt;
-        const cy=c.y + Math.sin(t*c.bob+c.ph)*14;          // 덩어리 전체 둥실
+        const cy=c.y + Math.sin(t*c.bob+c.ph)*14;
         if(c.x - c.rx*1.8 > W){ c.x=-c.rx*1.8; c.y=rand(H*0.05,H*0.85); }
         for(const l of c.lobes){
-          const ly=cy + l.dy + Math.sin(t*l.bob+l.ph)*5;    // 표면 몽글 움직임
-          const lr=l.r*(1+Math.sin(t*0.5+l.ph)*0.05);       // 숨쉬듯
+          const ly=cy + l.dy + Math.sin(t*l.bob+l.ph)*5;
+          const lr=l.r*(1+Math.sin(t*0.5+l.ph)*0.05);
           ctx.globalAlpha=l.a*cur;
           ctx.drawImage(sprite, c.x+l.dx-lr, ly-lr, lr*2, lr*2);
         }
@@ -575,7 +644,6 @@
   }
   requestAnimationFrame(loop);
 
-  // 'weather' 커스텀 이벤트 구독
   addEventListener('weather', e=>{
     const v=e.detail;
     if(v==='fog') target=1;
