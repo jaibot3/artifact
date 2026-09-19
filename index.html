@@ -46,26 +46,24 @@
     .piece { cursor: pointer; }
     .piece g {
       transform-box: view-box;    /* 변형 기준을 판화 좌표계(0~640, 0~594)로 */
-      transition: transform .55s cubic-bezier(.2,.8,.25,1), filter .55s ease;
+      transition: transform .4s cubic-bezier(.25,.8,.25,1), filter .4s ease;
       will-change: transform, filter;
     }
+    /* 평소엔 판화 그대로. hover하면 그 부위만 스윽 떠오름(lift) + 그림자 + 살짝 밝아짐 */
     .piece:hover g {
-      animation: breathe 1.6s ease-in-out infinite;
-      filter: drop-shadow(0 6px 11px rgba(30,22,18,0.38));
-    }
-    @keyframes breathe {
-      0%,100% { transform: translateY(-4px) scale(1.05); }
-      50%     { transform: translateY(-8px) scale(1.09); }
+      transform: translateY(-14px) scale(1.05);
+      filter: url(#lift) brightness(1.08);
     }
 
-    /* ▼ 각 조각의 '회전/확대 중심점'(부위 중앙). 위치가 어긋나면 여기 px 값 조절 ▼ */
+    /* ▼ 각 조각의 '떠오르는 중심점'(부위 중앙). 위치가 어긋나면 여기 px 값 조절 ▼ */
     .piece-dog   g { transform-origin: 176px 208px; }  /* (1) work */
     .piece-hand2 g { transform-origin: 357px 178px; }  /* (2) career */
     .piece-hand3 g { transform-origin: 423px 376px; }  /* (3) ficciones */
     .piece-nail  g { transform-origin: 322px 320px; }  /* (4) sakk */
 
     @media (prefers-reduced-motion: reduce) {
-      .piece:hover g { animation: none; transform: scale(1.04); }
+      .piece g { transition-duration: .01ms; }
+      .piece:hover g { transform: translateY(-8px) scale(1.03); }
     }
 
     /* ============================================================
@@ -192,6 +190,11 @@
         <clipPath id="clip-nail" clipPathUnits="userSpaceOnUse">
           <path transform="translate(300,302) scale(2.5)" d="M16.7868 7.28847L13.3653 13.2761C13.1872 13.5877 12.8583 13.7803 12.4994 13.7785C8.67385 13.7585 1.83734 13.54 1.07736 12.78C0.0773579 11.78 0.577358 7.78001 1.07736 5.28001C1.57736 2.78001 3.07736 1.78001 6.07736 0.780007C9.07736 -0.219993 12.0774 1.78001 13.0774 1.78001C13.8036 1.78001 15.6836 4.52702 16.7722 6.28043C16.963 6.58772 16.9663 6.97444 16.7868 7.28847Z"/>
         </clipPath>
+
+        <!-- 떠오를 때 생기는 그림자 (hyunne 페이지의 #lift 방식) -->
+        <filter id="lift" x="-40%" y="-40%" width="180%" height="180%">
+          <feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="black" flood-opacity="0.5"/>
+        </filter>
       </defs>
 
       <!-- 바탕: 판화 전체 (움직이지 않음) -->
