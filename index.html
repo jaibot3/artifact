@@ -192,7 +192,7 @@
         </clipPath>
 
         <!-- 떠오를 때 생기는 그림자 (hyunne 페이지의 #lift 방식) -->
-        <filter id="lift" x="-40%" y="-40%" width="180%" height="180%">
+        <filter id="lift" x="-20%" y="-20%" width="120%" height="120%">
           <feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="black" flood-opacity="0.5"/>
         </filter>
       </defs>
@@ -492,7 +492,26 @@
   addEventListener('pointermove',e=>{ mx=e.clientX; my=e.clientY; });
   addEventListener('pointerout',()=>{ mx=-9999; my=-9999; });
 
-  // 장애물: 좌하단 링크 텍스트(.rain-collide) + 마우스 + 팽이
+  // 판화 실루엣을 빗방울 충돌면으로 (그림 모양대로 비가 튐)
+  const engSvg = document.querySelector('.engraving');
+  const VBW = 640, VBH = 594;
+  const hitCtx = document.createElement('canvas').getContext('2d');
+  const silhouettes = [];
+  if(engSvg){
+    engSvg.querySelectorAll('clipPath > path').forEach(pel=>{
+      const d = pel.getAttribute('d'); if(!d) return;
+      let mat = new DOMMatrix();
+      try {
+        const cons = pel.transform.baseVal.consolidate();
+        if(cons){ const m=cons.matrix; mat = new DOMMatrix([m.a,m.b,m.c,m.d,m.e,m.f]); }
+      } catch(e){}
+      const p2d = new Path2D();
+      p2d.addPath(new Path2D(d), mat);
+      silhouettes.push(p2d);
+    });
+  }
+
+  // 장애물: 판화 실루엣 + 좌하단 링크 텍스트(.rain-collide) + 마우스 + 팽이
   function obstacles(){
     const rects=[];
     document.querySelectorAll('.rain-collide').forEach(el=>{
@@ -505,7 +524,9 @@
     const tc=document.getElementById('top-canvas');
     if(tc){ const r=tc.getBoundingClientRect();
       top={x:r.left+r.width*0.5, y:r.top+r.height*0.42, rx:r.width*0.30, ry:r.height*0.26}; }
-    return {rects,mouse,top};
+    let eng=null;
+    if(engSvg && silhouettes.length){ eng = engSvg.getBoundingClientRect(); }
+    return {rects,mouse,top,eng};
   }
 
   const drops=[];
@@ -524,6 +545,13 @@
     for(const r of ob.rects) if(x>=r.l&&x<=r.r&&y>=r.t&&y<=r.b) return {x,y:r.t,big:false};
     if(ob.mouse){ const m=ob.mouse; if((x-m.x)**2+(y-m.y)**2 < m.r*m.r) return {x,y,big:false}; }
     if(ob.top){ const o=ob.top; if(((x-o.x)/o.rx)**2+((y-o.y)/o.ry)**2 < 1) return {x,y,big:true}; }
+    if(ob.eng){
+      const r=ob.eng;
+      if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){
+        const ex=(x-r.left)/r.width*VBW, ey=(y-r.top)/r.height*VBH;
+        for(const s of silhouettes){ if(hitCtx.isPointInPath(s,ex,ey)) return {x,y,big:false}; }
+      }
+    }
     return null;
   }
 
