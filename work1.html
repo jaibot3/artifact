@@ -106,9 +106,10 @@
       display: block;
       overflow: hidden;
       text-decoration: none;
+      max-width: 420px;      /* ← PC 이미지 최대 크기. 줄이면 더 작아짐 */
     }
     .project-img-wrap img {
-      width: 100%;
+      width:100%;
       /* aspect-ratio: 3/2; */
       /* object-fit: cover; */
       display: block;
@@ -143,6 +144,7 @@
         padding: 28px 0;
       }
       .project-info { padding-right: 0; }
+      .project-img-wrap { max-width: none; }   /* 폰에선 원래대로 꽉 차게 */
     }
   </style>
 </head>
