@@ -46,40 +46,36 @@
     .piece { cursor: pointer; }
     .piece g {
       transform-box: view-box;    /* 변형 기준을 판화 좌표계(0~640, 0~594)로 */
-      transition: transform .4s cubic-bezier(.25,.8,.25,1), filter .4s ease;
+      transition: transform .45s ease, filter .45s ease;
       will-change: transform, filter;
+      /* 평소: 흰 광채가 1→4 순으로 뒤에서 번졌다 사라짐 (데스크톱·모바일 공통) */
+      animation: glowPulse 4.6s ease-in-out infinite;
     }
-    /* 평소엔 판화 그대로. hover하면 그 부위만 스윽 떠오름(lift) + 그림자 + 살짝 밝아짐 */
+    /* 마우스 올린 부위: 광채를 계속 켜둠 (리플 멈추고 유지) */
     .piece:hover g {
-      transform: translateY(-4px) scale(1.02);
-      filter: url(#lift) brightness(1.08);
+      animation: none;
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 20px rgba(255,255,255,1)) drop-shadow(0 0 52px rgba(255,255,255,0.85));
     }
 
-    /* ▼ 각 조각의 '떠오르는 중심점'(부위 중앙). 위치가 어긋나면 여기 px 값 조절 ▼ */
-    .piece-dog   g { transform-origin: 176px 208px; }  /* (1) work */
-    .piece-hand2 g { transform-origin: 357px 178px; }  /* (2) career */
-    .piece-hand3 g { transform-origin: 423px 376px; }  /* (3) ficciones */
-    .piece-nail  g { transform-origin: 322px 320px; }  /* (4) sakk */
+    /* 흰 광채가 뒤에서 피어올랐다 사라짐. 짧게 빛나고(12%) 긴 휴식.
+       drop-shadow 개수를 모든 키프레임에서 동일(2개)하게 둬야 부드럽게 보간됨 */
+    @keyframes glowPulse {
+      0%   { transform: scale(1);     filter: drop-shadow(0 0 0 rgba(255,255,255,0))      drop-shadow(0 0 0 rgba(255,255,255,0)); }
+      12%  { transform: scale(1.012); filter: drop-shadow(0 0 20px rgba(255,255,255,1))   drop-shadow(0 0 52px rgba(255,255,255,0.8)); }
+      30%  { transform: scale(1);     filter: drop-shadow(0 0 0 rgba(255,255,255,0))      drop-shadow(0 0 0 rgba(255,255,255,0)); }
+      100% { transform: scale(1);     filter: drop-shadow(0 0 0 rgba(255,255,255,0))      drop-shadow(0 0 0 rgba(255,255,255,0)); }
+    }
+
+    /* 순서 1→2→3→4 (delay 엇갈림) + 확대 중심점(부위 중앙) */
+    .piece-dog   g { transform-origin: 176px 208px; animation-delay: 0s;   }  /* (1) work */
+    .piece-hand2 g { transform-origin: 357px 178px; animation-delay: .5s;  }  /* (2) career */
+    .piece-hand3 g { transform-origin: 423px 376px; animation-delay: 1s;   }  /* (3) ficciones */
+    .piece-nail  g { transform-origin: 322px 320px; animation-delay: 1.5s; }  /* (4) sakk */
 
     @media (prefers-reduced-motion: reduce) {
-      .piece g { transition-duration: .01ms; animation: none !important; }
-      .piece:hover g { transform: translateY(-8px) scale(1.02); }
-    }
-
-    /* ── 터치 기기 전용: hover가 없으니 '여기 링크 있어요'를 스스로 알림.
-       1→2→3→4 순서로 그림자가 우웅 떠올랐다 가라앉음. 한 바퀴 돌고 잠깐 쉬고 반복. ── */
-    @keyframes pulseLift {
-      0%   { transform: translateY(0)    scale(1);    filter: drop-shadow(0 0 0 rgba(42,29,21,0)); }
-      11%  { transform: translateY(-6px) scale(1.02); filter: drop-shadow(0 9px 22px rgba(42,29,21,0.26)); }
-      30%  { transform: translateY(0)    scale(1);    filter: drop-shadow(0 0 0 rgba(42,29,21,0)); }
-      100% { transform: translateY(0)    scale(1);    filter: drop-shadow(0 0 0 rgba(42,29,21,0)); }
-    }
-    @media (hover: none) {
-      .piece g      { animation: pulseLift 4.6s ease-in-out infinite; }
-      .piece-dog   g { animation-delay: 0s;   }  /* (1) */
-      .piece-hand2 g { animation-delay: .5s;  }  /* (2) */
-      .piece-hand3 g { animation-delay: 1s;   }  /* (3) */
-      .piece-nail  g { animation-delay: 1.5s; }  /* (4) */
+      .piece g { animation: none; transition-duration: .01ms; }
+      .piece:hover g { transform: scale(1.02); }
     }
 
     /* ============================================================
@@ -208,18 +204,6 @@
           <path transform="translate(300,302) scale(2.5)" d="M16.7868 7.28847L13.3653 13.2761C13.1872 13.5877 12.8583 13.7803 12.4994 13.7785C8.67385 13.7585 1.83734 13.54 1.07736 12.78C0.0773579 11.78 0.577358 7.78001 1.07736 5.28001C1.57736 2.78001 3.07736 1.78001 6.07736 0.780007C9.07736 -0.219993 12.0774 1.78001 13.0774 1.78001C13.8036 1.78001 15.6836 4.52702 16.7722 6.28043C16.963 6.58772 16.9663 6.97444 16.7868 7.28847Z"/>
         </clipPath>
 
-        <!-- 떠오를 때 생기는 그림자: 넉넉한 필터 영역 + 큰 블러 + 따뜻한 잉크빛으로 부드럽게.
-             (영역을 -60%~220%로 넓혀야 블러가 잘리지 않고 온전히 번짐) -->
-        <filter id="lift" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="19" result="b1"/>
-          <feOffset in="b1" dy="10" result="o1"/>
-          <feFlood flood-color="#2a1d15" flood-opacity="0.30" result="c1"/>
-          <feComposite in="c1" in2="o1" operator="in" result="s1"/>
-          <feMerge>
-            <feMergeNode in="s1"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
       </defs>
 
       <!-- 바탕: 판화 전체 (움직이지 않음) -->
