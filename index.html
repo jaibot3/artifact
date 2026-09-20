@@ -144,6 +144,34 @@
     .weather-msg .blink { animation: none; }
 
     /* ============================================================
+       상단 중앙: rose.html '맨 위 글'을 한 줄씩 흘림
+       ============================================================ */
+    .verse-ticker {
+      position: fixed;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 8;                 /* 비·안개 위로 항상 읽히게 */
+      max-width: min(680px, 84vw);
+      text-align: center;
+      font-family: 'Jost', 'Google Sans', 'Century Gothic', AppleGothic, sans-serif;
+      font-size: clamp(14px, 1.5vw, 19px);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.4px;
+      line-height: 1.5;
+      color: #8b7170;             /* rose 페이지와 같은 잉크톤 */
+      white-space: pre-wrap;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0;
+      transition: opacity .9s ease;
+    }
+    @media (max-width: 640px) {
+      .verse-ticker { top: 26px; font-size: 15px; max-width: 88vw; }
+    }
+
+    /* ============================================================
        비 / 안개 캔버스 (클릭 통과)
        ============================================================ */
     #rain-canvas {
@@ -178,6 +206,9 @@
   </style>
 </head>
 <body>
+
+  <!-- 상단 중앙: rose.html 맨 위 글을 한 줄씩 -->
+  <div class="verse-ticker" id="verse" aria-hidden="true"></div>
 
   <!-- ===== 엔그레이빙 + 클릭 영역 ===== -->
   <!--
@@ -541,7 +572,7 @@
   const drops=[];
   const parts=[];
   const ripples=[];
-  let active=true;
+  let active=true;   // 기본값: 비 켜짐 (clear/stop 입력 시 멈춤)
 
   function splash(x,y,big){
     const n = big?6:4;
@@ -689,6 +720,51 @@
     if(v==='fog') target=1;
     else if(v==='clear'||v==='stop'||v==='sun'||v==='') target=0;
   });
+})();
+</script>
+<!-- ============================================================
+     VERSE — rose.html의 '맨 위 글'을 숨긴 iframe으로 읽어와 한 줄씩 흘림.
+     rose.html에 새 글이 추가되면 자동으로 최신 글로 갱신됨.
+     ============================================================ -->
+<script>
+(() => {
+  const el = document.getElementById('verse');
+  if(!el) return;
+  const SRC  = 'rose.html';   // 읽어올 글 페이지
+  const HOLD = 3600;          // 한 줄 머무는 시간(ms)
+  const FADE = 900;           // 페이드 시간(ms)
+
+  function play(lines){
+    if(!lines.length) return;
+    let i = 0;
+    function show(){
+      el.textContent = lines[i];
+      el.style.opacity = '1';
+      setTimeout(()=>{
+        el.style.opacity = '0';
+        setTimeout(()=>{ i=(i+1)%lines.length; show(); }, FADE);
+      }, HOLD);
+    }
+    setTimeout(show, 500);
+  }
+
+  // rose.html을 화면 밖 iframe으로 불러와, 걔가 렌더한 첫 글(.entry-body)을 읽음
+  const f = document.createElement('iframe');
+  f.setAttribute('aria-hidden','true');
+  f.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;height:600px;border:0;opacity:0;pointer-events:none;';
+  f.src = SRC;
+  f.addEventListener('load', () => {
+    let lines = [];
+    try {
+      const doc = f.contentDocument || f.contentWindow.document;
+      const body = doc.querySelector('.entry-body');   // 맨 위(최신) 글
+      if(body) lines = body.textContent.split('\n').map(s=>s.trim()).filter(Boolean);
+    } catch(e){ /* 다른 출처 등으로 못 읽으면 조용히 넘어감 */ }
+    f.remove();
+    play(lines);
+  });
+  f.addEventListener('error', ()=> f.remove());
+  document.body.appendChild(f);
 })();
 </script>
 </body>
