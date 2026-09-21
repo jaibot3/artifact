@@ -18,39 +18,40 @@
       font-family:'Google Sans','Jost','Century Gothic', CenturyGothic, AppleGothic, sans-serif;
       -webkit-text-size-adjust:100%;
     }
-    .wrap { max-width:1440px; margin:0 auto; padding:120px 24px 140px; }
+    body { overflow-x:hidden; }
 
-    /* 우상단 Index 링크 — work1.html 위치 */
-    .top { display:flex; justify-content:flex-end; padding:36px 6% 0; }
+    /* 우상단 Index */
+    .top { display:flex; justify-content:flex-end; padding:36px 6% 0; position:relative; z-index:20; }
     .back {
       font-size:10px; letter-spacing:3px; text-transform:uppercase;
       color:#8a7f70; text-decoration:none; transition:color .3s;
     }
     .back:hover { color:#1c1a18; }
 
-    /* Work 타이틀 — work1.html 위치·크기 (색은 검정 유지) */
+    /* Work — work1.html 위치·크기, 좌상단 고정, 색 검정.
+       pointer-events:none → 겹친 이미지 클릭을 막지 않음 */
     .page-title {
       font-size:76px; font-weight:700; color:#1c1a18;
       line-height:1; letter-spacing:0.5px;
-      padding:0 0 40px 0; margin:0;
-      position:fixed; top:0; left:0;
+      position:fixed; top:0; left:0; margin:0;
+      z-index:30; pointer-events:none;
     }
 
-    /* ── 프로젝트 리스트 (아래로 쭉 반복) ── */
-    .projects { display:flex; flex-direction:column; gap:96px; }
-
+    /* 프로젝트 리스트 — 이미지 왼쪽 여백 0(flush), 상단 Work와 겹침 */
+    .projects {
+      display:flex; flex-direction:column; gap:72px;
+      padding:60px 6% 120px 0;      /* 왼쪽 0 / 오른쪽 6% / 위 60px(=Work와 살짝 겹침) */
+    }
     .project {
       display:grid;
-      grid-template-columns: minmax(0, 66%) 1fr;
+      grid-template-columns:2fr 1fr;   /* 이미지 2 : 글 1 */
       gap:40px;
       align-items:start;
     }
-
-    /* 왼쪽: 넓은 이미지 (image1) */
     .thumb { display:block; overflow:hidden; text-decoration:none; background:#2b2b2b; }
     .thumb img {
       width:100%;
-      aspect-ratio:16/9;      /* 넓은 가로 이미지 슬롯 (원본 비율 그대로 쓰려면 이 줄 지우기) */
+      aspect-ratio:16/9;          /* 원본 비율 그대로 쓰려면 이 줄 삭제 */
       object-fit:cover;
       display:block;
       transition:opacity .35s ease;
@@ -63,88 +64,74 @@
       font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
     }
 
-    /* 오른쪽: 프로젝트명 + 설명 */
-    .meta { padding-top:4px; }
+    .meta { padding-top:6px; }
     .project-name {
       display:inline-block;
       font-size:30px; font-weight:400; color:#1c1a18; text-decoration:none;
       letter-spacing:-0.3px; line-height:1.1;
       transition:transform .25s cubic-bezier(.25,.8,.25,1), opacity .25s ease;
     }
-    .project-name:hover { transform:translateX(10px); opacity:.55; }  /* hover 시 오른쪽으로 밀림 */
+    .project-name:hover { transform:translateX(10px); opacity:.55; }
+    .desc { margin-top:18px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-wrap; }
 
-    .desc {
-      margin-top:18px;
-      width:100%;
-      font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-wrap;
-    }
-
-    /* ── 모바일 ── */
     @media (max-width:740px) {
-      .wrap { padding:92px 5% 90px; }
-      .page-title { font-size:44px; }
       .top { padding:28px 5% 0; }
-      .projects { gap:56px; }
-      .project { grid-template-columns:1fr; gap:16px; }
+      .page-title { font-size:44px; }
+      .projects { gap:48px; padding:64px 5% 90px 0; }
+      .project { grid-template-columns:1fr; gap:14px; }
       .project-name { font-size:24px; }
-      .desc { min-height:auto; }
     }
   </style>
 </head>
 <body>
+
   <div class="top"><a class="back" href="index.html">← Index</a></div>
   <h1 class="page-title">Work</h1>
 
-  <div class="wrap">
+  <!-- ▼▼▼ 프로젝트 목록 — <article> 복사해서 계속 추가 ▼▼▼ -->
+  <div class="projects">
 
-    <!-- ▼▼▼ 프로젝트 목록 — 아래 <article> 블록을 복사해서 계속 추가 ▼▼▼ -->
-    <div class="projects">
-
-      <!-- 프로젝트 1 -->
-      <article class="project">
-        <a class="thumb" href="portfolio1_0.html">
-          <img src="image1.jpg" alt="Project 01"
-               onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-        </a>
-        <div class="meta">
-          <a class="project-name" href="portfolio1_0.html">Project NAME</a>
-          <div class="desc">(프로젝트 설명박스 — 가로만 제한, 하단 열어둠)
+    <article class="project">
+      <a class="thumb" href="portfolio1_0.html">
+        <img src="image1.jpg" alt="Project 01"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_0.html">Project NAME</a>
+        <div class="desc">(프로젝트 설명 — 가로만 제한, 하단 열어둠)
 지원사업 프로젝트
 등등등 설명 …</div>
-        </div>
-      </article>
+      </div>
+    </article>
 
-      <!-- 프로젝트 2 -->
-      <article class="project">
-        <a class="thumb" href="portfolio2.html">
-          <img src="image2.jpg" alt="Project 02"
-               onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-        </a>
-        <div class="meta">
-          <a class="project-name" href="portfolio2.html">Project NAME</a>
-          <div class="desc">(프로젝트 설명박스 — 가로만 제한, 하단 열어둠)
+    <article class="project">
+      <a class="thumb" href="portfolio2.html">
+        <img src="image2.jpg" alt="Project 02"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio2.html">Project NAME</a>
+        <div class="desc">(프로젝트 설명 — 가로만 제한, 하단 열어둠)
 지원사업 프로젝트
 등등등 설명 …</div>
-        </div>
-      </article>
+      </div>
+    </article>
 
-      <!-- 프로젝트 3 -->
-      <article class="project">
-        <a class="thumb" href="portfolio2.html">
-          <img src="image3.jpg" alt="Project 03"
-               onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-        </a>
-        <div class="meta">
-          <a class="project-name" href="portfolio2.html">Project NAME</a>
-          <div class="desc">(프로젝트 설명박스 — 가로만 제한, 하단 열어둠)
+    <article class="project">
+      <a class="thumb" href="portfolio2.html">
+        <img src="image3.jpg" alt="Project 03"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio2.html">Project NAME</a>
+        <div class="desc">(프로젝트 설명 — 가로만 제한, 하단 열어둠)
 지원사업 프로젝트
 등등등 설명 …</div>
-        </div>
-      </article>
-
-    </div>
-    <!-- ▲▲▲ 여기까지 ▲▲▲ -->
+      </div>
+    </article>
 
   </div>
+  <!-- ▲▲▲ 여기까지 ▲▲▲ -->
+
 </body>
 </html>
