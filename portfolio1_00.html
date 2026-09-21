@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Project NAME — Work</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      min-height:100%;
+      background:#eff2f0;
+      color:#1c1a18;
+      font-family:'Google Sans','Jost','Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      -webkit-text-size-adjust:100%;
+    }
+    body { overflow-x:hidden; }
+
+    /* 우상단 Index */
+    .top { display:flex; justify-content:flex-end; padding:36px 6% 0; position:relative; z-index:20; }
+    .back {
+      font-size:10px; letter-spacing:3px; text-transform:uppercase;
+      color:#8a7f70; text-decoration:none; transition:color .3s;
+    }
+    .back:hover { color:#1c1a18; }
+
+    /* Work(링크) — 좌상단 고정, 색 검정 */
+    .page-title {
+      font-size:76px; font-weight:700; color:#1c1a18;
+      line-height:1; letter-spacing:0.5px;
+      position:fixed; top:0; left:0; margin:0;
+      z-index:30; text-decoration:none; display:block;
+    }
+    .page-title:hover { color:#1c1a18; }
+
+    /* 상단 래퍼 — 왼쪽 flush, 상단 Work와 겹침 */
+    .detail { padding:60px 6% 140px 6px; }
+
+    /* 상단: 큰 이미지(왼) + 글(오른) */
+    .detail-top {
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:40px;
+      align-items:start;
+      margin-bottom:56px;
+    }
+    .hero { display:block; overflow:hidden; background:#2b2b2b; }
+    .hero img {
+      width:100%;
+      aspect-ratio:4/3;           /* 큰 이미지 비율. 원본대로면 이 줄 삭제 */
+      object-fit:cover;
+      display:block; background:#2b2b2b;
+    }
+    .ph-hero {
+      width:100%; aspect-ratio:4/3; background:#2b2b2b;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
+    }
+    .meta { padding-top:6px; }
+    .project-name-lg { font-size:44px; font-weight:400; letter-spacing:-0.3px; line-height:1.05; }
+    .desc { margin-top:18px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-wrap; }
+
+    /* 하단: 화면 정중앙 정렬 + 한 줄에 하나씩 세로로 나열 */
+    .gallery {
+      max-width:1000px; margin:0 auto; padding:56px 24px 140px;
+      display:flex; flex-direction:column; gap:32px; align-items:center;
+    }
+    .g-item { display:block; width:100%; overflow:hidden; background:#2b2b2b; text-decoration:none; }
+    .g-item img { width:100%; height:auto; display:block; background:#2b2b2b; }  /* 원본 비율 그대로, 안 잘림 */
+    .g-ph {
+      width:100%; aspect-ratio:3/2; background:#2b2b2b;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
+    }
+    /* 유튜브 쇼츠 (세로 9:16) — 가운데 정렬. <div class="g-item short"> */
+    .g-item.short { max-width:405px; }
+    .g-item.short iframe, .g-item.short .g-ph { width:100%; aspect-ratio:9/16; border:0; display:block; background:#000; }
+    /* 일반 유튜브 영상 (가로 16:9, 전폭). <div class="g-item video"> */
+    .g-item.video iframe, .g-item.video .g-ph { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+
+    @media (max-width:740px) {
+      .top { padding:28px 5% 0; }
+      .page-title { font-size:44px; }
+      .detail { padding:64px 5% 100px 0; }
+      .detail-top { grid-template-columns:1fr; gap:16px; margin-bottom:36px; }
+      .project-name-lg { font-size:32px; }
+      .gallery { gap:20px; padding:40px 5% 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top"><a class="back" href="index.html">← Index</a></div>
+  <a class="page-title" href="portfolio1.html">Work</a>
+
+  <div class="detail">
+
+    <!-- 큰 이미지 + 글 -->
+    <div class="detail-top">
+      <div class="hero">
+        <img src="das1.jpg" alt="big image"
+             onerror="this.outerHTML='&lt;div class=\'ph-hero\'&gt;big image&lt;/div&gt;'">
+      </div>
+      <div class="meta">
+        <h1 class="project-name-lg">Das Ding 2026. SAKK</h1>
+        <div class="desc">Das ding
+무게감 있는 컨셉에 베이직한 제품을 꾸준히 내는 브랜드로 방향을 바꾸기 위해 준비한 시즌입니다. 
+“Back to basic”에서 basic의 의미를 어떻게 무겁게 전달할 수 있을지에 대해 고민했고,
+하이데거 Das Ding의 개념과 Brancusi의 조각 형태 구현 방식을 가져와서 기본적인 디자인을 제안 했습니다. 
+"기본"의 상징성과 의미의 시각적 표현을 위해 브랑쿠시의 조각에서 오마주한 Das Ding Object 함께 제작 클리셰한 장치를 부여했습니다. 
+
+오브제처럼 연출하기 위해 후면 붉은 컬러 액자를 걸어 갤러리 혹은 아티스트 작업실과 같은 장소를 연출했으며
+빨간 그림은 Das Ding Object의 키 컬러로 연장되어 하나의 스토리를 완성하도록 작업했습니다. 
+        </div>
+      </div>
+    </div>
+
+ <div class="gallery">
+
+      <!-- 이미지 (전폭, 원본 비율) -->
+      <a class="g-item" href="">
+        <img src="dasde.jpg" alt="image 01"
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 1&lt;/div&gt;'">
+      </a>
+     </div>
+
+  </div>
+
+</body>
+</html>
