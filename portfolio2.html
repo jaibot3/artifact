@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Project NAME — Work</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      min-height:100%;
+      background:#eff2f0;
+      color:#1c1a18;
+      font-family:'Google Sans','Jost','Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      -webkit-text-size-adjust:100%;
+    }
+    .wrap { max-width:1200px; margin:0 auto; padding:120px 24px 160px; }
+
+    /* 우상단 Index 링크 — work1.html 위치 */
+    .top { display:flex; justify-content:flex-end; padding:36px 6% 0; }
+    .back {
+      font-size:10px; letter-spacing:3px; text-transform:uppercase;
+      color:#8a7f70; text-decoration:none; transition:color .3s;
+    }
+    .back:hover { color:#1c1a18; }
+
+    /* Work 타이틀(링크) — work1.html 위치·크기, 색 검정 */
+    .page-title {
+      font-size:76px; font-weight:700; color:#1c1a18;
+      line-height:1; letter-spacing:0.5px;
+      padding:0 0 40px 0; margin:0;
+      position:fixed; top:0; left:0;
+      text-decoration:none; display:block;
+    }
+    .page-title:hover { color:#1c1a18; }
+
+    /* 프로젝트 제목 + 설명 */
+    .head { margin:10px 0 48px; }
+    .project-name-lg { font-size:52px; font-weight:400; letter-spacing:-0.5px; line-height:1; }
+    .desc {
+      margin-top:20px;
+      max-width:560px;
+      font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-wrap;
+    }
+
+    /* ── 미디어 스택 (아래로 쭉 나열: 이미지·쇼츠 자유롭게 추가) ── */
+    .media { display:flex; flex-direction:column; gap:48px; align-items:center; }
+
+    /* 전체폭 이미지 (큰 이미지 / 추가 이미지) */
+    .m-full { width:100%; }
+    .m-full img {
+      width:100%; height:auto; display:block; background:#2b2b2b;
+    }
+    .ph-full {
+      width:100%; aspect-ratio:3/2; background:#2b2b2b;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
+    }
+
+    /* 유튜브 쇼츠 (세로 9:16) */
+    .m-short {
+      width:100%; max-width:405px;   /* 쇼츠 표시 폭 */
+      aspect-ratio:9/16;
+      background:#000;
+    }
+    .m-short iframe { width:100%; height:100%; border:0; display:block; }
+    .ph-short {
+      width:100%; height:100%; background:#2b2b2b;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
+    }
+
+    /* ── 모바일 ── */
+    @media (max-width:740px) {
+      .wrap { padding:92px 5% 100px; }
+      .page-title { font-size:53px; }
+      .top { padding:28px 5% 0; }
+      .project-name-lg { font-size:36px; }
+      .head { margin:8px 0 32px; }
+      .media { gap:32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top"><a class="back" href="index.html">← Index</a></div>
+  <a class="page-title" href="portfolio1.html">Work</a>
+
+  <div class="wrap">
+
+    <div class="head">
+      <h1 class="project-name-lg">Project NAME</h1>
+      <div class="desc">(프로젝트 설명)
+지원사업 프로젝트
+등등등 설명 …</div>
+    </div>
+
+    <!-- ▼▼▼ 미디어 — 아래 블록들을 복사해서 이미지·쇼츠 계속 추가 ▼▼▼ -->
+    <div class="media">
+
+      <!-- 큰 이미지 -->
+      <div class="m-full">
+        <img src="p2_01.jpg" alt="image 01"
+             onerror="this.outerHTML='&lt;div class=\'ph-full\'&gt;big image&lt;/div&gt;'">
+      </div>
+
+      <!-- 추가 이미지 (넣는 대로 복사) -->
+      <div class="m-full">
+        <img src="p2_02.jpg" alt="image 02"
+             onerror="this.outerHTML='&lt;div class=\'ph-full\'&gt;image 2&lt;/div&gt;'">
+      </div>
+
+      <div class="m-full">
+        <img src="p2_03.jpg" alt="image 03"
+             onerror="this.outerHTML='&lt;div class=\'ph-full\'&gt;image 3&lt;/div&gt;'">
+      </div>
+
+      <!-- 유튜브 쇼츠 (세로). VIDEO_ID 를 쇼츠 영상 ID 로 교체 -->
+      <div class="m-short">
+        <!-- <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="short"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe> -->
+        <div class="ph-short">youtube short</div>
+      </div>
+
+    </div>
+    <!-- ▲▲▲ 여기까지 ▲▲▲ -->
+
+  </div>
+</body>
+</html>
