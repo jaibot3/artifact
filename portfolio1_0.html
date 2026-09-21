@@ -37,8 +37,8 @@
     }
     .page-title:hover { color:#1c1a18; }
 
-    /* 전체 래퍼 — 왼쪽 flush, 상단 Work와 겹침 */
-    .detail { padding:60px 6% 140px 0; }
+    /* 상단 래퍼 — 왼쪽 flush, 상단 Work와 겹침 */
+    .detail { padding:60px 6% 0 0; }
 
     /* 상단: 큰 이미지(왼) + 글(오른) */
     .detail-top {
@@ -64,30 +64,23 @@
     .project-name-lg { font-size:44px; font-weight:400; letter-spacing:-0.3px; line-height:1.05; }
     .desc { margin-top:18px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-wrap; }
 
-    /* 하단: 한 줄에 3장 그리드 (행 복사해서 계속 추가) */
+    /* 하단: 화면 정중앙 정렬 + 한 줄에 하나씩 세로로 나열 */
     .gallery {
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:24px;
+      max-width:1000px; margin:0 auto; padding:56px 24px 140px;
+      display:flex; flex-direction:column; gap:32px; align-items:center;
     }
-    .g-item { display:block; overflow:hidden; background:#2b2b2b; }
-    .g-item img {
-      width:100%;
-      aspect-ratio:3/4;           /* 세로형. 가로형이면 4/3 등으로 */
-      object-fit:cover;
-      display:block; background:#2b2b2b;
-    }
+    .g-item { display:block; width:100%; overflow:hidden; background:#2b2b2b; text-decoration:none; }
+    .g-item img { width:100%; height:auto; display:block; background:#2b2b2b; }  /* 원본 비율 그대로, 안 잘림 */
     .g-ph {
-      width:100%; aspect-ratio:3/4; background:#2b2b2b;
+      width:100%; aspect-ratio:3/2; background:#2b2b2b;
       display:flex; align-items:center; justify-content:center;
       font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
     }
-    /* 유튜브 쇼츠 셀 (세로 9:16) — <div class="g-item short"> */
-    .g-item.short img, .g-item.short .g-ph { aspect-ratio:9/16; }
-    .g-item.short iframe { width:100%; aspect-ratio:9/16; border:0; display:block; background:#000; }
-    /* 일반 유튜브 영상 셀 (가로 16:9) — <div class="g-item video"> */
-    .g-item.video img, .g-item.video .g-ph { aspect-ratio:16/9; }
-    .g-item.video iframe { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+    /* 유튜브 쇼츠 (세로 9:16) — 가운데 정렬. <div class="g-item short"> */
+    .g-item.short { max-width:405px; }
+    .g-item.short iframe, .g-item.short .g-ph { width:100%; aspect-ratio:9/16; border:0; display:block; background:#000; }
+    /* 일반 유튜브 영상 (가로 16:9, 전폭). <div class="g-item video"> */
+    .g-item.video iframe, .g-item.video .g-ph { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
 
     @media (max-width:740px) {
       .top { padding:28px 5% 0; }
@@ -95,7 +88,7 @@
       .detail { padding:64px 5% 100px 0; }
       .detail-top { grid-template-columns:1fr; gap:16px; margin-bottom:36px; }
       .project-name-lg { font-size:32px; }
-      .gallery { grid-template-columns:repeat(2, 1fr); gap:14px; }
+      .gallery { gap:20px; padding:40px 5% 100px; }
     }
   </style>
 </head>
@@ -120,9 +113,10 @@
       </div>
     </div>
 
-    <!-- ▼▼▼ 한 줄에 3장 — .gallery 안에 <a class="g-item"> 계속 추가 ▼▼▼ -->
+    <!-- ▼▼▼ 한 줄에 하나씩 — 블록 복사해서 이미지·영상·쇼츠 계속 추가 ▼▼▼ -->
     <div class="gallery">
 
+      <!-- 이미지 (전폭, 원본 비율) -->
       <a class="g-item" href="">
         <img src="p2_01.jpg" alt="image 01"
              onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 1&lt;/div&gt;'">
@@ -131,22 +125,16 @@
         <img src="p2_02.jpg" alt="image 02"
              onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 2&lt;/div&gt;'">
       </a>
-      <a class="g-item" href="">
-        <img src="p2_03.jpg" alt="image 03"
-             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 3&lt;/div&gt;'">
-      </a>
 
-      <!-- 다음 줄 (3장 더) -->
-      <a class="g-item" href="">
-        <img src="p2_04.jpg" alt="image 04"
-             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 4&lt;/div&gt;'">
-      </a>
-      <a class="g-item" href="">
-        <img src="p2_05.jpg" alt="image 05"
-             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 5&lt;/div&gt;'">
-      </a>
+      <!-- 일반 유튜브 영상 (가로 16:9, 전폭). VIDEO_ID 만 교체 -->
+      <div class="g-item video">
+        <!-- <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="video"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe> -->
+        <div class="g-ph">youtube video</div>
+      </div>
 
-      <!-- 유튜브 쇼츠 셀 예시 (세로 9:16). VIDEO_ID 만 교체 -->
+      <!-- 유튜브 쇼츠 (세로 9:16, 가운데). VIDEO_ID 만 교체 -->
       <div class="g-item short">
         <!-- <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="short"
              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
