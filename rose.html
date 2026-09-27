@@ -23,7 +23,7 @@
       --ink-3: #8b7170;
       --rule: rgba(38, 34, 30, 0.12);
       --num: #ded36ebb;
-      --fig-w: 260px;   /* 그림 가로 크기 — 이 숫자만 바꾸면 돼 (세로는 자동) */
+      --fig-w: 546px;   /* 그림 가로 크기 — 이 숫자만 바꾸면 돼 (세로는 자동) */
     }
     
     html, body {
@@ -635,8 +635,8 @@ E. cheers.`
           <span class="num">${String(e.__num).padStart(2, '0')}</span>
           <span class="rest">${day} ${rest}</span>
         </div>
-        <div class="entry-body">${escapeHtml(e.text)}</div>
         ${figs}
+        <div class="entry-body">${escapeHtml(e.text)}</div>
       </article>
     `;
   }).join('');
