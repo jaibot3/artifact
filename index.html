@@ -200,7 +200,10 @@
     @media (max-width: 640px) {
       #top-canvas { width: 160px; height: 210px; }
       /* 손 그림을 아래로 내려서 링크 글씨 바로 위에 앉힘 (top 대신 bottom 기준) */
-      .artwork    { width: min(360px, 82vw); top: auto; bottom: 30%; left: -4%; }
+      /* ↓ 아래 묶음 전체를 약 20px 위로: 각 bottom 에 +20px */
+      .artwork    { width: min(360px, 82vw); top: auto; bottom: calc(30% + 20px); left: -4%; }
+      .legend          { bottom: calc(16% + 20px); }
+      .input-container { bottom: calc(7% + 20px); }
       .legend a   { font-size: 16px; }
       .weather-input { width: min(210px, 50vw); padding: 4px 10px; }
     }
