@@ -51,11 +51,11 @@
       left: 0;
     }
 
-    /* ── 본문: 왼쪽 소개 / 오른쪽 커리어 2단 ── */
+    /* ── 본문: 왼쪽 소개 / 오른쪽 CV 2단 ── */
     .content-wrap {
       padding: 250px 6% 120px 2%;   /* 위 = 타이틀 아래로 밀기 / 왼쪽 여백 */
       display: grid;
-      grid-template-columns: 30% 1fr; /* 왼쪽 소개 폭 / 오른쪽 커리어 */
+      grid-template-columns: 30% 1fr; /* 왼쪽 소개 폭 / 오른쪽 CV */
       gap: 4%;
       align-items: start;
     }
@@ -68,24 +68,51 @@
       letter-spacing: 0.3px;
       color: #91908e;
       word-break: keep-all;
+      position: sticky;   /* 스크롤해도 소개가 옆에 따라옴 (원치 않으면 이 줄 삭제) */
+      top: 250px;
     }
     .intro p + p { margin-top: 14px; }
 
-    /* 오른쪽: 커리어 목록 */
-    .career-list {
+    /* ── 오른쪽: CV ── */
+    .cv {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 34px;
     }
-    .career-item {
-      font-family: 'Google Sans', 'Century Gothic', CenturyGothic, sans-serif;
-      font-size: 15px;
+    .cv-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #8a7f70;
+      margin-bottom: 12px;
+    }
+    .cv-entry { margin-bottom: 12px; }
+    .cv-entry:last-child { margin-bottom: 0; }
+    .cv-line {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: 0.3px;
+      color: #6f6d6a;
+    }
+    .cv-line + .cv-line { margin-top: 3px; }   /* 목록형(Capabilities/Tools) 줄 간격 */
+    .cv-sub {
+      font-size: 12px;
       font-style: italic;
       font-weight: 300;
-      line-height: 1.3;
-      letter-spacing: 0.4px;
-      color: #91908e;
+      line-height: 1.5;
+      letter-spacing: 0.3px;
+      color: #a09e9b;
+      margin-top: 2px;
     }
+    .cv-link {
+      color: #8a7f70;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(138,127,112,.4);
+      transition: color .3s, border-color .3s;
+    }
+    .cv-link:hover { color: #38221e; border-color: #38221e; }
 
     /* ── 모바일: 데스크탑과 같은 2단 유지 ── */
     @media (max-width: 640px) {
@@ -93,11 +120,16 @@
       .page-title { font-size: 44px; padding: 0px 0 28px 5%; }
       .content-wrap {
         padding: 120px 5% 80px 5%;
-        grid-template-columns: 32% 1fr;  /* 2단 유지: 왼쪽 소개 / 오른쪽 커리어 */
+        grid-template-columns: 32% 1fr;  /* 2단 유지: 왼쪽 소개 / 오른쪽 CV */
         gap: 5%;
       }
-      .intro { font-size: 10px; line-height: 1.7; }
-      .career-item { font-size: 10.5px; line-height: 1.25; }
+      .intro { font-size: 10px; line-height: 1.7; top: 120px; }
+      .cv { gap: 22px; }
+      .cv-label { font-size: 8px; letter-spacing: 2px; margin-bottom: 7px; }
+      .cv-line { font-size: 10.5px; line-height: 1.4; }
+      .cv-line + .cv-line { margin-top: 2px; }
+      .cv-sub { font-size: 9px; }
+      .cv-entry { margin-bottom: 8px; }
     }
   </style>
 </head>
@@ -117,18 +149,85 @@
     <!-- ◀ 왼쪽: 소개 문구 (이 안의 글만 바꾸면 됨) -->
     <div class="intro">
       <p>jay lim</p>
-      <p>connector</p>
+      <p>I work across projects, disciplines and formats. I connect ideas, people and disciplines, and turn ambiguity into a direction.</p>
     </div>
 
-    <!-- ▶ 오른쪽: 커리어 목록 -->
-    <div class="career-list">
-      <p class="career-item">SAKK — Founder</p>
-      <p class="career-item">AOLADO - Co-founder, Chief Operating Officer</p>
-      <p class="career-item">Adjunct Professor, Jeonghwa Arts University 2025</p>
-      <p class="career-item">Fashion Design - Women's Wear, Central Saint Martins, UAL</p>
-      <p class="career-item">Portfolio Instructor, Art in Studio 2018</p>
-      <p class="career-item">Project Runway Korea Top 3, Allstar season</p>
-      <p class="career-item">Project Runway Korea, season 4</p>
+    <!-- ▶ 오른쪽: CV -->
+    <div class="cv">
+
+      <section class="cv-section">
+        <div class="cv-label">Education</div>
+        <div class="cv-entry">
+          <p class="cv-line">Central Saint Martins, University of the Arts London</p>
+          <p class="cv-sub">BA Fashion Design, Womenswear · 2008–2012</p>
+        </div>
+      </section>
+
+      <section class="cv-section">
+        <div class="cv-label">Capabilities</div>
+        <p class="cv-line">Research</p>
+        <p class="cv-line">Direction</p>
+        <p class="cv-line">Communication</p>
+        <p class="cv-line">Emerging Technology</p>
+      </section>
+
+      <section class="cv-section">
+        <div class="cv-label">Tools</div>
+        <p class="cv-line">Adobe Illustrator · Photoshop · Premiere Pro</p>
+        <p class="cv-line">Google Analytics · Meta Ads</p>
+        <p class="cv-line">Excel · PowerPoint</p>
+        <p class="cv-line">Python · AI Tools · Vibe Coding</p>
+      </section>
+
+      <section class="cv-section">
+        <div class="cv-label">Experience</div>
+        <div class="cv-entry">
+          <p class="cv-line">SAKK — Founder & Creative Director</p>
+          <p class="cv-sub">2019–Present · Seoul</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-line">AOLADO — Co-founder & COO</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-line">Jeonghwa Arts University — Adjunct Professor</p>
+          <p class="cv-sub">2025 · Fashion History & Design Application</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-line">Art in Studio — Portfolio Instructor</p>
+          <p class="cv-sub">2018</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-line">Project Runway Korea</p>
+          <p class="cv-sub">Season 4 · Top 3 · All Star Participant</p>
+        </div>
+      </section>
+
+      <section class="cv-section">
+        <div class="cv-label">Selected International Experience</div>
+        <div class="cv-entry">
+          <p class="cv-line">SEEK Berlin</p>
+          <p class="cv-sub">2018</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-line">Milan Fashion Show</p>
+          <p class="cv-sub">2015</p>
+        </div>
+        <div class="cv-entry">
+          <p class="cv-line">International Art Fair / Art Market</p>
+          <p class="cv-sub">New York · London · Paris · Daegu · 2010–2022</p>
+        </div>
+      </section>
+
+      <section class="cv-section">
+        <div class="cv-label">Languages</div>
+        <p class="cv-line">Korean · English</p>
+      </section>
+
+      <section class="cv-section">
+        <div class="cv-label">Website</div>
+        <p class="cv-line"><a class="cv-link" href="https://ficciones.me" target="_blank" rel="noopener">Ficciones.me</a></p>
+      </section>
+
     </div>
 
   </div>
