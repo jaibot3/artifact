@@ -8,7 +8,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Asta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   
   <style>
     /* Reset & Base Variables */
@@ -23,59 +23,45 @@
       --ink-3: #8b7170;
       --rule: rgba(38, 34, 30, 0.12);
       --num: #ded36ebb;
+      --fig-w: 260px;   /* 그림 가로 크기 — 이 숫자만 바꾸면 돼 (세로는 자동) */
     }
     
     html, body {
       min-height: 100%;
-      font-family: 'Apple Symbols', 'AppleSymbols', 'Apple Symbol', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-family: 'Asta Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
     }
     
     body {
-      background: radial-gradient(120% 90% at 50% 0%, #F2F5E8 0%, #eff2f0 55%, #f7f6f3 100%);
+      background: #fcfcfb;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       padding: 0 24px 120px; /* 상단 여백은 헤더가 아닌 .sheet에서 관리 */
     }
     
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.10;
-      mix-blend-mode: multiply;
-      background-image:
-        radial-gradient(rgba(70,55,40,0.18) 1px, transparent 1px),
-        radial-gradient(rgba(70,55,40,0.1) 1px, transparent 1px);
-      background-size: 3px 3px, 7px 7px;
-      background-position: 0 0, 1px 2px;
-      z-index: 0;
-    }
-    
     /* ── 왼쪽 상단 고정 (rose 문구 타이틀 위치) ── */
     .page-header {
       position: fixed;
-      top: 36px;
-      left: 6%;
+      top: 6px;
+      left: 2%;
       z-index: 10;
-      font-family: 'Apple Symbols', -apple-system, sans-serif;
+      font-family: 'Asta Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
       text-align: left;
     }
     
     .ph-verse {
       font-size: 30px;
       font-weight: 700;
-      line-height: 38px;
+      line-height: 20px;
       letter-spacing: 0.5px;
       color: #91908e;
       white-space: pre-wrap;
     }
     
     .ph-src {
-      margin-top: 10px;
+      margin-top: 8px;
       font-size: 12px;
       font-weight: 400;
       font-style: italic;
@@ -149,14 +135,6 @@
       color: var(--num);
     }
     
-    .entry-meta .day {
-      font-size: 30px; 
-      line-height: 0.7; 
-      letter-spacing: -1px;
-      font-weight: normal; 
-      color: var(--ink);
-    }
-    
     .entry-meta .rest {
       font-size: 11px; 
       letter-spacing: 4px; 
@@ -184,8 +162,22 @@
       will-change: transform, filter, opacity;
     }
     
-    .entries article:not(:first-child) { 
-      opacity: 0.5; 
+    /* ── 일기 그림 ── */
+    .entry-figs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 20px 0 4px;
+    }
+    .entry-figs img {
+      width: var(--fig-w);   /* 가로만 고정, 세로는 비율대로 자동 */
+      height: auto;
+      display: block;
+      border-radius: 2px;
+    }
+
+    .entries article:not(:first-child) {
+      opacity: 0.5;
     }
     
     .empty {
@@ -239,6 +231,10 @@ and reach the star I have longed for.</p>
   </div>
 
 <script>
+/* 그림 넣는 법: 글(text) 옆에 image 또는 images 한 줄만 추가하면 돼.
+   한 장:   { date:'2026-09-25', text:`...`, image:'photo.jpg' }
+   여러 장: { date:'2026-09-25', text:`...`, images:['a.jpg','b.jpg'] }
+   그림 없으면 그냥 안 쓰면 됨. */
 const ENTRIES = [
    {date: '2026-09-25',
     text: ` 모두가 매일 죽고 다시 이불 끝에 말려 태어난다. 
@@ -622,14 +618,19 @@ E. cheers.`
 
   $list.innerHTML = sortedDesc.map(e => {
     const { day, rest } = fmt(e.date);
+    const imgs = [].concat(e.images || e.image || []).filter(Boolean);
+    const figs = imgs.length
+      ? `<div class="entry-figs">${imgs.map(src =>
+          `<img src="${escapeHtml(src)}" alt="">`).join('')}</div>`
+      : '';
     return `
       <article>
         <div class="entry-meta">
           <span class="num">${String(e.__num).padStart(2, '0')}</span>
-          <span class="day">${day}</span>
-          <span class="rest">${rest}</span>
+          <span class="rest">${day} ${rest}</span>
         </div>
         <div class="entry-body">${escapeHtml(e.text)}</div>
+        ${figs}
       </article>
     `;
   }).join('');
