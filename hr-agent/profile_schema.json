@@ -1,0 +1,72 @@
+{
+  "profile_type": "Cross-disciplinary Creative / Project Strategist",
+  "career_shape": "NON_LINEAR_PORTFOLIO_CAREER",
+  "career_path": [
+    "Designer",
+    "Founder",
+    "Creative Director",
+    "Operator",
+    "Producer",
+    "Educator",
+    "Digital / AI Experimenter",
+    "Cross-disciplinary Strategist"
+  ],
+  "core_function": "Connect ideas, people, disciplines and execution layers; turn ambiguity into direction and direction into output.",
+  "capabilities": [
+    "Research & Synthesis",
+    "Concept Development",
+    "Creative Direction",
+    "Project Structuring",
+    "Cross-functional Communication",
+    "Production & Execution",
+    "Brand Strategy",
+    "Content Strategy",
+    "Stakeholder Management",
+    "External Partner Coordination",
+    "Business Development",
+    "Product Development",
+    "Manufacturing Coordination",
+    "Web / Digital Structure",
+    "Customer Journey Thinking",
+    "Digital / AI Experimentation"
+  ],
+  "domains": [
+    "Fashion",
+    "Art",
+    "Branding",
+    "Content",
+    "Retail",
+    "Manufacturing",
+    "Digital",
+    "Education",
+    "Emerging Technology"
+  ],
+  "working_mode": [
+    "High ambiguity tolerance",
+    "0-to-1",
+    "Project-based",
+    "Cross-functional",
+    "Independent ownership",
+    "Concept-to-execution",
+    "External collaboration"
+  ],
+  "avoid_defaulting_to": [
+    "Pure fashion designer",
+    "Repetitive production-only",
+    "Graphic designer-only",
+    "Styling-only",
+    "Social media posting-only",
+    "Administrative coordinator",
+    "Execution-only marketing"
+  ],
+  "evidence_policy": {
+    "rule": "Every capability claim must point to portfolio, career page, or verified project evidence.",
+    "do_not_infer": [
+      "Unstated revenue impact",
+      "Unstated team size",
+      "Unstated leadership scope",
+      "Unstated client results",
+      "Unstated technical depth"
+    ]
+  }
+}
