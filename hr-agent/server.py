@@ -55,6 +55,23 @@ Return ONLY valid JSON with this exact shape:
   "position": "string",
   "score": 0,
   "grade": "A|B|DISCARD",
+  "jd_structure": {
+    "primary_hiring_intent": "string",
+    "weighted_subtasks": [
+      {
+        "subtask": "string",
+        "weight": "CRITICAL|HIGH|MEDIUM|LOW",
+        "evidence_from_jd": "string"
+      }
+    ],
+    "repeated_signals": ["string"],
+    "high_salience_phrases": ["string"],
+    "special_submission_requirements": ["string"],
+    "likely_first_6_month_outputs": ["string"],
+    "background_filters": ["string"],
+    "hard_eligibility": ["string"],
+    "preferences": ["string"]
+  },
   "score_breakdown": {{
     "capability_fit": 0,
     "role_transferability": 0,
@@ -83,6 +100,10 @@ Rules:
 - score_breakdown maximums are 40, 25, 20, 15.
 - score must equal the sum of those four numbers.
 - Be strict. Vague words like creativity or communication do not count without evidence.
+- Do NOT score before structurally reading the JD.
+- Weight repeated responsibilities, top-listed responsibilities, ownership verbs, concrete deliverables, and special submission requirements more heavily.
+- Treat special submission requirements as strong evidence of what the company actually values.
+- Do not over-penalize broad industry-background requirements when they are not supported by the actual responsibility structure.
 """
 
 
