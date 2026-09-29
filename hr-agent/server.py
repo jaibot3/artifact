@@ -85,6 +85,11 @@ Return ONLY valid JSON with this exact shape:
       "evidence": "string"
     }}
   ],
+  "strongest_match": {
+    "title": "short Korean title for the single strongest intersection between this JD and Jay",
+    "portfolio_cv_connection": "name the exact project/CV evidence that best proves it",
+    "why_it_matters": "1-3 sentences explaining why this is the most important overlap"
+  },
   "main_gap": "string",
   "gap_interpretation": "string",
   "fatal_gap": false,
@@ -104,6 +109,9 @@ Rules:
 - Weight repeated responsibilities, top-listed responsibilities, ownership verbs, concrete deliverables, and special submission requirements more heavily.
 - Treat special submission requirements as strong evidence of what the company actually values.
 - Do not over-penalize broad industry-background requirements when they are not supported by the actual responsibility structure.
+- strongest_match must identify ONE decisive intersection, not a generic capability list.
+- strongest_match must explicitly name the portfolio project or CV evidence that proves it.
+- Prefer the overlap that is both highly salient in the JD and unusually well evidenced in Jay's portfolio.
 """
 
 
