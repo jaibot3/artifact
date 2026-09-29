@@ -8,11 +8,56 @@
 </head>
 <body>
   <main>
-    <h1>JOB MATCH</h1>
-    <p id="url">현재 페이지를 분석합니다.</p>
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">JAY / JOB MATCH</div>
+        <h1 id="role">Current Job</h1>
+      </div>
+      <div id="gradeBadge" class="grade-badge">—</div>
+    </header>
+
+    <p id="url" class="url">현재 페이지를 분석합니다.</p>
     <button id="analyze">ANALYZE CURRENT JOB</button>
-    <div id="status"></div>
-    <pre id="result"></pre>
+    <div id="status" class="status"></div>
+
+    <section id="summaryCard" class="card hidden">
+      <div class="score-row">
+        <div>
+          <div class="label">MATCH SCORE</div>
+          <div id="score" class="score">—</div>
+        </div>
+        <div class="action-box">
+          <div class="label">ACTION</div>
+          <div id="action" class="action">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="breakdownCard" class="card hidden">
+      <div class="label">FIT BREAKDOWN</div>
+      <div id="breakdown"></div>
+    </section>
+
+    <section id="matchesCard" class="card hidden">
+      <div class="label">TOP MATCHES</div>
+      <div id="matches"></div>
+    </section>
+
+    <section id="gapCard" class="card hidden">
+      <div class="label">MAIN GAP</div>
+      <div id="gap" class="body-text"></div>
+    </section>
+
+    <section id="strongestCard" class="card strongest hidden">
+      <div class="label">STRONGEST MATCH</div>
+      <div id="strongest" class="strongest-title"></div>
+      <div id="strongestEvidence" class="body-text"></div>
+    </section>
+
+    <details id="rawDetails" class="hidden">
+      <summary>Full analysis</summary>
+      <pre id="result"></pre>
+    </details>
   </main>
   <script src="popup.js"></script>
 </body>
