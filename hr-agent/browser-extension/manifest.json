@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Jay Job Matcher",
+  "version": "0.1.0",
+  "description": "Analyze the current job posting against Jay's portfolio profile.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["http://127.0.0.1:8765/*"],
+  "action": {
+    "default_title": "Analyze this job",
+    "default_popup": "popup.html"
+  }
+}
