@@ -74,7 +74,9 @@ function render(data){
   } : null);
   if (strongest){
     document.getElementById("strongest").textContent = strongest.title || strongest.matched_capability || "";
-    document.getElementById("strongestEvidence").textContent = strongest.evidence || strongest.why || "";
+    document.getElementById("strongestEvidence").textContent =
+      [strongest.portfolio_cv_connection, strongest.why_it_matters].filter(Boolean).join(" — ")
+      || strongest.evidence || strongest.why || "";
     show("strongestCard");
   }
 
@@ -85,7 +87,25 @@ function render(data){
 (async () => {
   const tab = await getCurrentTab();
   urlEl.textContent = tab?.url || "No active tab";
+
+  // 기록 기능 이전에 분석해둔 마지막 결과가 있으면 한 번만 기록으로 옮긴다
+  const { lastResult, lastAnalyzedAt, lastSavedToHistory } =
+    await chrome.storage.local.get(["lastResult", "lastAnalyzedAt", "lastSavedToHistory"]);
+  if (lastResult && !lastSavedToHistory) {
+    try {
+      const r = await fetch("http://127.0.0.1:8765/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...lastResult, analyzed_at: lastResult.analyzed_at || lastAnalyzedAt })
+      });
+      if (r.ok) await chrome.storage.local.set({ lastSavedToHistory: true });
+    } catch (_) { /* 서버 꺼져 있으면 다음에 다시 시도 */ }
+  }
 })();
+
+document.getElementById("history").addEventListener("click", () => {
+  chrome.tabs.create({ url: "http://127.0.0.1:8765/history" });
+});
 
 document.getElementById("analyze").addEventListener("click", async () => {
   try {
@@ -103,7 +123,8 @@ document.getElementById("analyze").addEventListener("click", async () => {
     await chrome.storage.local.set({
       lastResult: data,
       lastURL: page.url,
-      lastAnalyzedAt: new Date().toISOString()
+      lastAnalyzedAt: new Date().toISOString(),
+      lastSavedToHistory: true   // 서버가 /analyze 때 이미 저장함
     });
   } catch (err) {
     statusEl.textContent = "오류";
