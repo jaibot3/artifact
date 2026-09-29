@@ -191,3 +191,136 @@ Therefore, a "fashion retail industry experience" requirement should not be scor
 - PREFERENCE mismatch: minimal penalty.
 
 Before penalizing any requirement, the model must explain what type it is and why.
+
+
+## JD Structural Reading — Salience Before Keywords
+
+The matcher must read the JD as a structured document, not as a bag of keywords.
+
+Before scoring, identify:
+
+### A. Primary hiring intent
+What problem is this role mainly expected to solve?
+Infer from the combination of:
+- repeated responsibilities
+- first-listed responsibilities
+- section headings
+- phrases tied to ownership such as "lead", "own", "drive", "plan", "develop"
+- output/deliverable language
+- collaboration targets
+- portfolio / assignment / submission requirements
+- repeated domain references
+- unusually specific requirements
+
+### B. Subtasks
+Break the job into 3–6 subtasks.
+For each subtask, estimate weight:
+
+- CRITICAL: central to the role
+- HIGH: repeated or clearly tied to expected output
+- MEDIUM: supporting responsibility
+- LOW: incidental / occasional
+
+Do not give equal weight to all JD bullets.
+
+### C. Salience signals
+
+Increase weight when:
+- the same responsibility appears in multiple sections
+- similar wording is repeated
+- the item appears near the top of responsibilities
+- the company asks for a dedicated portfolio / assignment / work sample for it
+- the company describes a concrete output connected to it
+- the wording uses ownership verbs
+- the requirement is unusually specific compared with generic bullets
+- the qualification section repeats the same capability implied by responsibilities
+
+Decrease weight when:
+- the phrase is generic HR boilerplate
+- it appears only once in a broad qualification line
+- it is a background filter not reflected in actual responsibilities
+- it is listed as preferred only
+- it is a vague trait such as passion, communication, trend sensitivity
+
+### D. Submission requirements are strong evidence of what the company values
+
+If the JD asks for special materials beyond resume/CV, parse them separately.
+
+Examples:
+- portfolio
+- project description
+- writing sample
+- assignment
+- case study
+- concept proposal
+- work sample
+- specific portfolio category
+- mandatory links
+- specific project count
+- role-specific portfolio instructions
+
+Treat this as a high-salience signal.
+
+Example:
+If a JD asks for:
+"Portfolio including concept planning process"
+then concept planning should receive substantially more weight than a generic industry-years requirement.
+
+### E. Deliverable inference
+
+Ask:
+"What would this person probably have to produce in the first 3–6 months?"
+
+Possible outputs:
+- concepts
+- campaign plans
+- collection directions
+- project roadmaps
+- partnership proposals
+- visual guidelines
+- content systems
+- product plans
+- research decks
+- operational processes
+
+Then compare those likely outputs to Jay's evidence.
+
+### F. Requirement interpretation rule
+
+A requirement should NOT be penalized merely because its wording does not appear in the portfolio.
+
+Instead:
+1. identify the underlying task,
+2. identify its importance in the JD,
+3. identify equivalent portfolio evidence,
+4. then score.
+
+### G. Contradiction rule
+
+If a qualification appears important linguistically but the actual responsibilities do not support it, downgrade its importance.
+
+Example:
+"2+ years fashion retail industry experience"
+but responsibilities focus on:
+- collection concept planning
+- cultural research
+- collaboration planning
+- creative direction
+
+Interpret "fashion retail" primarily as industry-context background unless retail operations repeatedly appear elsewhere.
+
+### H. Required structured extraction before scoring
+
+For every JD, first produce:
+
+- primary_hiring_intent
+- weighted_subtasks
+- repeated_signals
+- high_salience_phrases
+- special_submission_requirements
+- likely_first_6_month_outputs
+- background_filters
+- hard_eligibility
+- preferences
+
+Only after this step should the matcher calculate fit.
