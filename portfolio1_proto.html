@@ -75,14 +75,26 @@
     .desc { margin-top:10px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-line; }
 
 
-    /* ── 배경 #75481B + 밝은 글자 ── */
-    html, body { background:#75481B; color:#f4ede2; }
-    .page-title, .project-name { color:#f4ede2; }
-    .back { color:rgba(244,237,226,.6); } .back:hover { color:#f4ede2; }
-    .group-label, .k { color:rgba(244,237,226,.55) !important; }
-    .v p, .ex li { color:rgba(244,237,226,.8) !important; }
-    .v .hl { color:#f4ede2 !important; }
-    .toggle { color:#f4ede2 !important; }
+    /* ── 상단 Work 바 · 하단 푸터: #75481B ── */
+    body { padding-top:76px; }
+    .bar {
+      position:fixed; top:0; left:0; right:0; height:76px; z-index:30;
+      background:#75481B; display:flex; align-items:center; justify-content:space-between;
+      padding-right:6%;
+    }
+    .bar .page-title { position:static; color:#f4ede2; pointer-events:auto; text-decoration:none; }
+    .bar .back { color:rgba(244,237,226,.7); }
+    .bar .back:hover { color:#f4ede2; }
+    .foot {
+      background:#75481B; padding:56px 6% 64px;
+      display:flex; gap:36px; flex-wrap:wrap; align-items:baseline;
+    }
+    .foot a {
+      font-size:22px; font-weight:400; color:#f4ede2; text-decoration:none;
+      letter-spacing:-0.2px; transition:opacity .25s;
+    }
+    .foot a:hover { opacity:.55; }
+    .foot .small { margin-left:auto; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(244,237,226,.6); }
 
     /* 섹션 구분 (Selected / Other) */
     .group-label {
@@ -118,11 +130,11 @@
       .project.open .more {
         display:block; position:absolute; top:46px; left:0; right:0; bottom:0;
         overflow-y:auto; overscroll-behavior:contain;
-        scrollbar-width:thin; scrollbar-color:rgba(244,237,226,.35) transparent;
+        scrollbar-width:thin; scrollbar-color:rgba(28,26,24,.3) transparent;
         animation:fadeIn .45s ease;
       }
       .more::-webkit-scrollbar { width:4px; }
-      .more::-webkit-scrollbar-thumb { background:rgba(244,237,226,.35); }
+      .more::-webkit-scrollbar-thumb { background:rgba(28,26,24,.3); }
     }
     @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
@@ -149,6 +161,11 @@
     @media (max-width:740px) {
       .top { padding:15px 5% 0; }
       .page-title { font-size:44px; }
+      body { padding-top:46px; }
+      .bar { height:46px; padding-right:5%; }
+      .foot { padding:40px 5% 48px; gap:24px; }
+      .foot a { font-size:18px; }
+      .foot .small { margin-left:0; width:100%; }
       .projects { gap:48px; padding:64px 0 90px 0; }
       .project { grid-template-columns:1fr; gap:14px; }
       .meta { padding:0 5%; }
@@ -168,8 +185,10 @@
 </head>
 <body>
 
-  <div class="top"><a class="back" href="index.html">← Index</a></div>
-  <h1 class="page-title">Work</h1>
+  <header class="bar">
+    <a class="page-title" href="portfolio1.html">Work</a>
+    <a class="back" href="index.html">← Index</a>
+  </header>
 
   <div class="projects">
 
@@ -356,8 +375,8 @@
     <p class="group-label">Other Projects</p>
 
     <article class="project">
-      <a class="thumb" href="portfolio1_0.html" style="background:#75481B;">
-        <img src="das_spin.webp" alt="Das Ding ( ) Holder" style="background:#75481B;" loading="lazy"
+      <a class="thumb" href="portfolio1_0.html" style="background:#eff2f0;">
+        <img src="das_spin.webp" alt="Das Ding ( ) Holder" style="background:#eff2f0;" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
@@ -547,6 +566,13 @@
     </article>
 
   </div>
+
+  <footer class="foot">
+    <a href="portfolio1.html">Work</a>
+    <a href="career.html">Career</a>
+    <a href="https://instagram.com/limy.vorn" target="_blank" rel="noopener">Instagram</a>
+    <a class="small" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Top</a>
+  </footer>
 
   <script>
     document.querySelectorAll('.process').forEach(p =>
