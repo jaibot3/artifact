@@ -72,15 +72,104 @@
       transition:transform .25s cubic-bezier(.25,.8,.25,1), opacity .25s ease;
     }
     .project-name:hover { transform:translateX(10px); opacity:.55; }
-    .desc { margin-top:18px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-line; }
+    .desc { margin-top:10px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-line; }
+
+
+    /* ── 상단 Work 바 · 하단 푸터: #75481B ── */
+    .page-title { color:#75481B; }
+    .foot {
+      background:#75481B; padding:56px 6% 64px;
+      display:flex; gap:36px; flex-wrap:wrap; align-items:baseline;
+    }
+    .foot a {
+      font-size:22px; font-weight:400; color:#f4ede2; text-decoration:none;
+      letter-spacing:-0.2px; transition:opacity .25s;
+    }
+    .foot a:hover { opacity:.55; }
+    .foot .small { margin-left:auto; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(244,237,226,.6); }
+
+    /* 섹션 구분 (Selected / Other) */
+    .group-label {
+      font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#8a7f70;
+      padding:24px 0 0; margin-bottom:-36px;
+    }
+    .project-name { line-height:1.15; }
+
+    /* 데스크톱: 요약·버튼 숨김, 4단계 항상 보임 */
+    /* +/− 버튼 (PC·모바일 공통 모양) */
+    .toggle {
+      display:block; width:100%; margin-top:14px; padding:6px 0;
+      background:none; border:0;
+      font:300 26px/1 'Jost', sans-serif; color:#75481B; cursor:pointer;
+      -webkit-tap-highlight-color:transparent; transition:opacity .2s;
+    }
+    .toggle:hover { opacity:.55; }
+    .g-item { display:block; width:100%; background:#2b2b2b; }
+    .g-item img { width:100%; height:auto; display:block; }
+    .g-item.short { max-width:405px; }
+    .g-item.short iframe { width:100%; aspect-ratio:9/16; border:0; display:block; background:#000; }
+    .g-item.video iframe { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+
+    /* PC: + 누르면 타이틀·설명이 사라지고, 그 자리(이미지 높이만큼)에서 상세 이미지가 안쪽 스크롤 */
+    @media (min-width:741px) {
+      .toggle { width:auto; margin-left:0; padding:4px 0; font-size:34px; text-align:left; }
+      .meta { position:relative; }
+      .more { display:none; }
+      .more-in { display:flex; flex-direction:column; gap:10px; align-items:center; }
+      .project.open .meta { align-self:stretch; padding-top:0; }
+      .project.open .project-name, .project.open .process { display:none; }
+      .project.open .toggle { margin-top:0; }
+      .project.open .more {
+        display:block; position:absolute; top:50px; left:0; right:0; bottom:0;
+        overflow-y:auto; overscroll-behavior:contain;
+        scrollbar-width:thin; scrollbar-color:rgba(28,26,24,.3) transparent;
+        animation:fadeIn .45s ease;
+      }
+      .more::-webkit-scrollbar { width:4px; }
+      .more::-webkit-scrollbar-thumb { background:rgba(28,26,24,.3); }
+    }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    .process { margin-top:14px; }          /* 타이틀 ↔ 설명 간격 */
+    .step { padding:14px 0 0; }
+    .step + .step { margin-top:2px; }
+    .k {
+      font-size:9.5px; font-weight:400; letter-spacing:2.4px; text-transform:uppercase;
+      color:#8a7f70; margin-bottom:4px;
+    }
+    .v p { font-size:12.5px; line-height:1.55; color:#5c5b5a; word-break:keep-all; }
+    .v p + p { margin-top:1px; }
+    .v .hl { font-size:13px; color:#1c1a18; margin-bottom:1px; }
+    .ex { list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:1px 16px; }
+    .ex li { font-size:12px; line-height:1.7; color:#5c5b5a; }
+
+    /* 화면에 들어오면 위에서부터 차례로 은은하게 */
+    .step { opacity:0; transform:translateY(6px);
+      transition:opacity .7s ease, transform .7s cubic-bezier(.25,.8,.25,1);
+      transition-delay:calc(var(--i) * 120ms); }
+    .project.in .step { opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce) { .step { transition:none; } }
 
     @media (max-width:740px) {
       .top { padding:15px 5% 0; }
       .page-title { font-size:44px; }
+      .foot { padding:40px 5% 48px; gap:24px; }
+      .foot a { font-size:18px; }
+      .foot .small { margin-left:0; width:100%; }
       .projects { gap:48px; padding:64px 0 90px 0; }
       .project { grid-template-columns:1fr; gap:14px; }
       .meta { padding:0 5%; }
       .project-name { font-size:24px; }
+      .group-label { padding:16px 5% 0; margin-bottom:-24px; }
+
+      /* 모바일: 설명 아래 꽉 찬 +/− 버튼 → 상세 이미지가 목록 안에서 아래로 펼쳐짐 */
+      .more {
+        display:grid; grid-template-rows:0fr; margin:0 -5.6%;   /* 이미지는 화면 폭 가득 */
+        transition:grid-template-rows .5s cubic-bezier(.25,.8,.25,1);
+      }
+      .more-in { overflow:hidden; display:flex; flex-direction:column; gap:12px; align-items:center; }
+      .project.open .more { grid-template-rows:1fr; }
+      .project.open .more-in { padding-top:14px; }
     }
   </style>
 </head>
@@ -89,277 +178,413 @@
   <div class="top"><a class="back" href="index.html">← Index</a></div>
   <h1 class="page-title">Work</h1>
 
-  <!-- ▼▼▼ 프로젝트 목록 — <article> 복사해서 계속 추가 (반드시 </article> 로 닫기!) ▼▼▼ -->
   <div class="projects">
+
+    <p class="group-label">Selected Projects</p>
 
     <article class="project">
       <a class="thumb" href="portfolio1_0.html">
-        <img src="das.jpg" alt="Project 01"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="das.jpg" alt="Das Ding · SAKK, 2026" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="portfolio1_0.html">Das Ding. 2026 SAKK</a>
-        <div class="desc">Concept Development
-Creative Direction
-Object Design
+        <a class="project-name" href="portfolio1_0.html">Das Ding · SAKK, 2026</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>‘Basic’을 단순함이나 미니멀리즘으로 반복하지 않고, 형태를 덜어내면서도 물성과 무게가 남는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Das Ding / The Thing</p><p>대상을 다른 의미로 환원하기보다, 하나의 물체가 그 자체로 존재하는 상태에 집중.</p><p>응축된 형태, 반복되는 단위, 원단의 무게와 구조를 제품 언어로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Concept development</li><li>Product design</li><li>Material &amp; silhouette development</li><li>Object development</li><li>Spatial presentation</li><li>Launch direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Direction / Product Development</p><p>시즌 개념을 제품, 오브제, 공간 연출까지 연결하는 전체 구조 기획 및 디렉션.</p></div></div>
         </div>
-      </div>
-    </article>
-
-    <!-- Das Ding ( )Holder — 360° 회전 오브제 (투명 배경 webp, 칸 배경을 페이지색으로 맞춤) -->
-    <article class="project">
-      <a class="thumb" href="portfolio1_0.html" style="background:#eff2f0;">
-        <img src="das_spin.webp" alt="Das Ding ( )Holder rotating object" style="background:#eff2f0;"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-      </a>
-      <div class="meta">
-        <a class="project-name" href="portfolio1_0.html">Das Ding ( )Holder. 2026 SAKK</a>
-        <div class="desc">Object Design
-3D Visualization
-        </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="das1.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="dasde.jpg" alt="image 01"
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 1&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
     <article class="project">
       <a class="thumb" href="portfolio1_00.html">
-        <img src="lethe.jpg" alt="Project 02"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="lethe.jpg" alt="Lethe, Still Shimmering" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="portfolio1_00.html">Lethe,Still shimmering Art performance Video</a>
-        <div class="desc">Artist Coordination
-Performance Direction
-Sound Direction
-Video Editing
+        <a class="project-name" href="portfolio1_00.html">Lethe, Still Shimmering</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>제품을 직접 설명하는 영상 대신, 제품이 장면 안에서 나타나고 사라지는 방식으로 경험되는 구조 기획.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Lethe / Différance / Disappearance</p><p>기억과 망각 사이에서 이미지가 지연되는 구조 설정.</p><p>스카프를 중심 오브제가 아닌 시선 속에서 반복적으로 출현하는 매개체로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Artist collaboration</li><li>Performance direction</li><li>Location direction</li><li>Sound direction</li><li>Editing</li><li>Color grading</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Director</p><p>제품 런칭을 퍼포먼스 기반 영상 작업으로 확장.</p><p>아티스트 협업, 퍼포먼스, 사운드, 편집 전반 디렉션.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="lethe2.jpg" alt=""></div>
+<div class="g-item short">
+         <iframe loading="lazy" src="https://www.youtube.com/embed/VgphnJDY6hY" title="short"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe> 
+        
       </div>
-    </article>
-
-    <article class="project">
-      <a class="thumb" href="interview.html">
-        <img src="interview.jpg" alt="Interview Project"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-      </a>
-      <div class="meta">
-        <a class="project-name" href="interview.html">Interview Project — "I LOVE U ___". 2023 SAKK</a>
-        <div class="desc">Content &amp; Community Strategy
-Reels Planning
-Casting
-Interview Production
-        </div>
+<div class="g-item">
+        <img loading="lazy" src="lethede.jpg" alt="image 01"
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 1&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
     <article class="project">
       <a class="thumb" href="portfolio1_01.html">
-        <img src="ao.jpg" alt="Project 03"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="ao.jpg" alt="AOLADO" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
         <a class="project-name" href="portfolio1_01.html">AOLADO</a>
-        <div class="desc">Team Building
-Project Management
-Content Direction & Design
-Social Media & PR
-Production
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>가방, 여성복, 파티시에 세 사업자의 개별 역량을 하나의 브랜드 안에서 작동시키는 구조 설계.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Color as a Common Language</p><p>Roberto Burle Marx의 색채와 유기적 형태를 공통 시각 언어로 설정.</p><p>장난감, 가구, 과일, 음식 등 일상 오브제를 활용한 브랜드 이미지 확장.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Business proposal</li><li>Brand concept development</li><li>Content direction</li><li>Video &amp; sound production</li><li>Website production</li><li>Production setup</li><li>Wholesale sales</li><li>Retail negotiation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Co-founder / COO</p><p>지원사업 제안부터 브랜드 구축, 생산, 콘텐츠, 웹사이트, 영업까지 전체 사업 운영 구조 설계.</p><p>지원사업 최종 선정 및 백화점 완사입 계약 성사.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="aolado1.jpg" alt=""></div>
+<div class="g-item short">
+        <iframe loading="lazy" src="https://www.youtube.com/embed/fPiQKVRYrys" title="short"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe>
+      </div>
+<div class="g-item short">
+        <iframe loading="lazy" src="https://www.youtube.com/embed/tDd3RT5CZ5Y" title="short"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe>
+      </div>
+<div class="g-item short">
+        <iframe loading="lazy" src="https://www.youtube.com/embed/wFkfyV3iQn0" title="short"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe>
+      </div>
+<div class="g-item short">
+        <iframe loading="lazy" src="https://www.youtube.com/embed/jMfEc4y-nlg" title="short"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe>
+      </div>
+<div class="g-item">
+        <img loading="lazy" src="aode.jpg" alt="image 01"
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 1&lt;/div&gt;'">
+      </div></div></div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio_kant.html">
+        <img src="kant.jpg" alt="Immanuel Kant · Critique of Pure Reason" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio_kant.html">Immanuel Kant · Critique of Pure Reason</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>철학을 단순 인용이 아닌, 특정 사상과 관심사를 공유하는 집단의 착용 가능한 표식으로 전환하는 제품 기획.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Idea as Affiliation</p><p>『순수이성비판』 텍스트를 장식 요소가 아닌 정체성과 관심사를 드러내는 기호로 설정.</p><p>Fraktur typography를 활용한 역사성과 시각적 무게 강화.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Product concept</li><li>Graphic design</li><li>Manufacturer sourcing</li><li>Sampling &amp; production</li><li>Influencer partnership</li><li>Fulfillment structure</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Project Lead</p><p>제품 기획, 디자인, 생산, 인플루언서 협업 및 수익 배분 구조 설계.</p><p>제작·배송과 판매 채널을 분리한 50:50 협업 모델 구축.</p><p>제품 완판.</p></div></div>
+        </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kant2.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="kantde.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="3bil.html">
+        <img src="casest.jpg" alt="3billion · Digital &amp; Marketing Case Study" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="3bil.html">3billion · Digital &amp; Marketing Case Study</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>문제 발생 이후 검색을 통해 유입되는 유전자 검사 서비스의 기존 고객 흐름 분석.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Search-driven → Proactive</p><p>사후 검색 중심 서비스에서 예방 및 사전 관리 중심 서비스로 포지셔닝 전환 제안.</p><p>고객 유형에 따른 별도 사용자 여정 설계.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Customer research</li><li>User segmentation</li><li>Customer journey design</li><li>Positioning</li><li>Content strategy</li><li>Portal structure</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Independent Case Study</p><p>고객 행동 분석, 포지셔닝 재정의, 신규 진입 경로 및 콘텐츠 구조 제안.</p></div></div>
+        </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="3bil2.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="3bil1200.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="interview.html">
+        <img src="interview.jpg" alt="I LOVE U ___ · SAKK, 2023" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="interview.html">I LOVE U ___ · SAKK, 2023</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>제품 중심 콘텐츠에서 벗어나, 고객이 자신과 유사한 인물을 통해 브랜드에 진입하는 콘텐츠 구조 기획.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Identity before Product</p><p>“I LOVE U ___”라는 열린 문장을 기반으로 인터뷰이를 브랜드 서사의 주체로 설정.</p><p>제품보다 인물과 태도를 선행시키는 커뮤니케이션 방식 설계.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Persona selection</li><li>Interview planning</li><li>Reels production</li><li>A/B testing</li><li>Content strategy</li><li>Community development</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Content &amp; Community Strategy</p><p>타깃 고객과 유사한 페르소나 선정 및 인터뷰 콘텐츠 시리즈 기획.</p><p>기존 피드 게시물 대비 조회수 약 3배 증가.</p></div></div>
+        </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="interview2.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="interviewde.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
     <article class="project">
       <a class="thumb" href="portfolio1_02.html">
-        <img src="gap1.jpg" alt="Project 04"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="gap1.jpg" alt="GAP Skirt · 2024" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="portfolio1_02.html">2024 · GAP Skirt</a>
-        <div class="desc">Concept Development
-Design
+        <a class="project-name" href="portfolio1_02.html">GAP Skirt · 2024</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>의복의 안과 밖을 고정된 관계가 아닌, 이동하고 뒤집힐 수 있는 구조로 재해석.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Inside / Outside</p><p>Richard Wilson의 Turning the Place Over를 레퍼런스로 내부와 외부의 역전 구조 설정.</p><p>건축적 회전과 절개의 개념을 의복 구조로 변환.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Reference research</li><li>Form development</li><li>Garment design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer</p><p>건축적 레퍼런스를 절개, 구조, 실루엣으로 번역한 의복 디자인 개발.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="gap2.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="gapde.jpg" alt="image 01"
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 1&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
     <article class="project">
       <a class="thumb" href="opera.html">
-        <img src="opera0.jpg" alt="OPERA &amp; CURTAIN Top"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="opera0.jpg" alt="OPERA &amp; CURTAIN Top · 2024" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="opera.html">2024 · OPERA &amp; CURTAIN Top</a>
-        <div class="desc">Concept Development
-Design
+        <a class="project-name" href="opera.html">OPERA &amp; CURTAIN Top · 2024</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>신체를 통제하기 위한 장치와 부드러운 원단의 대비를 의복 구조로 전환하는 디자인 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Restraint / Draping</p><p>Elaine Cameron-Weir의 작업을 기반으로 천, 프레임, 벨트, 긴장 관계를 조형 언어로 설정.</p><p>구속 구조에서 발생하는 드레이프와 셔링 개발.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Reference research</li><li>Garment design</li><li>Draping development</li><li>Lookbook styling</li><li>Visual documentation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer</p><p>조각적 레퍼런스를 의복 구조로 전환하고 디자인, 스타일링, 비주얼 기록까지 전 과정 수행.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="opera2.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="operade.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
+      </div>
+    </article>
+
+    <p class="group-label">Other Projects</p>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_0.html" style="background:#eff2f0;">
+        <img src="das_spin.webp" alt="Das Ding ( ) Holder" style="background:#eff2f0;" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_0.html">Das Ding ( ) Holder</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>시즌 개념을 제품 설명이 아닌 물리적 오브제로 확장하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">( ) / An Open Container</p><p>비어 있는 괄호를 무엇이든 담길 수 있는 자리로 해석.</p><p>Brancusi의 응축된 형태를 참고해 시즌의 무게와 물성을 오브제로 번역.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Object design</li><li>Form development</li><li>3D rotation render</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Object Design</p><p>Das Ding 개념을 독립 오브제로 확장.</p></div></div>
+        </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="das1.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="dasde.jpg" alt="image 01"
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image 1&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
     <article class="project">
       <a class="thumb" href="portfolio1_03.html">
-        <img src="kom.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="kom.jpg" alt="Kommt. Art Gallery" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="portfolio1_03.html">Kommt. Art gallery</a>
-        <div class="desc">Branding
-Slogan Development
-Logo Design
+        <a class="project-name" href="portfolio1_03.html">Kommt. Art Gallery</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>온라인 아트 콘텐츠를 정보 피드가 아닌, 특정 감각과 정서로 기억되는 브랜드로 전환하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Art Comes with Emotion</p><p>독일어 kommt와 영어 comes의 언어적 연결을 브랜드 이름과 슬로건으로 발전.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Naming</li><li>Logo design</li><li>Slogan development</li><li>Video content</li><li>Brand concept</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Brand Design</p><p>이름, 언어, 그래픽, 영상이 하나의 브랜드 인상으로 작동하는 기본 아이덴티티 설계.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kom2.jpg" alt=""></div>
+<div class="g-item short">
+         <iframe loading="lazy" src="https://www.youtube.com/embed/dQw4w9WgXcQR5_C98IGlEQ" title="short"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowfullscreen></iframe> 
+      </div></div></div>
       </div>
     </article>
 
-     <article class="project">
-      <a class="thumb" href="portfolio_kant.html">
-        <img src="kant.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-      </a>
-      <div class="meta">
-        <a class="project-name" href="portfolio_kant.html">Immanuel Kant, Critique of Pure Reason</a>
-        <div class="desc">Project Development & Production
-          Influencer Outreach & Collaboration
-          Product Concept & Hat Design
-          Manufacturer Sourcing & Production Management
-          Partnership & Equity Structure
-        </div>
-      </div>
-    </article>
-
-<article class="project">
-      <a class="thumb" href="">
-        <img src="ka.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-      </a>
-      <div class="meta">
-        <a class="project-name" href="">Artist Product Development — Kahee Jeong</a>
-        <div class="desc">Product Development
-Production Coordination
-        </div>
-      </div>
-    </article>
-
-    
     <article class="project">
       <a class="thumb" href="">
-        <img src="dew.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="ka.jpg" alt="Kahee Jeong · Artist Product" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="">Artist Art piece - Dew Kim</a>
-        <div class="desc">Garment Development
-          Art Video Styling 
+        <a class="project-name" href="">Kahee Jeong · Artist Product</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>작가의 작업 언어를 복제하지 않으면서 판매 가능한 제품으로 변환할 필요 발생.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Artwork → Product</p><p>작가의 시각 언어와 제품 기능 사이의 균형 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Product development</li><li>Material sourcing</li><li>Production coordination</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Product Developer</p><p>작가 아이디어의 생산 가능한 제품화 및 제작 과정 조율.</p></div></div>
         </div>
-       </div>
-     </article>
-    
-      <article class="project">
-      <a class="thumb" href="portfolio1_04.html">
-        <img src="cac.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
-      </a>
-      <div class="meta">
-        <a class="project-name" href="portfolio1_04.html">Design for Cactusholic Maniac</a>
-        <div class="desc">Branding
-Slogan Development
-Graphic Design
-        </div>
+        
       </div>
     </article>
 
-     <article class="project">
-      <a class="thumb" href="3bil.html">
-        <img src="casest.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+    <article class="project">
+      <a class="thumb" href="">
+        <img src="dew.jpg" alt="Dew Kim · Art Piece" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="3bil.html">3billion - Digital & Marketing CASE STUDY</a>
-        <div class="desc">Customer Research
-Customer Journey Mapping
-Digital Strategy
-Marketing & Content Strategy
-Web / Portal Structure
+        <a class="project-name" href="">Dew Kim · Art Piece</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>의상을 독립된 패션 제품이 아닌, 작품의 일부로 기능하는 매체로 개발.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Garment as Medium</p><p>작가의 영상과 퍼포먼스 안에서 의상을 하나의 시각 매체로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Garment development</li><li>Production</li><li>Art video styling</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Garment Developer</p><p>작가의 작업 의도를 의상 구조와 스타일링으로 변환.</p></div></div>
         </div>
+        
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_04.html">
+        <img src="cac.jpg" alt="Cactusholic Maniac" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_04.html">Cactusholic Maniac</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>십대 특유의 불안정함과 과잉된 감각을 하나의 시각 캐릭터로 전환하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Cactus / Color / Thorn</p><p>선인장의 강한 색과 가시를 감정적 긴장과 연결.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Brand concept</li><li>Copywriting</li><li>Graphic design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Brand Design</p><p>개념, 언어, 그래픽을 캐릭터 중심 아이덴티티로 구성.</p></div></div>
+        </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="cactus.jpg" alt=""></div></div></div>
       </div>
     </article>
 
     <article class="project">
       <a class="thumb" href="portfolio1_05.html">
-        <img src="al.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="al.jpg" alt="AL Studio · Apron" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="portfolio1_05.html">Apron Design for AL studio</a>
-        <div class="desc">Apron Design
-Lookbook Styling
+        <a class="project-name" href="portfolio1_05.html">AL Studio · Apron</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>기능적 작업복인 앞치마를 스튜디오의 시각 정체성으로 확장하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Uniform as Identity</p><p>작업복과 브랜드 이미지 사이의 경계 축소.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Apron design</li><li>Styling</li><li>Lookbook direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer / Stylist</p><p>제품 디자인과 착장 이미지의 동시 설계.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="al1.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="alde.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
-     <article class="project">
+    <article class="project">
       <a class="thumb" href="portfolio1_06.html">
-        <img src="maska.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="maska.jpg" alt="MASKA" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="portfolio1_06.html">Styling for eyewear brand MASKA</a>
-        <div class="desc">Lookbook Styling
+        <a class="project-name" href="portfolio1_06.html">MASKA</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>클라이언트가 요청한 Gucci 중심 맥시멀 스타일의 제품 이미지 구현.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Product within Character</p><p>제품 단독 강조가 아닌 인물, 의상, 액세서리를 하나의 캐릭터로 구성.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Styling research</li><li>Wardrobe selection</li><li>Accessory coordination</li><li>On-set styling</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stylist</p><p>클라이언트 레퍼런스의 실제 촬영 이미지 번역.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="mas2.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="maskade.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
-     <article class="project">
+    <article class="project">
       <a class="thumb" href="portfolio1_07.html">
-        <img src="leblue.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="leblue.jpg" alt="LEBLUE" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="portfolio1_07.html">Styling for Jewelry brand LEBLUE</a>
-        <div class="desc">Lookbook Styling
+        <a class="project-name" href="portfolio1_07.html">LEBLUE</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>주얼리가 의상에 묻히지 않으면서 전체 이미지와 분리되지 않는 균형 필요.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Image as a Whole</p><p>제품, 의상, 인물 사이의 비율과 시선 조정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Fashion styling</li><li>Jewelry coordination</li><li>Visual direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stylist</p><p>주얼리와 착장의 관계 조율을 통한 하나의 이미지 완성.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="leblue2.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="lebluede.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
       </div>
-
-       
     </article>
-      <article class="project">
+
+    <article class="project">
       <a class="thumb" href="women.html">
-        <img src="women.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="women.jpg" alt="Women in Art" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="women.html">Women in Art - Statioinary Design</a>
-        <div class="desc">
+        <a class="project-name" href="women.html">Women in Art</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>프로젝트 메시지를 일회성 그래픽이 아닌, 소유하고 사용할 수 있는 물건으로 확장.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Editorial Object</p><p>노트를 정보 전달물이 아닌 작은 출판물이자 오브제로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Graphic design</li><li>Paper selection</li><li>Color direction</li><li>Stationery design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stationery Designer</p><p>브랜드 콘셉트의 그래픽, 종이, 색상, 제작 사양 구체화.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="women1.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="womende.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
-
-
-    
-      <article class="project">
+    <article class="project">
       <a class="thumb" href="">
-        <img src="poet.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="poet.jpg" alt="POET · Cordpress" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
-        <a class="project-name" href="">POET - Cordpress</a>
-        <div class="desc">Participant poet
+        <a class="project-name" href="">POET · Cordpress</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>텍스트를 설명 도구가 아닌 독립된 작업 형식으로 다룬 프로젝트.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Text as Work</p><p>이미지나 제품이 아닌 언어 자체를 결과물로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Writing</li><li>Editing</li><li>Publication participation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Participant Poet</p><p>Cordpress 프로젝트 시 작업 참여.</p></div></div>
         </div>
+        
       </div>
     </article>
 
-     <article class="project">
+    <article class="project">
       <a class="thumb" href="portfolio1_08.html">
-        <img src="kingking.jpg" alt="Project 05"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image1&lt;/div&gt;'">
+        <img src="kingking.jpg" alt="King Kong Shower" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
         <a class="project-name" href="portfolio1_08.html">King Kong Shower</a>
-        <div class="desc">Creative Production
-          Client Communication & Project Coordination
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>명확한 클라이언트 요구사항을 외부 그래픽 디자이너가 실행 가능한 작업 언어로 변환할 필요 발생.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Translate the Brief</p><p>클라이언트 요구와 디자이너 실행 사이의 정보 손실 최소화를 목표로 커뮤니케이션 구조 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Client communication</li><li>Designer sourcing</li><li>Creative coordination</li><li>Feedback management</li><li>Production supervision</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Producer</p><p>클라이언트와 디자이너 간 요구사항 정리, 피드백 전달, 제작 과정 조율 및 결과물 품질 관리.</p></div></div>
         </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kingking.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="king2.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
-
   </div>
-  <!-- ▲▲▲ 여기까지 ▲▲▲ -->
+
+  <footer class="foot">
+    <a href="portfolio1.html">Work</a>
+    <a href="career.html">Career</a>
+    <a href="https://instagram.com/limy.vorn" target="_blank" rel="noopener">Instagram</a>
+    <a class="small" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Top</a>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.process').forEach(p =>
+      p.querySelectorAll('.step').forEach((s, i) => s.style.setProperty('--i', i)));
+
+    // 화면에 들어오면 .in → 4단계가 차례로 나타남 (한 번만)
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.25 });
+    document.querySelectorAll('.project').forEach(a => io.observe(a));
+
+    // 모바일 + / − 버튼
+    document.querySelectorAll('.toggle').forEach(b => b.addEventListener('click', () => {
+      const a = b.closest('.project');
+      const open = a.classList.toggle('open');
+      b.textContent = open ? '−' : '+';
+      b.setAttribute('aria-expanded', open);
+      b.setAttribute('aria-label', open ? '상세 이미지 접기' : '상세 이미지 펼치기');
+      const pc = window.matchMedia('(min-width:741px)').matches;
+      if (pc) { const m = a.querySelector('.more'); if (m) m.scrollTop = 0;
+                a.scrollIntoView({ block:'center', behavior:'smooth' }); }
+      else if (!open) a.scrollIntoView({ block:'start', behavior:'smooth' });
+    }));
+  </script>
 
 </body>
 </html>
