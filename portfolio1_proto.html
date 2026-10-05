@@ -85,9 +85,9 @@
     /* 데스크톱: 요약·버튼 숨김, 4단계 항상 보임 */
     /* +/− 버튼 (PC·모바일 공통 모양) */
     .toggle {
-      display:block; width:100%; margin-top:18px; padding:10px 0;
-      background:none; border:0; border-top:1px solid rgba(28,26,24,.18); border-bottom:1px solid rgba(28,26,24,.18);
-      font:300 20px/1 'Jost', sans-serif; color:#1c1a18; cursor:pointer;
+      display:block; width:100%; margin-top:14px; padding:6px 0;
+      background:none; border:0;
+      font:700 24px/1 'Jost', sans-serif; color:#1c1a18; cursor:pointer;
       -webkit-tap-highlight-color:transparent; transition:opacity .2s;
     }
     .toggle:hover { opacity:.55; }
@@ -99,6 +99,7 @@
 
     /* PC: + 누르면 타이틀·설명이 사라지고, 그 자리(이미지 높이만큼)에서 상세 이미지가 안쪽 스크롤 */
     @media (min-width:741px) {
+      .toggle { width:auto; margin-left:auto; padding:4px 0 4px 16px; font-size:32px; text-align:right; }
       .meta { position:relative; }
       .more { display:none; }
       .more-in { display:flex; flex-direction:column; gap:10px; align-items:center; }
@@ -106,7 +107,7 @@
       .project.open .project-name, .project.open .process { display:none; }
       .project.open .toggle { margin-top:0; }
       .project.open .more {
-        display:block; position:absolute; top:44px; left:0; right:0; bottom:0;
+        display:block; position:absolute; top:46px; left:0; right:0; bottom:0;
         overflow-y:auto; overscroll-behavior:contain;
         scrollbar-width:thin; scrollbar-color:rgba(28,26,24,.3) transparent;
         animation:fadeIn .45s ease;
@@ -281,25 +282,6 @@
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="3bil2.jpg" alt=""></div>
 <div class="g-item">
         <img loading="lazy" src="3bil1200.jpg" alt=""
-             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
-      </div></div></div>
-      </div>
-    </article>
-
-    <article class="project">
-      <a class="thumb" href="portfolio1_08.html">
-        <img src="kingking.jpg" alt="King Kong Shower" loading="lazy"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
-      </a>
-      <div class="meta">
-        <a class="project-name" href="portfolio1_08.html">King Kong Shower</a>
-        <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>클라이언트가 원하는 방향은 명확했지만, 이를 실제 그래픽 결과물로 번역할 외부 디자이너와의 조율이 필요했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Translate the Brief</p><p>클라이언트의 요구사항을 시각적인 작업 언어로 정리하고, 디자이너가 실행 가능한 수준까지 구체화하는 데 집중했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Client communication</li><li>Designer sourcing</li><li>Creative coordination</li><li>Feedback management</li><li>Production supervision</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Producer</p><p>클라이언트와 디자이너 사이의 커뮤니케이션을 담당하고, 요구사항이 결과물까지 일관되게 반영되도록 프로젝트를 조율했다.</p></div></div>
-        </div>
-        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
-        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kingking.jpg" alt=""></div>
-<div class="g-item">
-        <img loading="lazy" src="king2.jpg" alt=""
              onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
       </div></div></div>
       </div>
@@ -533,6 +515,25 @@
           <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>텍스트를 설명의 도구가 아니라 독립된 작업 형식으로 사용한 프로젝트.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Text as Work</p><p>시를 통해 이미지나 제품이 아닌 언어 자체를 결과물로 다뤘다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Writing</li><li>Editing</li><li>Publication participation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Participant Poet</p><p>Cordpress 프로젝트에 시 작업으로 참여했다.</p></div></div>
         </div>
         
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_08.html">
+        <img src="kingking.jpg" alt="King Kong Shower" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_08.html">King Kong Shower</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>클라이언트가 원하는 방향은 명확했지만, 이를 실제 그래픽 결과물로 번역할 외부 디자이너와의 조율이 필요했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Translate the Brief</p><p>클라이언트의 요구사항을 시각적인 작업 언어로 정리하고, 디자이너가 실행 가능한 수준까지 구체화하는 데 집중했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Client communication</li><li>Designer sourcing</li><li>Creative coordination</li><li>Feedback management</li><li>Production supervision</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Producer</p><p>클라이언트와 디자이너 사이의 커뮤니케이션을 담당하고, 요구사항이 결과물까지 일관되게 반영되도록 프로젝트를 조율했다.</p></div></div>
+        </div>
+        <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
+        <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kingking.jpg" alt=""></div>
+<div class="g-item">
+        <img loading="lazy" src="king2.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div></div></div>
       </div>
     </article>
 
