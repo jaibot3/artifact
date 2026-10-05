@@ -83,7 +83,38 @@
     .project-name { line-height:1.15; }
 
     /* 데스크톱: 요약·버튼 숨김, 4단계 항상 보임 */
-    .toggle, .more { display:none; }
+    /* +/− 버튼 (PC·모바일 공통 모양) */
+    .toggle {
+      display:block; width:100%; margin-top:18px; padding:10px 0;
+      background:none; border:0; border-top:1px solid rgba(28,26,24,.18); border-bottom:1px solid rgba(28,26,24,.18);
+      font:300 20px/1 'Jost', sans-serif; color:#1c1a18; cursor:pointer;
+      -webkit-tap-highlight-color:transparent; transition:opacity .2s;
+    }
+    .toggle:hover { opacity:.55; }
+    .g-item { display:block; width:100%; background:#2b2b2b; }
+    .g-item img { width:100%; height:auto; display:block; }
+    .g-item.short { max-width:405px; }
+    .g-item.short iframe { width:100%; aspect-ratio:9/16; border:0; display:block; background:#000; }
+    .g-item.video iframe { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+
+    /* PC: + 누르면 타이틀·설명이 사라지고, 그 자리(이미지 높이만큼)에서 상세 이미지가 안쪽 스크롤 */
+    @media (min-width:741px) {
+      .meta { position:relative; }
+      .more { display:none; }
+      .more-in { display:flex; flex-direction:column; gap:10px; align-items:center; }
+      .project.open .meta { align-self:stretch; padding-top:0; }
+      .project.open .project-name, .project.open .process { display:none; }
+      .project.open .toggle { margin-top:0; }
+      .project.open .more {
+        display:block; position:absolute; top:44px; left:0; right:0; bottom:0;
+        overflow-y:auto; overscroll-behavior:contain;
+        scrollbar-width:thin; scrollbar-color:rgba(28,26,24,.3) transparent;
+        animation:fadeIn .45s ease;
+      }
+      .more::-webkit-scrollbar { width:4px; }
+      .more::-webkit-scrollbar-thumb { background:rgba(28,26,24,.3); }
+    }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
     .process { margin-top:14px; }          /* 타이틀 ↔ 설명 간격 */
     .step { padding:14px 0 0; }
@@ -114,13 +145,7 @@
       .project-name { font-size:24px; }
       .group-label { padding:16px 5% 0; margin-bottom:-24px; }
 
-      /* 모바일: 설명 아래 꽉 찬 +/− 버튼 → 상세 페이지의 세로 이미지가 목록 안에서 펼쳐짐 */
-      .toggle {
-        display:block; width:100%; margin-top:18px; padding:10px 0;
-        background:none; border:0; border-top:1px solid rgba(28,26,24,.18); border-bottom:1px solid rgba(28,26,24,.18);
-        font:300 20px/1 'Jost', sans-serif; color:#1c1a18; cursor:pointer;
-        -webkit-tap-highlight-color:transparent;
-      }
+      /* 모바일: 설명 아래 꽉 찬 +/− 버튼 → 상세 이미지가 목록 안에서 아래로 펼쳐짐 */
       .more {
         display:grid; grid-template-rows:0fr; margin:0 -5.6%;   /* 이미지는 화면 폭 가득 */
         transition:grid-template-rows .5s cubic-bezier(.25,.8,.25,1);
@@ -128,11 +153,6 @@
       .more-in { overflow:hidden; display:flex; flex-direction:column; gap:12px; align-items:center; }
       .project.open .more { grid-template-rows:1fr; }
       .project.open .more-in { padding-top:14px; }
-      .g-item { display:block; width:100%; background:#2b2b2b; }
-      .g-item img { width:100%; height:auto; display:block; }
-      .g-item.short { max-width:405px; }
-      .g-item.short iframe { width:100%; aspect-ratio:9/16; border:0; display:block; background:#000; }
-      .g-item.video iframe { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
     }
   </style>
 </head>
@@ -535,7 +555,10 @@
       b.textContent = open ? '−' : '+';
       b.setAttribute('aria-expanded', open);
       b.setAttribute('aria-label', open ? '상세 이미지 접기' : '상세 이미지 펼치기');
-      if (!open) a.scrollIntoView({ block:'start', behavior:'smooth' });
+      const pc = window.matchMedia('(min-width:741px)').matches;
+      if (pc) { const m = a.querySelector('.more'); if (m) m.scrollTop = 0;
+                a.scrollIntoView({ block:'center', behavior:'smooth' }); }
+      else if (!open) a.scrollIntoView({ block:'start', behavior:'smooth' });
     }));
   </script>
 
