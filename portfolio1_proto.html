@@ -75,6 +75,15 @@
     .desc { margin-top:10px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-line; }
 
 
+    /* ── 배경 #75481B + 밝은 글자 ── */
+    html, body { background:#75481B; color:#f4ede2; }
+    .page-title, .project-name { color:#f4ede2; }
+    .back { color:rgba(244,237,226,.6); } .back:hover { color:#f4ede2; }
+    .group-label, .k { color:rgba(244,237,226,.55) !important; }
+    .v p, .ex li { color:rgba(244,237,226,.8) !important; }
+    .v .hl { color:#f4ede2 !important; }
+    .toggle { color:#f4ede2 !important; }
+
     /* 섹션 구분 (Selected / Other) */
     .group-label {
       font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#8a7f70;
@@ -109,11 +118,11 @@
       .project.open .more {
         display:block; position:absolute; top:46px; left:0; right:0; bottom:0;
         overflow-y:auto; overscroll-behavior:contain;
-        scrollbar-width:thin; scrollbar-color:rgba(28,26,24,.3) transparent;
+        scrollbar-width:thin; scrollbar-color:rgba(244,237,226,.35) transparent;
         animation:fadeIn .45s ease;
       }
       .more::-webkit-scrollbar { width:4px; }
-      .more::-webkit-scrollbar-thumb { background:rgba(28,26,24,.3); }
+      .more::-webkit-scrollbar-thumb { background:rgba(244,237,226,.35); }
     }
     @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
@@ -174,7 +183,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_0.html">Das Ding · SAKK, 2026</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>‘Basic’을 단순함이나 미니멀리즘으로 반복하고 싶지 않았다.</p><p>형태를 덜어내면서도 물성과 무게가 남는 방식을 찾는 데서 시작했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Das Ding / The Thing</p><p>대상을 다른 의미로 환원하기보다, 하나의 물체가 그 자체로 존재하는 상태에 집중했다.</p><p>응축된 형태, 반복되는 단위, 원단의 무게와 구조를 제품의 언어로 가져왔다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Concept development</li><li>Product design</li><li>Material &amp; silhouette development</li><li>Object development</li><li>Spatial presentation</li><li>Launch direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Direction / Product Development</p><p>시즌의 개념부터 제품, 오브제, 공간 연출까지 하나의 시각 언어로 연결했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>‘Basic’을 단순함이나 미니멀리즘으로 반복하지 않고, 형태를 덜어내면서도 물성과 무게가 남는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Das Ding / The Thing</p><p>대상을 다른 의미로 환원하기보다, 하나의 물체가 그 자체로 존재하는 상태에 집중.</p><p>응축된 형태, 반복되는 단위, 원단의 무게와 구조를 제품 언어로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Concept development</li><li>Product design</li><li>Material &amp; silhouette development</li><li>Object development</li><li>Spatial presentation</li><li>Launch direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Direction / Product Development</p><p>시즌 개념을 제품, 오브제, 공간 연출까지 연결하는 전체 구조 기획 및 디렉션.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="das1.jpg" alt=""></div>
@@ -193,7 +202,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_00.html">Lethe, Still Shimmering</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>제품을 설명하는 영상보다, 제품이 하나의 장면 안에서 잠시 나타났다 사라지는 방식을 만들고 싶었다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Lethe / Différance / Disappearance</p><p>스카프를 직접적으로 보여주는 대신, 기억과 망각 사이에서 이미지가 계속 지연되는 구조를 만들었다.</p><p>제품은 영상의 주인공이라기보다 시선 안에서 반복적으로 나타나는 매개체로 사용했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Artist collaboration</li><li>Performance direction</li><li>Location direction</li><li>Sound direction</li><li>Editing</li><li>Color grading</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Director</p><p>아티스트 박성은과 협업해 제품 런칭을 퍼포먼스 기반 영상 작업으로 확장했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>제품을 직접 설명하는 영상 대신, 제품이 장면 안에서 나타나고 사라지는 방식으로 경험되는 구조 기획.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Lethe / Différance / Disappearance</p><p>기억과 망각 사이에서 이미지가 지연되는 구조 설정.</p><p>스카프를 중심 오브제가 아닌 시선 속에서 반복적으로 출현하는 매개체로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Artist collaboration</li><li>Performance direction</li><li>Location direction</li><li>Sound direction</li><li>Editing</li><li>Color grading</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Director</p><p>제품 런칭을 퍼포먼스 기반 영상 작업으로 확장.</p><p>아티스트 협업, 퍼포먼스, 사운드, 편집 전반 디렉션.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="lethe2.jpg" alt=""></div>
@@ -218,7 +227,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_01.html">AOLADO</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>서로 다른 업종의 세 사업자가 함께 참여하는 지원사업이었다.</p><p>가방, 여성복, 파티시에라는 서로 다른 영역을 단순히 묶는 것이 아니라, 각자의 강점을 하나의 브랜드 안에서 작동하게 만드는 구조가 필요했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Color as a Common Language</p><p>Roberto Burle Marx의 강한 색채와 유기적 형태를 출발점으로 삼아 세 사업자의 차이를 하나의 시각 언어 안에 연결했다.</p><p>제품뿐 아니라 장난감, 가구, 과일, 음식 등 일상 오브제를 함께 사용해 브랜드의 색채를 확장했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Business proposal</li><li>Brand concept development</li><li>Content direction</li><li>Video &amp; sound production</li><li>Website production</li><li>Production setup</li><li>Wholesale sales</li><li>Retail negotiation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Co-founder / COO</p><p>사업 기획부터 지원사업 제안, 브랜드 구축, 생산, 콘텐츠, 웹사이트, 영업까지 전체 운영 구조를 설계했다.</p><p>지원사업 최종 선정.</p><p>백화점 완사입 계약 성사.</p><p>Little Archive 입점.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>가방, 여성복, 파티시에 세 사업자의 개별 역량을 하나의 브랜드 안에서 작동시키는 구조 설계.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Color as a Common Language</p><p>Roberto Burle Marx의 색채와 유기적 형태를 공통 시각 언어로 설정.</p><p>장난감, 가구, 과일, 음식 등 일상 오브제를 활용한 브랜드 이미지 확장.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Business proposal</li><li>Brand concept development</li><li>Content direction</li><li>Video &amp; sound production</li><li>Website production</li><li>Production setup</li><li>Wholesale sales</li><li>Retail negotiation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Co-founder / COO</p><p>지원사업 제안부터 브랜드 구축, 생산, 콘텐츠, 웹사이트, 영업까지 전체 사업 운영 구조 설계.</p><p>지원사업 최종 선정 및 백화점 완사입 계약 성사.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="aolado1.jpg" alt=""></div>
@@ -257,7 +266,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio_kant.html">Immanuel Kant · Critique of Pure Reason</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>철학을 단순한 인용이나 그래픽 모티프로 소비하는 대신, 특정 생각을 공유하는 사람들이 실제로 착용할 수 있는 제품을 만들고 싶었다.</p><p>동시에 특정 분야의 인플루언서가 가진 커뮤니티와 제품 생산을 결합하는 판매 구조를 실험했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Idea as Affiliation</p><p>『순수이성비판』이라는 텍스트를 장식적 문구가 아니라, 특정 관심과 태도를 드러내는 표식으로 사용했다.</p><p>고전적인 Fraktur typography를 적용해 텍스트의 역사적 무게를 유지했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Product concept</li><li>Graphic design</li><li>Manufacturer sourcing</li><li>Sampling &amp; production</li><li>Influencer partnership</li><li>Fulfillment structure</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Project Lead</p><p>기획, 디자인, 생산, 인플루언서 협업 구조를 설계했다.</p><p>제품 제작과 배송은 직접 운영하고, 파트너의 커뮤니티를 판매 채널로 활용하는 50:50 협업 모델을 구성했다.</p><p>제품 완판.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>철학을 단순 인용이 아닌, 특정 사상과 관심사를 공유하는 집단의 착용 가능한 표식으로 전환하는 제품 기획.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Idea as Affiliation</p><p>『순수이성비판』 텍스트를 장식 요소가 아닌 정체성과 관심사를 드러내는 기호로 설정.</p><p>Fraktur typography를 활용한 역사성과 시각적 무게 강화.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Product concept</li><li>Graphic design</li><li>Manufacturer sourcing</li><li>Sampling &amp; production</li><li>Influencer partnership</li><li>Fulfillment structure</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Project Lead</p><p>제품 기획, 디자인, 생산, 인플루언서 협업 및 수익 배분 구조 설계.</p><p>제작·배송과 판매 채널을 분리한 50:50 협업 모델 구축.</p><p>제품 완판.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kant2.jpg" alt=""></div>
@@ -276,7 +285,7 @@
       <div class="meta">
         <a class="project-name" href="3bil.html">3billion · Digital &amp; Marketing Case Study</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>유전자 검사 서비스는 대부분 사용자가 이미 건강 문제를 인식한 이후 검색을 통해 발견된다.</p><p>이 구조를 예방과 사전 관리의 관점으로 전환할 가능성을 검토했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Search-driven → Proactive</p><p>문제가 발생한 이후 서비스를 찾는 고객과, 위험을 미리 관리하려는 고객을 분리해 다른 사용자 여정을 설계했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Customer research</li><li>User segmentation</li><li>Customer journey design</li><li>Positioning</li><li>Content strategy</li><li>Portal structure</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Independent Case Study</p><p>채용 과정의 마케팅 사전 과제로 진행한 단독 프로젝트.</p><p>서비스 구조와 고객 행동을 분석하고 새로운 고객 진입 경로와 콘텐츠 방향을 제안했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>문제 발생 이후 검색을 통해 유입되는 유전자 검사 서비스의 기존 고객 흐름 분석.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Search-driven → Proactive</p><p>사후 검색 중심 서비스에서 예방 및 사전 관리 중심 서비스로 포지셔닝 전환 제안.</p><p>고객 유형에 따른 별도 사용자 여정 설계.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Customer research</li><li>User segmentation</li><li>Customer journey design</li><li>Positioning</li><li>Content strategy</li><li>Portal structure</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Independent Case Study</p><p>고객 행동 분석, 포지셔닝 재정의, 신규 진입 경로 및 콘텐츠 구조 제안.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="3bil2.jpg" alt=""></div>
@@ -295,7 +304,7 @@
       <div class="meta">
         <a class="project-name" href="interview.html">I LOVE U ___ · SAKK, 2023</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>브랜드 콘텐츠를 제품 중심으로 운영하면 고객은 계속 관찰자의 위치에 남는다.</p><p>고객이 자신과 비슷한 사람을 통해 브랜드 안으로 들어오는 구조를 만들고자 했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Identity before Product</p><p>“I LOVE U ___”라는 열린 문장을 사용해 인터뷰이가 브랜드 콘텐츠의 주체가 되도록 했다.</p><p>제품을 설명하는 대신 인물과 태도를 앞세워 브랜드의 정체성을 전달했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Persona selection</li><li>Interview planning</li><li>Reels production</li><li>A/B testing</li><li>Content strategy</li><li>Community development</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Content &amp; Community Strategy</p><p>타깃 고객이 자신을 투영할 수 있는 인물을 선정하고 인터뷰 기반 콘텐츠 시리즈를 기획했다.</p><p>기존 피드 게시물 대비 조회수 약 3배 증가.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>제품 중심 콘텐츠에서 벗어나, 고객이 자신과 유사한 인물을 통해 브랜드에 진입하는 콘텐츠 구조 기획.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Identity before Product</p><p>“I LOVE U ___”라는 열린 문장을 기반으로 인터뷰이를 브랜드 서사의 주체로 설정.</p><p>제품보다 인물과 태도를 선행시키는 커뮤니케이션 방식 설계.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Persona selection</li><li>Interview planning</li><li>Reels production</li><li>A/B testing</li><li>Content strategy</li><li>Community development</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Content &amp; Community Strategy</p><p>타깃 고객과 유사한 페르소나 선정 및 인터뷰 콘텐츠 시리즈 기획.</p><p>기존 피드 게시물 대비 조회수 약 3배 증가.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="interview2.jpg" alt=""></div>
@@ -314,7 +323,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_02.html">GAP Skirt · 2024</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>의복의 안과 밖을 하나의 고정된 관계로 보지 않고, 구조 자체가 뒤집히거나 이동하는 형태를 탐구했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Inside / Outside</p><p>Richard Wilson의 Turning the Place Over에서 건축의 일부가 회전하며 내부와 외부의 관계가 뒤집히는 방식에 주목했다.</p><p>이를 의복의 절개와 구조로 번역했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Reference research</li><li>Form development</li><li>Garment design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer</p><p>건축적 레퍼런스를 의복의 구조와 실루엣으로 변환했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>의복의 안과 밖을 고정된 관계가 아닌, 이동하고 뒤집힐 수 있는 구조로 재해석.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Inside / Outside</p><p>Richard Wilson의 Turning the Place Over를 레퍼런스로 내부와 외부의 역전 구조 설정.</p><p>건축적 회전과 절개의 개념을 의복 구조로 변환.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Reference research</li><li>Form development</li><li>Garment design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer</p><p>건축적 레퍼런스를 절개, 구조, 실루엣으로 번역한 의복 디자인 개발.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="gap2.jpg" alt=""></div>
@@ -333,7 +342,7 @@
       <div class="meta">
         <a class="project-name" href="opera.html">OPERA &amp; CURTAIN Top · 2024</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>신체를 고정하거나 통제하기 위한 장치가 의복 안으로 들어왔을 때, 기능과 장식의 경계가 어떻게 달라지는지 탐구했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Restraint / Draping</p><p>Elaine Cameron-Weir의 작업에서 천과 금속 구조, 묶임과 긴장의 관계를 가져왔다.</p><p>부드러운 원단과 이를 통제하는 구조물의 대비를 드레이프와 셔링으로 변환했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Reference research</li><li>Garment design</li><li>Draping development</li><li>Lookbook styling</li><li>Visual documentation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer</p><p>조각적 레퍼런스를 의복 구조로 변환하고 디자인 개발부터 비주얼 기록까지 진행했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>신체를 통제하기 위한 장치와 부드러운 원단의 대비를 의복 구조로 전환하는 디자인 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Restraint / Draping</p><p>Elaine Cameron-Weir의 작업을 기반으로 천, 프레임, 벨트, 긴장 관계를 조형 언어로 설정.</p><p>구속 구조에서 발생하는 드레이프와 셔링 개발.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Reference research</li><li>Garment design</li><li>Draping development</li><li>Lookbook styling</li><li>Visual documentation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer</p><p>조각적 레퍼런스를 의복 구조로 전환하고 디자인, 스타일링, 비주얼 기록까지 전 과정 수행.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="opera2.jpg" alt=""></div>
@@ -347,14 +356,14 @@
     <p class="group-label">Other Projects</p>
 
     <article class="project">
-      <a class="thumb" href="portfolio1_0.html" style="background:#eff2f0;">
-        <img src="das_spin.webp" alt="Das Ding ( ) Holder" style="background:#eff2f0;" loading="lazy"
+      <a class="thumb" href="portfolio1_0.html" style="background:#75481B;">
+        <img src="das_spin.webp" alt="Das Ding ( ) Holder" style="background:#75481B;" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
       </a>
       <div class="meta">
         <a class="project-name" href="portfolio1_0.html">Das Ding ( ) Holder</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>시즌의 개념을 제품 설명만으로 전달하지 않고, 물리적인 오브제로 확장하고자 했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">( ) / An Open Container</p><p>비어 있는 괄호를 무엇이든 들어갈 수 있는 자리로 해석했다.</p><p>Brancusi의 응축된 형태를 참고해 시즌의 무게와 물성을 오브제로 번역했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Object design</li><li>Form development</li><li>3D rotation render</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Object Design</p><p>Das Ding의 개념을 독립적인 오브제로 확장했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>시즌 개념을 제품 설명이 아닌 물리적 오브제로 확장하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">( ) / An Open Container</p><p>비어 있는 괄호를 무엇이든 담길 수 있는 자리로 해석.</p><p>Brancusi의 응축된 형태를 참고해 시즌의 무게와 물성을 오브제로 번역.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Object design</li><li>Form development</li><li>3D rotation render</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Object Design</p><p>Das Ding 개념을 독립 오브제로 확장.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="das1.jpg" alt=""></div>
@@ -373,7 +382,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_03.html">Kommt. Art Gallery</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>온라인 아트 콘텐츠가 단순한 정보 피드가 아니라 특정한 감각과 정서로 기억될 수 있는 방법을 찾았다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Art Comes with Emotion</p><p>독일어 kommt와 영어 comes의 언어적 연결을 브랜드 이름과 슬로건으로 발전시켰다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Naming</li><li>Logo design</li><li>Slogan development</li><li>Video content</li><li>Brand concept</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Brand Design</p><p>이름, 언어, 그래픽, 영상이 하나의 브랜드 인상으로 작동하도록 기본 아이덴티티를 설계했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>온라인 아트 콘텐츠를 정보 피드가 아닌, 특정 감각과 정서로 기억되는 브랜드로 전환하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Art Comes with Emotion</p><p>독일어 kommt와 영어 comes의 언어적 연결을 브랜드 이름과 슬로건으로 발전.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Naming</li><li>Logo design</li><li>Slogan development</li><li>Video content</li><li>Brand concept</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Brand Design</p><p>이름, 언어, 그래픽, 영상이 하나의 브랜드 인상으로 작동하는 기본 아이덴티티 설계.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kom2.jpg" alt=""></div>
@@ -393,7 +402,7 @@
       <div class="meta">
         <a class="project-name" href="">Kahee Jeong · Artist Product</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>작가의 작업 언어를 그대로 복제하지 않으면서도 실제 판매 가능한 제품으로 변환해야 했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Artwork → Product</p><p>작가의 시각적 언어와 제품의 기능 사이에서 균형을 잡았다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Product development</li><li>Material sourcing</li><li>Production coordination</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Product Developer</p><p>작가의 아이디어를 생산 가능한 제품으로 구체화하고 제작 과정을 조율했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>작가의 작업 언어를 복제하지 않으면서 판매 가능한 제품으로 변환할 필요 발생.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Artwork → Product</p><p>작가의 시각 언어와 제품 기능 사이의 균형 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Product development</li><li>Material sourcing</li><li>Production coordination</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Product Developer</p><p>작가 아이디어의 생산 가능한 제품화 및 제작 과정 조율.</p></div></div>
         </div>
         
       </div>
@@ -407,7 +416,7 @@
       <div class="meta">
         <a class="project-name" href="">Dew Kim · Art Piece</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>의상을 독립적인 패션 제품이 아니라 작품의 일부로 기능하도록 개발했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Garment as Medium</p><p>작가의 영상과 퍼포먼스 안에서 의상이 하나의 시각적 매체로 작동하도록 접근했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Garment development</li><li>Production</li><li>Art video styling</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Garment Developer</p><p>작가의 작업 의도를 실제 의상 구조와 스타일링으로 변환했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>의상을 독립된 패션 제품이 아닌, 작품의 일부로 기능하는 매체로 개발.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Garment as Medium</p><p>작가의 영상과 퍼포먼스 안에서 의상을 하나의 시각 매체로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Garment development</li><li>Production</li><li>Art video styling</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Garment Developer</p><p>작가의 작업 의도를 의상 구조와 스타일링으로 변환.</p></div></div>
         </div>
         
       </div>
@@ -421,7 +430,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_04.html">Cactusholic Maniac</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>십대 특유의 불안정함과 과잉된 감각을 하나의 시각적 캐릭터로 만들고자 했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Cactus / Color / Thorn</p><p>선인장의 강한 색과 가시를 감정적 긴장과 연결했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Brand concept</li><li>Copywriting</li><li>Graphic design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Brand Design</p><p>개념, 언어, 그래픽을 하나의 캐릭터 중심 아이덴티티로 구성했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>십대 특유의 불안정함과 과잉된 감각을 하나의 시각 캐릭터로 전환하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Cactus / Color / Thorn</p><p>선인장의 강한 색과 가시를 감정적 긴장과 연결.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Brand concept</li><li>Copywriting</li><li>Graphic design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Brand Design</p><p>개념, 언어, 그래픽을 캐릭터 중심 아이덴티티로 구성.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="cactus.jpg" alt=""></div></div></div>
@@ -436,7 +445,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_05.html">AL Studio · Apron</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>기능적인 작업복인 앞치마가 스튜디오의 시각적 정체성까지 보여줄 수 있도록 접근했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Uniform as Identity</p><p>작업복과 브랜드 이미지의 경계를 줄였다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Apron design</li><li>Styling</li><li>Lookbook direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer / Stylist</p><p>제품 디자인과 착장 이미지를 함께 설계했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>기능적 작업복인 앞치마를 스튜디오의 시각 정체성으로 확장하는 방향 설정.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Uniform as Identity</p><p>작업복과 브랜드 이미지 사이의 경계 축소.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Apron design</li><li>Styling</li><li>Lookbook direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Designer / Stylist</p><p>제품 디자인과 착장 이미지의 동시 설계.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="al1.jpg" alt=""></div>
@@ -455,7 +464,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_06.html">MASKA</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>클라이언트가 요청한 당시 Gucci 중심의 맥시멀한 스타일을 제품 이미지 안에서 구현했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Product within Character</p><p>제품만 강조하지 않고 인물, 의상, 액세서리가 하나의 캐릭터로 보이도록 구성했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Styling research</li><li>Wardrobe selection</li><li>Accessory coordination</li><li>On-set styling</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stylist</p><p>클라이언트의 레퍼런스를 실제 촬영 이미지로 번역했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>클라이언트가 요청한 Gucci 중심 맥시멀 스타일의 제품 이미지 구현.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Product within Character</p><p>제품 단독 강조가 아닌 인물, 의상, 액세서리를 하나의 캐릭터로 구성.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Styling research</li><li>Wardrobe selection</li><li>Accessory coordination</li><li>On-set styling</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stylist</p><p>클라이언트 레퍼런스의 실제 촬영 이미지 번역.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="mas2.jpg" alt=""></div>
@@ -474,7 +483,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_07.html">LEBLUE</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>주얼리가 의상에 묻히지 않으면서도 전체 이미지와 분리되어 보이지 않는 균형이 필요했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Image as a Whole</p><p>제품, 의상, 인물 사이의 비율과 시선을 조정했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Fashion styling</li><li>Jewelry coordination</li><li>Visual direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stylist</p><p>주얼리와 전체 착장의 관계를 조율해 하나의 이미지로 완성했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>주얼리가 의상에 묻히지 않으면서 전체 이미지와 분리되지 않는 균형 필요.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Image as a Whole</p><p>제품, 의상, 인물 사이의 비율과 시선 조정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Fashion styling</li><li>Jewelry coordination</li><li>Visual direction</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stylist</p><p>주얼리와 착장의 관계 조율을 통한 하나의 이미지 완성.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="leblue2.jpg" alt=""></div>
@@ -493,7 +502,7 @@
       <div class="meta">
         <a class="project-name" href="women.html">Women in Art</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>프로젝트의 메시지를 일회성 그래픽이 아니라 실제로 소유하고 사용할 수 있는 물건으로 확장했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Editorial Object</p><p>노트를 정보 전달물이 아닌 하나의 작은 출판물과 오브제로 접근했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Graphic design</li><li>Paper selection</li><li>Color direction</li><li>Stationery design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stationery Designer</p><p>브랜드 콘셉트를 그래픽, 종이, 색상, 제작 사양으로 구체화했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>프로젝트 메시지를 일회성 그래픽이 아닌, 소유하고 사용할 수 있는 물건으로 확장.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Editorial Object</p><p>노트를 정보 전달물이 아닌 작은 출판물이자 오브제로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Graphic design</li><li>Paper selection</li><li>Color direction</li><li>Stationery design</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Stationery Designer</p><p>브랜드 콘셉트의 그래픽, 종이, 색상, 제작 사양 구체화.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="women1.jpg" alt=""></div>
@@ -512,7 +521,7 @@
       <div class="meta">
         <a class="project-name" href="">POET · Cordpress</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>텍스트를 설명의 도구가 아니라 독립된 작업 형식으로 사용한 프로젝트.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Text as Work</p><p>시를 통해 이미지나 제품이 아닌 언어 자체를 결과물로 다뤘다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Writing</li><li>Editing</li><li>Publication participation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Participant Poet</p><p>Cordpress 프로젝트에 시 작업으로 참여했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>텍스트를 설명 도구가 아닌 독립된 작업 형식으로 다룬 프로젝트.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Text as Work</p><p>이미지나 제품이 아닌 언어 자체를 결과물로 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Writing</li><li>Editing</li><li>Publication participation</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Participant Poet</p><p>Cordpress 프로젝트 시 작업 참여.</p></div></div>
         </div>
         
       </div>
@@ -526,7 +535,7 @@
       <div class="meta">
         <a class="project-name" href="portfolio1_08.html">King Kong Shower</a>
         <div class="process">
-          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>클라이언트가 원하는 방향은 명확했지만, 이를 실제 그래픽 결과물로 번역할 외부 디자이너와의 조율이 필요했다.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Translate the Brief</p><p>클라이언트의 요구사항을 시각적인 작업 언어로 정리하고, 디자이너가 실행 가능한 수준까지 구체화하는 데 집중했다.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Client communication</li><li>Designer sourcing</li><li>Creative coordination</li><li>Feedback management</li><li>Production supervision</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Producer</p><p>클라이언트와 디자이너 사이의 커뮤니케이션을 담당하고, 요구사항이 결과물까지 일관되게 반영되도록 프로젝트를 조율했다.</p></div></div>
+          <div class="step"><h3 class="k">Starting point</h3><div class="v"><p>명확한 클라이언트 요구사항을 외부 그래픽 디자이너가 실행 가능한 작업 언어로 변환할 필요 발생.</p></div></div><div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">Translate the Brief</p><p>클라이언트 요구와 디자이너 실행 사이의 정보 손실 최소화를 목표로 커뮤니케이션 구조 설정.</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Client communication</li><li>Designer sourcing</li><li>Creative coordination</li><li>Feedback management</li><li>Production supervision</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Creative Producer</p><p>클라이언트와 디자이너 간 요구사항 정리, 피드백 전달, 제작 과정 조율 및 결과물 품질 관리.</p></div></div>
         </div>
         <button class="toggle" type="button" aria-expanded="false" aria-label="상세 이미지 펼치기">+</button>
         <div class="more"><div class="more-in"><div class="g-item"><img loading="lazy" src="kingking.jpg" alt=""></div>
