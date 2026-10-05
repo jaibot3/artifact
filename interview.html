@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Interview Project — Work</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      min-height:100%;
+      background:#eff2f0;
+      color:#1c1a18;
+      font-family:'Google Sans','Jost','Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      -webkit-text-size-adjust:100%;
+    }
+    body { overflow-x:hidden; }
+
+    /* 우상단 Index */
+    .top { display:flex; justify-content:flex-end; padding:36px 6% 0; position:relative; z-index:20; }
+    .back {
+      font-size:10px; letter-spacing:3px; text-transform:uppercase;
+      color:#8a7f70; text-decoration:none; transition:color .3s;
+    }
+    .back:hover { color:#1c1a18; }
+
+    /* Work(링크) — 좌상단 고정, 색 검정 */
+    .page-title {
+      font-size:76px; font-weight:700; color:#1c1a18;
+      line-height:1; letter-spacing:0.5px;
+      position:fixed; top:0; left:0; margin:0;
+      z-index:30; text-decoration:none; display:block;
+    }
+    .page-title:hover { color:#1c1a18; }
+
+    /* 상단 래퍼 — 왼쪽 flush, 상단 Work와 겹침 */
+    .detail { padding:60px 6% 140px 6px; }
+
+    /* 상단: 큰 이미지(왼) + 글(오른) */
+    .detail-top {
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:40px;
+      align-items:start;
+      margin-bottom:56px;
+    }
+    .hero { display:block; overflow:hidden; background:#2b2b2b; }
+    .hero img {
+      width:100%;
+      aspect-ratio:4/3;           /* 큰 이미지 비율. 원본대로면 이 줄 삭제 */
+      object-fit:cover;
+      display:block; background:#2b2b2b;
+    }
+    .ph-hero {
+      width:100%; aspect-ratio:4/3; background:#2b2b2b;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
+    }
+    .meta { padding-top:6px; }
+    .project-name-lg { font-size:44px; font-weight:400; letter-spacing:-0.3px; line-height:1.05; }
+    .desc { margin-top:18px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-line; }
+
+    /* 하단: 화면 정중앙 정렬 + 한 줄에 하나씩 세로로 나열 */
+    .gallery {
+      max-width:1000px; margin:0 auto; padding:56px 24px 140px;
+      display:flex; flex-direction:column; gap:32px; align-items:center;
+    }
+    .g-item { display:block; width:100%; overflow:hidden; background:#2b2b2b; text-decoration:none; }
+    .g-item img { width:100%; height:auto; display:block; background:#2b2b2b; }  /* 원본 비율 그대로, 안 잘림 */
+    .g-ph {
+      width:100%; aspect-ratio:3/2; background:#2b2b2b;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
+    }
+    /* 유튜브 쇼츠 (세로 9:16) — 가운데 정렬. <div class="g-item short"> */
+    .g-item.short { max-width:405px; }
+    .g-item.short iframe, .g-item.short .g-ph { width:100%; aspect-ratio:9/16; border:0; display:block; background:#000; }
+    /* 일반 유튜브 영상 (가로 16:9, 전폭). <div class="g-item video"> */
+    .g-item.video iframe, .g-item.video .g-ph { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+
+    @media (max-width:740px) {
+      .top { padding:28px 5% 0; }
+      .page-title { font-size:44px; }
+      .detail { padding:64px 0 0 0; }
+      .detail-top { grid-template-columns:1fr; gap:16px; margin-bottom:36px; }
+      .meta { padding-left:5%; padding-right:5%; }
+      .project-name-lg { font-size:32px; }
+      .gallery { gap:20px; padding:40px 0 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top"><a class="back" href="index.html">← Index</a></div>
+  <a class="page-title" href="portfolio1.html">Work</a>
+
+  <div class="detail">
+
+    <!-- 큰 이미지 + 글 -->
+    <div class="detail-top">
+      <div class="hero">
+        <img src="interview2.jpg" alt="big image"
+             onerror="this.outerHTML='&lt;div class=\'ph-hero\'&gt;big image&lt;/div&gt;'">
+      </div>
+      <div class="meta">
+        <h1 class="project-name-lg">Interview Project<br>"I LOVE U ___"</h1>
+        <div class="desc">SAKK의 인터뷰 콘텐츠 프로젝트. 타깃이 자신의 페르소나를 투영할 수 있는 인물을 선별해 인터뷰 릴스와 콘텐츠를 제작했습니다. 인터뷰 참여자에게 개인 서사를 부여해 내적 지분을 가진 앰배서더로 전환하고, 인터뷰이의 팬덤을 브랜드 유저로 흡수해 커뮤니티를 형성하는 것이 목표였습니다. 2023년 A/B 테스트를 거쳐 기획했으며, 기존 피드 게시물 대비 조회수가 3배 늘었습니다.
+
+An interview content project for SAKK. We selected people the target audience could project themselves onto, and produced interview reels and content around them — turning each interviewee into an ambassador with a personal stake in the brand, and drawing their followers into the brand community. Planned through A/B testing in 2023; views tripled compared with existing feed posts.
+
+ROLE
+Content &amp; Community Strategy · Reels Planning · Casting · Interview Production</div>
+      </div>
+    </div>
+
+    <div class="gallery">
+
+      <!-- 이미지 (전폭, 원본 비율) -->
+      <div class="g-item">
+        <img src="interviewde.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div>
+
+      <!-- ▼ 필요하면 아래 예시를 복사해서 쓰면 됨 ▼ -->
+
+      <!-- 이미지 하나 더:
+      <div class="g-item">
+        <img src="kingkong-3.jpg" alt=""
+             onerror="this.outerHTML='&lt;div class=\'g-ph\'&gt;image&lt;/div&gt;'">
+      </div>
+      -->
+
+      <!-- 유튜브 영상(가로 16:9): VIDEO_ID 부분만 바꾸기
+      <div class="g-item video">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      -->
+
+      <!-- 유튜브 쇼츠(세로 9:16): VIDEO_ID 부분만 바꾸기
+      <div class="g-item short">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="short"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      -->
+
+    </div>
+
+  </div>
+
+</body>
+</html>

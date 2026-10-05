@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Work — Portfolio (process draft)</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      min-height:100%;
+      background:#eff2f0;
+      color:#1c1a18;
+      font-family:'Google Sans','Jost','Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      -webkit-text-size-adjust:100%;
+    }
+    body { overflow-x:hidden; }
+
+    /* 우상단 Index */
+    .top { display:flex; justify-content:flex-end; padding:36px 6% 0; position:relative; z-index:20; }
+    .back {
+      font-size:10px; letter-spacing:3px; text-transform:uppercase;
+      color:#8a7f70; text-decoration:none; transition:color .3s;
+    }
+    .back:hover { color:#1c1a18; }
+
+    /* Work — work1.html 위치·크기, 좌상단 고정, 색 검정.
+       pointer-events:none → 겹친 이미지 클릭을 막지 않음 */
+    .page-title {
+      font-size:76px; font-weight:700; color:#1c1a18;
+      line-height:1; letter-spacing:0.5px;
+      position:fixed; top:0; left:0; margin:0;
+      z-index:30; pointer-events:none;
+    }
+
+    /* 프로젝트 리스트 — 이미지 왼쪽 여백 0(flush), 상단 Work와 겹침 */
+    .projects {
+      display:flex; flex-direction:column; gap:72px;
+      padding:60px 6% 120px 6px;      /* 왼쪽 0 / 오른쪽 6% / 위 60px(=Work와 살짝 겹침) */
+    }
+    .project {
+      display:grid;
+      grid-template-columns:2fr 1fr;   /* 이미지 2 : 글 1 */
+      gap:40px;
+      align-items:start;
+    }
+    .thumb { display:block; overflow:hidden; text-decoration:none; background:#2b2b2b; }
+    .thumb img {
+      width:100%;
+      aspect-ratio:16/9;          /* 원본 비율 그대로 쓰려면 이 줄 삭제 */
+      object-fit:cover;
+      display:block;
+      transition:opacity .35s ease;
+      background:#2b2b2b;
+    }
+    .thumb:hover img { opacity:.86; }
+    .img-ph {
+      width:100%; aspect-ratio:16/9; background:#2b2b2b;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; letter-spacing:3px; color:#8f8f8f; text-transform:uppercase;
+    }
+
+    .meta { padding-top:6px; }
+    .project-name {
+      display:inline-block;
+      font-size:30px; font-weight:400; color:#1c1a18; text-decoration:none;
+      letter-spacing:-0.3px; line-height:1.1;
+      transition:transform .25s cubic-bezier(.25,.8,.25,1), opacity .25s ease;
+    }
+    .project-name:hover { transform:translateX(10px); opacity:.55; }
+    .desc { margin-top:18px; font-size:13px; line-height:1.7; color:#5c5b5a; white-space:pre-line; }
+
+
+    /* ── 생각 방식 4단계 (Trigger → Concept → Scope → Role) ──
+       화면에 들어오면 위에서부터 한 줄씩: 가는 선이 그어지고 → 글이 떠오름 */
+    .process { margin-top:26px; counter-reset:step; }
+    .step {
+      position:relative; display:grid; grid-template-columns:96px 1fr; gap:12px;
+      padding:12px 0 13px;
+    }
+    .step::before {                       /* 각 줄 위 가는 선 */
+      content:""; position:absolute; left:0; right:0; top:0; height:1px;
+      background:#1c1a18; opacity:.22;
+      transform:scaleX(0); transform-origin:left center;
+      transition:transform .7s cubic-bezier(.65,0,.35,1);
+      transition-delay:calc(var(--i) * 160ms);
+    }
+    .k {
+      counter-increment:step;
+      font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#8a7f70;
+      padding-top:2px; white-space:nowrap;
+    }
+    .k::before { content:counter(step, decimal-leading-zero) "  "; color:#1c1a18; }
+    .v { font-size:13px; line-height:1.65; color:#3d3c3a; word-break:keep-all; }
+    .v b { font-weight:500; color:#1c1a18; display:block; }
+    .res { display:block; color:#5c5b5a; }
+    .tags { display:flex; flex-wrap:wrap; gap:4px 0; }
+    .tag:not(:last-child)::after { content:"·"; margin:0 7px; color:#a39a8c; }
+    .k, .v {
+      opacity:0; transform:translateY(8px);
+      transition:opacity .6s ease, transform .6s cubic-bezier(.25,.8,.25,1);
+      transition-delay:calc(var(--i) * 160ms + 220ms);
+    }
+    .project.in .step::before { transform:scaleX(1); }
+    .project.in .k, .project.in .v { opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce) {
+      .step::before, .k, .v { transition:none; }
+    }
+
+    @media (max-width:740px) {
+      .top { padding:15px 5% 0; }
+      .page-title { font-size:44px; }
+      .projects { gap:48px; padding:64px 0 90px 0; }
+      .project { grid-template-columns:1fr; gap:14px; }
+      .meta { padding:0 5%; }
+      .project-name { font-size:24px; }
+      .process { margin-top:18px; }
+      .step { grid-template-columns:1fr; gap:6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top"><a class="back" href="index.html">← Index</a></div>
+  <h1 class="page-title">Work</h1>
+
+  <div class="projects">
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_0.html">
+        <img src="das.jpg" alt="Das Ding. 2026 SAKK" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_0.html">Das Ding. 2026 SAKK</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">'Back to basic'의 basic을 어떻게 가볍지 않게, 무게 있게 말할 수 있을까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">Das Ding(하이데거) — 축소가 아니라, 물체가 자기 자신으로 존재하는 상태. 형태는 브랑쿠시의 응축된 조각에서 가져왔다.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">컨셉 개발</span><span class="tag">베이직 제품 디자인</span><span class="tag">브랑쿠시 오마주 오브제 제작</span><span class="tag">붉은 액자로 갤러리·작업실 공간 연출</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Creative Director</b><span class="res">개념, 제품, 오브제, 공간을 하나의 스토리로 연결</span></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_0.html" style="background:#eff2f0;">
+        <img src="das_spin.webp" alt="Das Ding ( )Holder. 2026 SAKK" style="background:#eff2f0;" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_0.html">Das Ding ( )Holder. 2026 SAKK</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">Das Ding의 개념을 어떻게 눈에 보이는 물건으로 가져올 수 있을까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">브랑쿠시의 표현 방식으로 만든 상징적 오브제 — 시즌의 베이직함과 무게감을 더 설득력 있게 보여주는 장치.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">오브제 디자인</span><span class="tag">3D 회전 렌더</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Object Designer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_00.html">
+        <img src="lethe.jpg" alt="Lethe, Still Shimmering — Art Performance Video" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_00.html">Lethe, Still Shimmering — Art Performance Video</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">의미가 끝내 도착하지 않는다면, 잊혀진 이들과의 교통을 소통이라 부를 수 있을까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">차연(différance)과 망각의 강 레테. 스카프 영상이 아니라, 스카프는 시선 속에서만 명멸한다.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">아티스트 섭외(박성은)</span><span class="tag">옥상 퍼포먼스 연출</span><span class="tag">사운드 디렉션</span><span class="tag">편집·컬러 보정</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Director</b><span class="res">제품 런칭을 퍼포먼스 작품으로 전환</span></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="interview.html">
+        <img src="interview.jpg" alt="Interview Project — "I LOVE U ___". 2023 SAKK" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="interview.html">Interview Project — "I LOVE U ___". 2023 SAKK</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">브랜드가 하나의 집단 정체성이 되려면, 고객이 자기를 투영할 얼굴이 먼저 필요하지 않을까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">"I LOVE U ___" — 빈칸에 이름이 들어가는 순간, 인터뷰이는 브랜드 서사의 주인공이자 내적 지분을 가진 앰배서더가 된다.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">A/B 테스트 기반 릴스 기획</span><span class="tag">페르소나 투영 인물 선별</span><span class="tag">인터뷰 릴스·콘텐츠 제작</span><span class="tag">팬덤 → 브랜드 유저 커뮤니티 설계</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Content &amp; Community Strategy</b><span class="res">기존 피드 게시물 대비 조회수 3배</span></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_01.html">
+        <img src="ao.jpg" alt="AOLADO" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_01.html">AOLADO</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">가방, 여성복, 파티시에 — 세 브랜드의 장점을 모두 담을 수 있는 제품과 컨셉은 무엇일까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">Roberto Burle Marx의 색채. 트로피컬한 색을 장난감·가구·과일 같은 일상 오브제로 말한다.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">지원사업 제안</span><span class="tag">브랜딩</span><span class="tag">SNS 영상·사운드</span><span class="tag">웹사이트</span><span class="tag">완사입 영업</span><span class="tag">생산 라인 구축</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Co-founder &amp; COO</b><span class="res">지원사업 최종 선정 · 리틀 아카이브 완사입 입점</span></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_02.html">
+        <img src="gap1.jpg" alt="GAP" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_02.html">GAP</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">안과 밖이 뒤집히는 순간, 그 틈은 어디에 생길까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">Richard Wilson, <i>Turning the Place Over</i>(2007) 리서치.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">리서치</span><span class="tag">디자인</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Designer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_03.html">
+        <img src="kom.jpg" alt="Kommt. Art gallery" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_03.html">Kommt. Art gallery</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">인스타그램 피드 속 아트 매거진이 어떻게 감정으로 기억될까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">"Art Comes with Emotion" — 독일어 kommt(온다)와 comes의 연결.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">로고</span><span class="tag">슬로건</span><span class="tag">영상 콘텐츠</span><span class="tag">브랜딩 컨셉</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Brand Designer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio_kant.html">
+        <img src="kant.jpg" alt="Immanuel Kant, Critique of Pure Reason" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio_kant.html">Immanuel Kant, Critique of Pure Reason</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">철학 굿즈가 팬덤 상품이 아니라 같은 질문을 공유하는 집단의 표식이 될 수 있을까? 사상과 인플루언서가 만난 제품의 판매력은 얼마나 될까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">『순수이성비판』을 쓰는 모자. 프랙투어 타이포로 고전의 무게를 얼굴 위에 올린다.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">제품 컨셉·모자 디자인</span><span class="tag">인플루언서 컨택</span><span class="tag">제조사 소싱·생산·배송</span><span class="tag">50:50 지분 구조 설계</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Project Lead</b><span class="res">제작은 내가, 판매는 인플루언서가 — 완판</span></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="">
+        <img src="ka.jpg" alt="Artist Product Development — Kahee Jeong" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="">Artist Product Development — Kahee Jeong</a>
+        <div class="process">
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">제품 개발</span><span class="tag">생산 코디네이션</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Product Developer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="">
+        <img src="dew.jpg" alt="Artist Art piece — Dew Kim" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="">Artist Art piece — Dew Kim</a>
+        <div class="process">
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">의상 개발</span><span class="tag">아트 영상 스타일링</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Garment Developer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_04.html">
+        <img src="cac.jpg" alt="Design for Cactusholic Maniac" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_04.html">Design for Cactusholic Maniac</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">10대의 불안정한 정신세계를 환원할 수 있는 오브제는 무엇일까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">선인장 — 색감과 가시에 감정을 연결하고, 감각적인 문구로 디자인했다.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">브랜딩</span><span class="tag">슬로건</span><span class="tag">그래픽 디자인</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Brand Designer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="3bil.html">
+        <img src="casest.jpg" alt="3billion — Digital &amp; Marketing Case Study" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="3bil.html">3billion — Digital &amp; Marketing Case Study</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">유전자 검사는 왜 문제가 생긴 뒤에야 검색해서 찾는 서비스에 머물까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">Search-driven → Proactive / Preventive. 찾아오는 고객에서, 미리 대비하는 고객으로.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">고객 리서치</span><span class="tag">두 유형의 고객 여정 설계</span><span class="tag">포지셔닝</span><span class="tag">콘텐츠 전략</span><span class="tag">포털 구조</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Marketing Case Study</b><span class="res">마케팅 직무 사전과제 · 단독 수행 · 면접 진행</span></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_05.html">
+        <img src="al.jpg" alt="Apron Design for AL studio" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_05.html">Apron Design for AL studio</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">작업복인 앞치마가 스튜디오의 얼굴이 될 수 있을까?</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">앞치마 디자인</span><span class="tag">룩북 스타일링</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Designer &amp; Stylist</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_06.html">
+        <img src="maska.jpg" alt="Styling for eyewear brand MASKA" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_06.html">Styling for eyewear brand MASKA</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">클라이언트 요청 — 당시 유행하던 Gucci 무드를 이 브랜드에 맞게 풀어낼 수 있을까?</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">제품·인물·의상의 관계 조율</span><span class="tag">룩북 스타일링</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Stylist</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_07.html">
+        <img src="leblue.jpg" alt="Styling for Jewelry brand LEBLUE" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_07.html">Styling for Jewelry brand LEBLUE</a>
+        <div class="process">
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">주얼리·의상·전체 이미지의 관계 조율</span><span class="tag">룩북 스타일링</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Stylist</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="women.html">
+        <img src="women.jpg" alt="Women in Art — Stationery Design" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="women.html">Women in Art — Stationery Design</a>
+        <div class="process">
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">스테이셔너리 디자인</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Stationery Designer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="">
+        <img src="poet.jpg" alt="POET — Cordpress" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="">POET — Cordpress</a>
+        <div class="process">
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">시 창작·참여</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Participant Poet</b></p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <a class="thumb" href="portfolio1_08.html">
+        <img src="kingking.jpg" alt="King Kong Shower" loading="lazy"
+             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
+      </a>
+      <div class="meta">
+        <a class="project-name" href="portfolio1_08.html">King Kong Shower</a>
+        <div class="process">
+          <div class="step"><span class="k">Trigger</span><p class="v">클라이언트의 요구를 정확히 구현할 그래픽 디자이너는 누구일까?</p></div>
+          <div class="step"><span class="k">Concept</span><p class="v">클라이언트 요구사항을 또렷하게 정리해 디자이너에게 연결한다.</p></div>
+          <div class="step"><span class="k">Scope</span><p class="v tags"><span class="tag">그래픽 디자이너 섭외</span><span class="tag">클라이언트 커뮤니케이션</span><span class="tag">프로젝트 코디네이션</span></p></div>
+          <div class="step"><span class="k">Role</span><p class="v"><b>Creative Producer</b></p></div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <script>
+    // 각 줄에 순서 번호(--i)를 주고, 프로젝트가 화면에 들어오면 .in 을 붙여 한 번만 재생
+    document.querySelectorAll('.process').forEach(p =>
+      p.querySelectorAll('.step').forEach((s, i) => s.style.setProperty('--i', i)));
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.3 });
+    document.querySelectorAll('.project').forEach(a => io.observe(a));
+  </script>
+
+</body>
+</html>
