@@ -164,5 +164,38 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
   }
   if (!still) requestAnimationFrame(tick);
 })();
+
+// 클릭 소리: 우주선 버튼 같은 짧은 '삐용' (파일 없이 브라우저에서 합성). 소리가 들리도록 0.15초 뒤에 이동.
+(() => {
+  let ac = null;
+  const audio = () => (ac = ac || new (window.AudioContext || window.webkitAudioContext)());
+  function beep() {
+    const a = audio(), t = a.currentTime;
+    const out = a.createGain(); out.gain.value = .16;
+    const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
+    lp.connect(out); out.connect(a.destination);
+    // 1) 위로 쓸어올리는 두 겹 사각파
+    [0, 7].forEach(det => {
+      const o = a.createOscillator(), g = a.createGain();
+      o.type = 'square'; o.detune.value = det;
+      o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(1560, t + .09);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.5, t + .005); g.gain.exponentialRampToValueAtTime(.001, t + .13);
+      o.connect(g); g.connect(lp); o.start(t); o.stop(t + .14);
+    });
+    // 2) 끝에 붙는 높은 '띵'
+    const o2 = a.createOscillator(), g2 = a.createGain();
+    o2.type = 'sine'; o2.frequency.value = 2093;
+    g2.gain.setValueAtTime(0, t + .07); g2.gain.linearRampToValueAtTime(.6, t + .075); g2.gain.exponentialRampToValueAtTime(.001, t + .2);
+    o2.connect(g2); g2.connect(out); o2.start(t + .07); o2.stop(t + .21);
+  }
+  document.querySelectorAll('.sec, #nav a, .mark').forEach(el => {
+    el.addEventListener('click', e => {
+      try { beep(); } catch (_) { return; }                 // 소리를 못 내는 환경이면 그냥 이동
+      if (el.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;   // 새 탭은 바로 열림
+      e.preventDefault();
+      setTimeout(() => { location.href = el.href; }, 150);
+    });
+  });
+})();
 </script>
 </body></html>
