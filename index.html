@@ -45,12 +45,15 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
   .sec span{font-size:9px;left:3px;top:3px}
 }
 /* 도면 출처: 미술관 작품 캡션 같은 흰 종이 */
-.caption{position:absolute;right:0;bottom:0;z-index:5;background:#fff;padding:9px 12px 10px;max-width:46%;
+.caption{position:absolute;left:calc(100% + 48px);bottom:0;margin:0;z-index:5;background:#fff;padding:9px 12px 10px;width:max-content;max-width:240px;   /* PC: 도면 오른쪽, 떨어뜨려서 */
+ 
   font-size:11px;line-height:1.45;color:#080808;box-shadow:0 1px 2px rgba(0,0,0,.18),0 4px 12px rgba(0,0,0,.08)}
 .caption b{display:block;font-weight:600;font-size:12px}
 .caption i{display:block;font-style:italic}
 .caption small{display:block;margin-top:5px;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#8a7f70}
-@media (max-width:740px){.caption{padding:4px 6px 5px;font-size:8px;max-width:38%}.caption b{font-size:8.5px}.caption small{font-size:6.5px;margin-top:2px}}
+.caption small span{text-transform:none;letter-spacing:.02em}
+@media (min-width:741px){.plan{max-width:calc(100vw - 6% - 600px)}.caption{max-width:none}.caption small{white-space:nowrap}}   /* 양옆에 캡션 자리 확보 → 도면은 가운데 */
+@media (max-width:740px){.caption{left:auto;right:0;bottom:auto;top:calc(100% + 28px);max-width:70%}}   /* 모바일: 도면 아래 */
 @media (prefers-reduced-motion:reduce){.nav li.on::before{animation:none}.statue{transition:none}}
 </style></head>
 <body>
@@ -73,7 +76,7 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <a class="sec" data-id="career"    href="career.html"                                      style="left:9.28%;top:1.05%;width:31.53%;height:29.71%"><span>(2) career</span></a>
     <a class="sec" data-id="ficciones" href="rose.html"                                        style="left:39.91%;top:67.90%;width:32.43%;height:31.43%"><span>(3) ficciones</span></a>
     <a class="sec" data-id="sakk"      href="https://www.sakk.co.kr/" target="_blank" rel="noopener" style="left:85.86%;top:35.52%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
-    <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram</small></p>
+    <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram <span>by jaylim</span></small></p>
   </div>
 </main>
 
