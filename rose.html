@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blooming my million — Essay</title>
+  <title>Ficciones — blooming my million</title>
   
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,84 +39,32 @@
     body { min-height: 100vh; }
     .page { display: flex; justify-content: center; padding: 0 24px 120px; }
     
-    /* ── 우상단 Index (portfolio1과 동일) ── */
-    .top {
-      position: absolute;
-      top: 0; right: 0;
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      padding: 36px 6% 0;
-      z-index: 100;
-      pointer-events: none;
-    }
-    .back {
-      pointer-events: auto;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--mute);
-      text-decoration: none;
-      transition: color .3s;
-    }
-    .back:hover { color: var(--ink); }
-    
-    /* ── 좌상단 Essay: portfolio1의 Work 자리·크기, 색은 검정 ── */
-    .masthead {
-      position: absolute;
-      top: 0; left: 0;
-      z-index: 30;
-      pointer-events: none;
-    }
-    .masthead h1 {
-      font-size: 76px;
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: .5px;
-      color: var(--ink);
-    }
-    .masthead p {
-      margin-top: 4px;
-      padding-left: 4px;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-    
-    /* ── 스크롤하면 생기는 얇은 바 (portfolio1과 같은 높이·글씨, 색은 핑크/노랑 중 랜덤) ── */
-    .bar-top {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      height: 44px;
-      padding: 0 3%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--bar, var(--acid));
-      transform: translateY(-100%);
-      transition: transform .42s cubic-bezier(.2,.8,.2,1);
-    }
-    body.scrolled .bar-top { transform: none; }
-    @media (prefers-reduced-motion: reduce) { .bar-top { transition: none; } }
-    .bar-top a { color: var(--ink); text-decoration: none; transition: opacity .25s; }
-    .bar-top a:hover { opacity: .55; }
-    .bar-top .mark { font-size: 23px; font-weight: 700; letter-spacing: -.05em; }
-    .bar-top .nav { display: flex; gap: 24px; font-size: 15px; font-weight: 600; }
+    /* ── 상단 바: portfolio1과 같은 구성 (크게 → 스크롤하면 얇게), 색은 파랑 ── */
+    #chorus-bar{position:fixed;top:0;left:0;right:0;z-index:1000;height:186px;background:#7baffc;padding:23px 3% 18px;display:flex;align-items:flex-start;justify-content:space-between;transition:height .42s cubic-bezier(.2,.8,.2,1),padding .42s ease}
+    #chorus-bar .mark{color:#080808;text-decoration:none;font:700 clamp(44px,6vw,88px)/.9 'Instrument Sans','Google Sans','Jost',sans-serif;letter-spacing:-.065em}
+    #chorus-bar .nav{display:flex;align-items:center;gap:32px;padding-top:7px}
+    #chorus-bar .nav a{color:#080808;text-decoration:none;font:600 19px/1.1 'Instrument Sans','Google Sans','Jost',sans-serif;transition:opacity .25s}
+    #chorus-bar .nav a:hover{opacity:.55}
+    #chorus-bar .sub{position:absolute;left:3%;bottom:20px;color:#080808;font:600 17px/1.1 'Instrument Sans','Google Sans','Jost',sans-serif}
+    body.chorus-scrolled #chorus-bar{height:44px;padding:7px 3%;align-items:center}
+    body.chorus-scrolled #chorus-bar .mark{font-size:23px;letter-spacing:-.05em}
+    body.chorus-scrolled #chorus-bar .nav{padding-top:0;gap:24px}
+    body.chorus-scrolled #chorus-bar .nav a{font-size:15px}
+    body.chorus-scrolled #chorus-bar .sub{display:none}
+    @media(prefers-reduced-motion:reduce){#chorus-bar{transition:none}}
 
     /* ── 하단 (portfolio1과 동일) ── */
     .foot {
-      background: var(--pink);
+      background: #75481b;   /* 예전 portfolio1 하단의 황토색 */
       padding: 56px 6% 64px;
       display: flex; gap: 36px; flex-wrap: wrap; align-items: baseline;
     }
-    .foot a { font-size: 22px; font-weight: 400; color: var(--acid); text-decoration: none; letter-spacing: -.2px; transition: opacity .25s; }
+    .foot a { font-size: 22px; font-weight: 400; color: #f4ede2; text-decoration: none; letter-spacing: -.2px; transition: opacity .25s; }
     .foot a:hover { opacity: .55; }
-    .foot .small { margin-left: auto; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+    .foot .small { margin-left: auto; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(244,237,226,.6); }
 
     /* ── 본문 ── */
-    .sheet { position: relative; z-index: 1; width: 100%; max-width: 620px; padding-top: 150px; }
+    .sheet { position: relative; z-index: 1; width: 100%; max-width: 620px; padding-top: 250px; }   /* 상단 바 186px 아래 */
     .entries { display: flex; flex-direction: column; gap: 72px; }
     
     /* 글 머리: 제목(중간) + 날짜·요일(작게), 왼쪽 정렬 */
@@ -194,15 +142,18 @@
 
     /* ── 모바일 (portfolio1 기준) ── */
     @media (max-width: 740px) {
-      .top { padding: 15px 5% 0; }
-      .bar-top { height: 42px; padding: 0 5%; }
-      .bar-top .mark { font-size: 21px; }
-      .bar-top .nav { gap: 15px; font-size: 12px; }
       .foot { padding: 40px 5% 48px; gap: 24px; }
       .foot a { font-size: 18px; }
       .foot .small { margin-left: 0; width: 100%; }
-      .masthead h1 { font-size: 44px; }
-      .sheet { padding-top: 112px; }
+      .sheet { padding-top: 180px; }
+      #chorus-bar{height:139px;padding:17px 5%}
+      #chorus-bar .mark{font-size:min(51px,10.5vw)}   /* FICCIONES가 길어서 메뉴와 안 겹치게 */
+      #chorus-bar .nav{gap:15px}
+      #chorus-bar .nav a{font-size:13px}
+      #chorus-bar .sub{left:5%;bottom:15px;font-size:12px}
+      body.chorus-scrolled #chorus-bar{height:42px;padding:6px 5%}
+      body.chorus-scrolled #chorus-bar .mark{font-size:21px}
+      body.chorus-scrolled #chorus-bar .nav a{font-size:12px}
       .entries { gap: 56px; }
       .entry-head h2 { font-size: 24px; }
       .entry-body { font-size: 15.5px; }
@@ -211,22 +162,8 @@
 </head>
 <body oncontextmenu="return false" oncopy="return false">
 
-  <!-- 오른쪽 상단 고정: Index 링크 -->
-  <div class="top">
-    <a href="index.html" class="back">← Index</a>
-  </div>
-
-  <!-- 스크롤하면 생기는 얇은 바 -->
-  <header class="bar-top" aria-label="Essay">
-    <a class="mark" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Essay</a>
-    <nav class="nav"><a href="index.html">Index ↗</a><a href="portfolio1.html">Work</a></nav>
-  </header>
-
-  <!-- 좌상단: Essay -->
-  <header class="masthead">
-    <h1>Essay</h1>
-    <p>blooming my million</p>
-  </header>
+  <!-- 상단 바: portfolio1과 같은 구성 -->
+  <header id="chorus-bar"><a class="mark" href="rose.html">FICCIONES</a><nav class="nav"><a href="index.html">Index ↗</a><a href="career.html">Career</a></nav><span class="sub">blooming my million</span></header>
 
   <!-- 중앙 스크롤 본문 -->
   <div class="page">
@@ -605,9 +542,8 @@ E. cheers.`
 ];
 
 (() => {
-  const BAR = ['#f1cace', '#eaf751'];   // portfolio1의 핑크, 노랑
-  document.documentElement.style.setProperty('--bar', BAR[Math.floor(Math.random() * BAR.length)]);
-  const sync = () => document.body.classList.toggle('scrolled', window.scrollY > 100);
+  // 100px 넘게 내리면 상단 바가 얇아짐 (portfolio1과 같음)
+  const sync = () => document.body.classList.toggle('chorus-scrolled', window.scrollY > 100);
   sync(); window.addEventListener('scroll', sync, { passive: true });
 })();
 
