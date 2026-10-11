@@ -8,139 +8,116 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Asta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300&family=Gowun+Dodum&display=swap" rel="stylesheet">
   
   <style>
-    /* Reset & Base Variables */
-    *, *::before, *::after { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-    }
+    /* Layout: port1과 같은 종이·먹·서체, 색은 쓰지 않음. 선 없이 글자 크기와 간격만으로 나눈다. */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
-      --ink: #474039;
-      --ink-3: #8b7170;
-      --rule: rgba(38, 34, 30, 0.12);
-      --num: #ded36ebb;
+      --paper: #fcfdfa;
+      --ink: #28322e;
+      --mute: #7a857f;
+      --en: "Newsreader", "Iowan Old Style", "Times New Roman", serif;
+      --ko: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
       --fig-w: 546px;   /* 그림 가로 크기 — 이 숫자만 바꾸면 돼 (세로는 자동) */
     }
     
     html, body {
       min-height: 100%;
-      font-family: 'Asta Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: var(--ko);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
     }
     
     body {
-      background: #fcfcfb;
+      background: var(--paper);
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 0 24px 120px; /* 상단 여백은 헤더가 아닌 .sheet에서 관리 */
+      padding: 0 24px 120px;
     }
     
-    /* ── 오른쪽 상단 고정 (Work1 Index 위치) ── */
+    /* ── 오른쪽 상단 Index ── */
     .top {
       position: fixed;
-      top: 0;
-      right: 0;
+      top: 0; right: 0;
       width: 100%;
       display: flex;
       justify-content: flex-end;
-      padding: 36px 6% 0;
+      padding: 30px 6% 0;
       z-index: 100;
-      pointer-events: none; /* 밑에 깔린 일기 본문의 스크롤/마우스 인식 방해 금지 */
-    }
-    
-    .back {
-      pointer-events: auto; /* 링크만 클릭 가능하도록 활성화 */
-      font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
-      font-size: 10px; 
-      letter-spacing: 3px; 
-      text-transform: uppercase;
-      color: var(--ink-3); 
-      text-decoration: none; 
-      transition: color 0.3s ease;
-    }
-    
-    .back:hover { 
-      color: var(--ink); 
-    }
-    
-    /* ── 중앙 본문 ── */
-    .sheet { 
-      position: relative; 
-      z-index: 1; 
-      width: 100%; 
-      max-width: 660px; 
-      padding-top: 140px;
-    }
-
-    /* ── 상단 제목 ── */
-    .masthead { margin-bottom: 96px; }
-    .kicker {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--ink-3);
-    }
-    .masthead h1 {
-      margin-top: 14px;
-      font-size: 44px;
-      font-weight: 400;
-      line-height: 1.15;
-      letter-spacing: -0.5px;
-      color: var(--ink);
-    }
-    
-    .entries { 
-      display: flex; 
-      flex-direction: column; 
-    }
-    .entries article { padding: 56px 0 64px; border-top: 1px solid var(--rule); }
-    
-    /* 날짜: 2026.09.25  THU */
-    .entry-meta { 
-      display: flex; 
-      align-items: baseline; 
-      gap: 12px; 
-      margin-bottom: 28px; 
-      color: var(--ink-3);
-    }
-    .entry-meta .date {
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      font-variant-numeric: tabular-nums;
-    }
-    .entry-meta .wd {
-      font-size: 11px;
-      letter-spacing: 3px;
-    }
-    
-    .entry-body {
-      font-size: 18px; 
-      line-height: 1.85; 
-      color: var(--ink);
-      white-space: pre-wrap; 
-      font-weight: 400; 
-      letter-spacing: -0.1px;
-      word-break: keep-all;
-      overflow-wrap: anywhere;
-      user-select: none; 
-      -webkit-user-select: none; 
-    }
-    
-    .entry-body { position: relative; z-index: 0; }
-    .entry-body canvas.stain {
-      position: absolute;
-      left: -120px; top: -120px;   /* 물자국이 글 상자 밖으로도 번지게 */
-      z-index: -1;
       pointer-events: none;
     }
+    .back {
+      pointer-events: auto;
+      font-family: var(--en);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--mute);
+      text-decoration: none;
+      transition: color .3s ease;
+    }
+    .back:hover { color: var(--ink); }
+    
+    /* ── 본문 ── */
+    .sheet { position: relative; z-index: 1; width: 100%; max-width: 620px; padding-top: 128px; }
+
+    .masthead { margin-bottom: 88px; }
+    .masthead h1 {
+      font-family: var(--en);
+      font-weight: 600;
+      font-size: 64px;
+      line-height: .95;
+      letter-spacing: -1.5px;
+    }
+    .masthead p {
+      margin-top: 10px;
+      font-family: var(--en);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 17px;
+      color: var(--mute);
+    }
+    
+    .entries { display: flex; flex-direction: column; gap: 72px; }
+    
+    /* 글 머리: 제목(중간) + 날짜(작게), 모두 왼쪽 정렬 */
+    .entry-head { margin-bottom: 18px; }
+    .entry-head h2 {
+      font-family: "Newsreader", "Gowun Dodum", "Apple SD Gothic Neo", serif;
+      font-weight: 400;
+      font-size: 26px;
+      line-height: 1.15;
+      letter-spacing: -.3px;
+    }
+    .entry-head time {
+      display: block;
+      margin-top: 5px;
+      font-family: var(--en);
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: .6px;
+      color: var(--mute);
+      font-variant-numeric: tabular-nums;
+    }
+    
+    /* 본문: 줄 사이는 넉넉히, 문단 사이 빈칸은 좁게 */
+    .entry-body {
+      font-family: "Newsreader", "Gowun Dodum", "Apple SD Gothic Neo", serif;   /* 영문은 Newsreader, 한글은 Gowun Dodum */
+      font-size: 17px;
+      line-height: 1.7;
+      letter-spacing: -.1px;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .entry-body p { white-space: pre-wrap; }
+    .entry-body .w { white-space: nowrap; }   /* 글자를 쪼개도 단어 중간에서 줄이 바뀌지 않게 */
+    .entry-body p + p { margin-top: .55em; }
+    
     .entry-body .ch {
       display: inline-block;
       transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -150,76 +127,44 @@
     }
     
     /* ── 일기 그림: 한 장은 그대로, 여러 장은 좌우 슬라이드 ── */
-    .entry-figs { margin: 0 0 32px; }
-    .entry-figs > img {
-      width: var(--fig-w);   /* 가로만 고정, 세로는 비율대로 자동 */
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 2px;
-    }
+    .entry-figs { margin: 0 0 20px; }
+    .entry-figs > img { width: var(--fig-w); max-width: 100%; height: auto; display: block; }
     .slider { position: relative; }
     .slider .track {
-      display: flex;
-      align-items: center;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      outline: none;
+      display: flex; align-items: center;
+      overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+      scrollbar-width: none; outline: none;
     }
     .slider .track::-webkit-scrollbar { display: none; }
     .slider .track img {
-      flex: 0 0 100%;
-      width: 100%;
-      max-height: 72vh;
-      object-fit: contain;
-      scroll-snap-align: center;
-      display: block;
-      -webkit-user-drag: none;
+      flex: 0 0 100%; width: 100%; max-height: 72vh; object-fit: contain;
+      scroll-snap-align: center; display: block; -webkit-user-drag: none;
     }
     .slider .bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 12px;
-      color: var(--ink-3);
-      font-size: 13px;
-      letter-spacing: 1px;
-      font-variant-numeric: tabular-nums;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 8px; color: var(--mute);
+      font-family: var(--en); font-weight: 300; font-size: 14px; font-variant-numeric: tabular-nums;
     }
-    .slider .nav { display: flex; gap: 4px; }
+    .slider .nav { display: flex; gap: 2px; }
     .slider button {
-      background: none;
-      border: 0;
-      padding: 4px 10px;
-      font: inherit;
-      font-size: 22px;
-      line-height: 1;
-      color: var(--ink-3);
-      cursor: pointer;
-      transition: color .3s, opacity .3s;
+      background: none; border: 0; padding: 2px 8px;
+      font-family: var(--en); font-weight: 300; font-size: 26px; line-height: 1;
+      color: var(--mute); cursor: pointer; transition: color .3s, opacity .3s;
     }
     .slider button:hover, .slider button:focus-visible { color: var(--ink); outline: none; }
     .slider button:disabled { opacity: .3; cursor: default; }
+    
+    .empty { font-family: var(--en); font-style: italic; color: var(--mute); padding: 80px 0; }
 
-    .empty {
-      text-align: center; 
-      font-size: 12px; 
-      font-style: italic;
-      color: var(--ink-3); 
-      letter-spacing: 2px; 
-      padding: 80px 0;
-    }
-
-    /* ── 반응형 모바일 ── */
+    /* ── 모바일 ── */
     @media (max-width: 768px) {
-      .top { position: absolute; padding: 28px 5% 0; }   /* 모바일: 본문 위에 겹치지 않게 함께 스크롤 */
-      .sheet { padding-top: 96px; }
+      .top { position: absolute; padding: 24px 5% 0; }
+      .sheet { padding-top: 88px; }
       .masthead { margin-bottom: 64px; }
-      .masthead h1 { font-size: 34px; }
-      .entries article { padding: 44px 0 52px; }
-      .entry-body { font-size: 17px; line-height: 1.8; }
+      .masthead h1 { font-size: 48px; }
+      .entries { gap: 56px; }
+      .entry-head h2 { font-size: 22px; }
+      .entry-body { font-size: 16px; }
     }
   </style>
 </head>
@@ -233,14 +178,16 @@
   <!-- 중앙 스크롤 본문 -->
   <div class="sheet">
     <header class="masthead">
-      <p class="kicker">Essay</p>
-      <h1>Blooming my million</h1>
+      <h1>Essay</h1>
+      <p>blooming my million</p>
     </header>
     <section class="entries" id="entries"></section>
   </div>
 
 <script>
-/* 그림 넣는 법: 글(text) 옆에 image 또는 images 한 줄만 추가하면 돼.
+/* 제목 넣는 법: title 한 줄을 추가하면 돼. 없으면 날짜가 제목 자리에 들어가.
+   { date:'2026-09-25', title:'이불 끝', text:`...` }
+   그림 넣는 법: 글(text) 옆에 image 또는 images 한 줄만 추가하면 돼.
    한 장:   { date:'2026-09-25', text:`...`, image:'photo.jpg' }
    여러 장: { date:'2026-09-25', text:`...`, images:['a.jpg','b.jpg'] }
    그림 없으면 그냥 안 쓰면 됨. */
@@ -639,14 +586,15 @@ E. cheers.`
              <span class="nav"><button class="prev" aria-label="이전 그림">‹</button><button class="next" aria-label="다음 그림">›</button></span></div>
          </div>`
       : imgs.length ? `<div class="entry-figs">${tags}</div>` : '';
+    const paras = e.text.replace(/[ \t]+$/gm, '').trim().split(/\n\s*\n/).filter(t => t.trim());
+    const head = e.title
+      ? `<h2>${escapeHtml(e.title)}</h2><time datetime="${e.date}">${date} ${wd}</time>`
+      : `<h2>${date}</h2><time datetime="${e.date}">${wd}</time>`;
     return `
       <article>
-        <div class="entry-meta">
-          <time class="date" datetime="${e.date}">${date}</time>
-          <span class="wd">${wd}</span>
-        </div>
+        <header class="entry-head">${head}</header>
         ${figs}
-        <div class="entry-body">${escapeHtml(e.text.trim())}</div>
+        <div class="entry-body">${paras.map(t => `<p>${escapeHtml(t.trim())}</p>`).join('')}</div>
       </article>
     `;
   }).join('');
@@ -668,151 +616,82 @@ E. cheers.`
     sync();
   });
 
-  /* 물방울: 종이에 물이 떨어진 것처럼 번진다.
-     - 떨어진 자리에서 젖은 원이 천천히 퍼지고, 원이 지나간 글자는 바깥으로 밀리며 흐려진다
-     - 다 퍼지면 가장자리에 잉크 띠(마른 물자국)가 남는다
-     - 한 번 젖은 자리는 돌아오지 않는다 (새로고침하면 새 종이) */
-  const STILL = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   function activateScatter(body) {
     const text = body.textContent;
     body.textContent = '';
     const chars = [];
     
+    let word = null;
     for (const ch of text) {
       if (ch === ' ' || ch === '\n' || ch === '\t' || ch === '\r') {
+        word = null;
         body.appendChild(document.createTextNode(ch));
       } else {
+        if (!word) { word = document.createElement('span'); word.className = 'w'; body.appendChild(word); }
         const span = document.createElement('span');
         span.className = 'ch';
         span.textContent = ch;
-        body.appendChild(span);
-        chars.push({ el: span, x: 0, y: 0, e: 0 });
+        word.appendChild(span);
+        chars.push(span);
       }
     }
     
     if (!chars.length) return;
 
-    const RADIUS = 95;      // 물방울 최대 반경
-    const PUSH = 34;        // 글자가 밀려나는 거리
-    const BLUR = 3.4;       // 번짐
-    const GROW = 1100;      // 퍼지는 시간(ms)
-    const GAP = 70;         // 다음 물방울까지 마우스가 움직여야 하는 거리
+    const RADIUS = 95;
+    const PUSH = 34;
+    const BLUR = 3.4;
 
-    // 물자국을 그릴 종이 (글자 아래)
-    const cv = document.createElement('canvas');
-    cv.className = 'stain';
-    body.prepend(cv);
-    const ctx = cv.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const M = 120;          // 글 상자 바깥 여백 (CSS left/top과 같게)
-    let baked = null;       // 다 마른 물자국 (영구)
-
-    function layout() {
-      const w = body.clientWidth + M * 2, h = body.clientHeight + M * 2;
-      const keep = baked;
-      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-      cv.style.width = w + 'px'; cv.style.height = h + 'px';
-      baked = document.createElement('canvas');
-      baked.width = cv.width; baked.height = cv.height;
-      if (keep) baked.getContext('2d').drawImage(keep, 0, 0);
-      chars.forEach(c => {
-        c.x = c.el.offsetLeft + c.el.offsetWidth / 2;   // transform과 무관한 원래 자리
-        c.y = c.el.offsetTop + c.el.offsetHeight / 2;
-      });
-      paint();
-    }
-
-    // 물방울 하나: 가장자리가 고르지 않은 원
-    const drops = [];
-    function addDrop(x, y) {
-      const R = RADIUS * (0.6 + Math.random() * 0.45);
-      const k = [0, 1, 2].map(() => ({ a: Math.random() * 6.28, f: 2 + Math.floor(Math.random() * 5), m: 0.03 + Math.random() * 0.05 }));
-      drops.push({ x, y, R, k, t0: performance.now(), r: 0 });
-      if (!raf) raf = requestAnimationFrame(tick);
-    }
-    const edge = (d, th) => d.r * (1 + d.k.reduce((s, q) => s + q.m * Math.sin(q.f * th + q.a), 0));
-
-    function stain(g, d, dry) {
-      g.save();
-      g.scale(dpr, dpr);
-      g.translate(M, M);
-      g.beginPath();
-      for (let i = 0; i <= 72; i++) {
-        const th = i / 72 * Math.PI * 2, rr = edge(d, th);
-        const px = d.x + Math.cos(th) * rr, py = d.y + Math.sin(th) * rr;
-        i ? g.lineTo(px, py) : g.moveTo(px, py);
-      }
-      g.closePath();
-      g.fillStyle = 'rgba(150, 128, 104, 0.03)';           // 젖었던 자리의 옅은 얼룩
-      g.fill();
-      // 마른 물자국: 잉크가 가장자리로 몰려 바깥 경계는 또렷하고 안쪽으로 옅어진다 (안쪽만 보이게 잘라서 그림)
-      g.clip();
-      g.lineJoin = 'round';
-      const k = dry ? 1 : 0.55;
-      [[22, 0.018], [12, 0.03], [6, 0.05], [2.4, 0.11], [1, 0.16]].forEach(([w, a]) => {
-        g.strokeStyle = `rgba(112, 88, 68, ${(a * k).toFixed(3)})`;
-        g.lineWidth = w;
-        g.stroke();
-      });
-      g.restore();
-    }
-
-    function paint() {
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      if (baked) ctx.drawImage(baked, 0, 0);
-      drops.forEach(d => stain(ctx, d, false));
-    }
-
-    // 물이 지나간 글자: 바깥으로 밀리고 번진 채로 남는다 (더 세게 젖을 때만 갱신)
-    function wet(d) {
-      for (const c of chars) {
-        const dx = c.x - d.x, dy = c.y - d.y, dist = Math.hypot(dx, dy);
-        if (dist >= d.r || dist >= d.R) continue;
-        const f = 1 - dist / d.R, e = f * f;
-        if (e <= c.e) continue;
-        c.e = e;
-        const inv = dist || 1;
-        c.el.style.transform = `translate(${(dx / inv * PUSH * e).toFixed(1)}px, ${(dy / inv * PUSH * e).toFixed(1)}px)`;
-        c.el.style.filter = `blur(${(BLUR * e).toFixed(2)}px)`;
-        c.el.style.opacity = (1 - 0.85 * e).toFixed(3);
-      }
-    }
-
+    let centers = [];
     let raf = null;
-    function tick(now) {
-      raf = null;
-      for (let i = drops.length - 1; i >= 0; i--) {
-        const d = drops[i], p = STILL ? 1 : Math.min(1, (now - d.t0) / GROW);
-        d.r = d.R * (1 - Math.pow(1 - p, 3));               // 처음엔 빠르게, 점점 느리게 스며든다
-        wet(d);
-        if (p >= 1) { stain(baked.getContext('2d'), d, true); drops.splice(i, 1); }
-      }
-      paint();
-      if (drops.length) raf = requestAnimationFrame(tick);
+    let pending = null;
+
+    function cache() {
+      centers = chars.map(c => {
+        const r = c.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      });
     }
 
-    // 마우스가 지나가면 일정 간격으로 물방울이 떨어진다. 터치는 누른 자리에.
-    let lx = null, ly = null;
-    const local = ev => { const b = body.getBoundingClientRect(); return [ev.clientX - b.left, ev.clientY - b.top]; };
-    body.addEventListener('pointermove', ev => {
-      if (ev.pointerType !== 'mouse') return;
-      const [x, y] = local(ev);
-      if (lx === null || Math.hypot(x - lx, y - ly) > GAP) { lx = x; ly = y; addDrop(x, y); }
-    });
-    body.addEventListener('pointerleave', () => { lx = ly = null; });
-    body.addEventListener('pointerdown', ev => {
-      if (ev.pointerType === 'mouse') return;
-      const [x, y] = local(ev); addDrop(x, y);
-    });
+    function render() {
+      raf = null;
+      if (!pending) return;
+      
+      const { mx, my } = pending;
+      
+      for (let i = 0; i < chars.length; i++) {
+        const c = centers[i];
+        if (!c) continue;
+        
+        const dx = c.x - mx, dy = c.y - my;
+        const dist = Math.hypot(dx, dy);
+        
+        if (dist < RADIUS) {
+          const f = 1 - dist / RADIUS;
+          const e = f * f;
+          const inv = dist || 1;
+          const tx = (dx / inv) * PUSH * e;
+          const ty = (dy / inv) * PUSH * e;
+          
+          chars[i].style.transform = `translate(${tx}px, ${ty}px)`;
+          chars[i].style.filter = `blur(${(BLUR * e).toFixed(2)}px)`;
+          chars[i].style.opacity = (1 - 0.85 * e).toFixed(3);
+        }
+      }
+    }
 
-    layout();
-    window.addEventListener('resize', layout);
-    if (document.fonts) document.fonts.ready.then(layout);
+    body.addEventListener('mouseenter', cache);
+    body.addEventListener('mousemove', ev => {
+      pending = { mx: ev.clientX, my: ev.clientY };
+      if (!raf) raf = requestAnimationFrame(render);
+    });
+    
+    window.addEventListener('scroll', cache, { passive: true });
+    window.addEventListener('resize', cache);
   }
 
   // 모든 entry-body 요소에 activateScatter 효과 적용
-  const allBodies = $list.querySelectorAll('.entry-body');
+  const allBodies = $list.querySelectorAll('.entry-body p');
   allBodies.forEach(body => activateScatter(body));
 
 })();
