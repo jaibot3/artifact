@@ -3,139 +3,119 @@
 <title>ficciones — index</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
-<!-- 3D 인덱스: 스카르파의 카노바 석고상 미술관(포사뇨)을 지붕 없이 단순화한 모형. 각 공간을 누르면 해당 페이지로 이동.
-     이전 인덱스(손 그림자)는 index00.html 에 그대로 있음. 공간 ↔ 링크는 아래 SPACES 목록에서 바꾸면 됨. -->
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Jost:wght@400;700&display=swap" rel="stylesheet">
+<!-- 인덱스: 카노바 석고상 미술관 평면도를 가로로 눕힌 픽셀 도면. 각 공간(섹션)이 링크.
+     조각상은 새로고침할 때마다 섹션 주변 빈자리에 무작위로 놓임 (클릭은 섹션에만 걸림).
+     이전 인덱스(손 그림자)는 index00.html. 섹션 위치·링크는 아래 .sec 의 style / href 만 바꾸면 됨. -->
 <style>
 *{box-sizing:border-box}html,body{height:100%;margin:0}
-body{font-family:'Instrument Sans','Google Sans','Jost','Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#1c1a18;background:#eeeae4;overflow:hidden}
-#scene{position:fixed;inset:0}canvas{display:block;touch-action:none}
-.top{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;gap:10px;padding:23px 28px;pointer-events:none}
-.top h1{font-size:22px;letter-spacing:-.04em;font-weight:600;margin:0}
-.top small{display:block;font-size:10px;letter-spacing:.1em;margin-top:6px;color:#605e59}
-.top .stamp{font-size:10px;text-align:right;line-height:1.6;letter-spacing:.06em}
-.legend{position:absolute;top:100px;left:22px;display:flex;flex-direction:column;gap:4px;z-index:12}
-.legend a{display:flex;align-items:baseline;gap:10px;width:max-content;font-size:13px;color:#1c1a18;text-decoration:none;padding:5px 6px;transition:background .2s}
-.legend a small{font-size:10px;letter-spacing:.06em;color:#8a7f70}
-.legend a:hover,.legend a.active{background:#dad5cc}
-.swatch{width:8px;height:8px;border-radius:50%;background:#b9a278;align-self:center}
-.help{position:absolute;bottom:25px;left:28px;font-size:10px;letter-spacing:.06em;line-height:1.7;color:#605e59;pointer-events:none}
-.note{position:absolute;top:78px;right:28px;max-width:220px;text-align:right;color:#8a857d;line-height:1.5;font-size:10px;pointer-events:none}
-.aside{position:absolute;right:25px;bottom:25px;width:270px;padding:18px;background:#f9f7f2ed;border:1px solid #d6d0c6;z-index:15;box-shadow:0 10px 35px #3332;display:none}
-.aside.show{display:block}
-.aside .close{float:right;background:transparent;border:0;cursor:pointer;font-size:19px;color:#1c1a18}
-.badge{font-size:10px;color:#8b704d;letter-spacing:.1em}
-.aside h2{margin:12px 0 4px;font-size:26px;letter-spacing:-.04em;font-weight:600}
-.aside .space{font-size:11px;letter-spacing:.06em;color:#8a7f70;margin:0 0 10px}
-.aside p{font-size:12px;line-height:1.6;color:#5c5b5a;margin:0}
-.aside a.go{display:inline-block;margin-top:12px;background:#75481b;color:#fff;padding:11px 13px;text-decoration:none;font-size:11px;letter-spacing:.08em}
-.aside a.go:hover{opacity:.8}
-.zoom{position:absolute;bottom:27px;right:27px;display:flex;gap:4px;z-index:11}
-.zoom button{cursor:pointer;background:#f9f7f2;border:1px solid #d8d2c8;padding:8px 12px;font-size:16px;color:#1c1a18}
-.aside.show~.zoom{display:none}
-.fallback{display:none;position:absolute;inset:auto 28px 70px;font-size:11px;color:#8a7f70}
-.no3d .fallback{display:block}.no3d .help,.no3d .zoom{display:none}
-@media(max-width:650px){.top{padding:16px}.top h1{font-size:18px}.top .stamp{font-size:8px}
-.legend{left:8px;top:80px}.legend a{font-size:12px;background:#f0ede6cc}
-.help{bottom:10px;left:15px;font-size:9px}.aside{right:12px;left:12px;bottom:46px;width:auto}.note{display:none}.zoom{right:12px;bottom:12px}}
-</style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script></head>
-<body>
-<div id="scene"></div>
-<header class="top"><div><h1>ficciones</h1><small>INDEX · AFTER CARLO SCARPA, GIPSOTECA CANOVIANA</small></div><div class="stamp">OPEN ROOF STUDY<br>INTERACTIVE INDEX / 01</div></header>
-<div class="note">Conceptual model after Scarpa's Gipsoteca, Possagno.<br>Not a measured architectural model.</div>
-<!-- 링크 목록: 3D가 안 떠도 이것만으로 이동 가능 -->
-<nav class="legend" id="legend">
-  <a data-id="work" href="portfolio1.html"><span class="swatch"></span>(1) work <small>The Basilica</small></a>
-  <a data-id="career" href="career.html"><span class="swatch"></span>(2) career <small>Threshold &amp; Courtyard</small></a>
-  <a data-id="ficciones" href="rose.html"><span class="swatch"></span>(3) ficciones <small>Scarpa Wing</small></a>
-  <a data-id="sakk" href="https://www.sakk.co.kr/" target="_blank" rel="noopener"><span class="swatch"></span>(4) sakk <small>Curved Gallery</small></a>
-  <a data-id="index00" href="index00.html"><span class="swatch"></span>(0) previous index <small>Entrance</small></a>
-</nav>
-<div class="help">DRAG TO ROTATE · SCROLL TO ZOOM · CLICK A SPACE<br>CLICK AGAIN (OR DOUBLE-CLICK) TO ENTER</div>
-<div class="fallback">3D view unavailable — use the list above.</div>
-<aside class="aside" id="aside"><button class="close" aria-label="닫기">×</button><div class="badge">SELECTED SPACE</div><h2></h2><div class="space"></div><p></p><a class="go" id="go" href="#">OPEN ↗</a></aside>
-<div class="zoom"><button id="minus" aria-label="축소">−</button><button id="plus" aria-label="확대">+</button></div>
-<script>
-// three.js를 못 불러오면 목록만 남김
-setTimeout(()=>{ if(!document.querySelector('#scene canvas')) document.body.classList.add('no3d'); }, 6000);
-</script>
-<script type="module">
-import * as THREE from 'three';
+body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','Jost','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  display:grid;grid-template-rows:auto 1fr;overflow:hidden}
 
-// 공간 ↔ 페이지. 링크·이름·설명은 여기서만 바꾸면 됨.
-const SPACES=[
- {id:'work',     label:'(1) work',           space:'The Basilica',           desc:'Art Direction · Design · Strategy', link:'portfolio1.html',           x:-4.3,z:0,   w:4.0,d:14.2},
- {id:'sakk',     label:'(4) sakk',           space:'Curved Gallery',         desc:'sakk.co.kr',                          link:'https://www.sakk.co.kr/', ext:true, x:-4.3,z:-8,  w:4.0,d:2.3},
- {id:'ficciones',label:'(3) ficciones',      space:'Scarpa Wing',            desc:'Essay — blooming my million',         link:'rose.html',                 x:5.0, z:-.9, w:9,  d:3.9},
- {id:'career',   label:'(2) career',         space:'Threshold & Courtyard',  desc:'Career',                              link:'career.html',               x:1.0, z:4.2, w:6.6,d:4.2},
- {id:'index00',  label:'(0) previous index', space:'Entrance / Arcade',      desc:'The hand-shadow index',               link:'index00.html',              x:-7.2,z:8.4, w:6.8,d:2.7}
-];
+/* ── 상단 내비게이션: 지금 가리키는 곳 위에 세모가 깜빡임 ── */
+.nav{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:22px 3% 14px}
+.mark{font:700 23px/1 'Instrument Sans','Jost',sans-serif;letter-spacing:-.05em;color:#080808;text-decoration:none}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:26px}
+.nav li{position:relative}
+.nav li a{display:block;color:#080808;text-decoration:none;font-size:15px;font-weight:600;padding-top:14px}
+.nav li a small{font-weight:400;color:#8a7f70;margin-right:3px}
+.nav li.on::before{content:'';position:absolute;top:0;left:50%;margin-left:-5px;
+  border-left:5px solid transparent;border-right:5px solid transparent;border-top:8px solid #080808;
+  animation:blink 1s steps(1,end) infinite}
+@keyframes blink{50%{opacity:0}}
 
-const root=document.getElementById('scene'),scene=new THREE.Scene();scene.background=new THREE.Color('#eeeae4');
-const camera=new THREE.PerspectiveCamera(32,innerWidth/innerHeight,.1,250);
-const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;root.appendChild(renderer.domElement);
-scene.add(new THREE.HemisphereLight(0xffffff,0xc9c1b6,2.6));const sun=new THREE.DirectionalLight(0xffffff,2);sun.position.set(-9,20,10);scene.add(sun);
-const matWall=new THREE.MeshLambertMaterial({color:0xf8f6f1,side:THREE.DoubleSide}),matEdge=new THREE.MeshLambertMaterial({color:0xddd7cd}),matFloor=new THREE.MeshLambertMaterial({color:0xe3ded6,side:THREE.DoubleSide}),matCourt=new THREE.MeshLambertMaterial({color:0xd6d0c5,side:THREE.DoubleSide});
-const architecture=new THREE.Group();scene.add(architecture);const selectable=[];
-function box(w,h,d,x,y,z,mat=matWall){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);o.position.set(x,y,z);architecture.add(o);return o}
-function wall(x1,z1,x2,z2,h=2.2,t=.19){const L=Math.hypot(x2-x1,z2-z1);const o=box(L,h,t,(x1+x2)/2,h/2,(z1+z2)/2);o.rotation.y=-Math.atan2(z2-z1,x2-x1);return o}
-function floor(x,z,w,d,m=matFloor){return box(w,.11,d,x,-.09,z,m)}
-function column(x,z,r=.14){const o=new THREE.Mesh(new THREE.CylinderGeometry(r,r,2.15,10),matWall);o.position.set(x,1.075,z);architecture.add(o)}
-function pathFloor(pts,m=matFloor){const s=new THREE.Shape();pts.forEach(([x,z],i)=>i?s.lineTo(x,-z):s.moveTo(x,-z));s.closePath();const g=new THREE.ShapeGeometry(s);g.rotateX(-Math.PI/2);const o=new THREE.Mesh(g,m);o.position.y=-.035;architecture.add(o);return o}
-// 19세기 긴 전시홀
-floor(-4.3,0,4.4,14.5);wall(-6.65,-7.3,-6.65,7.3,2.7);wall(-2,-7.3,-2,7.3,2.7);wall(-6.65,7.3,-2,7.3,2.7);
-for(let z=-5.75;z<=6;z+=2.1){column(-5.95,z,.11);column(-2.7,z,.11)}
-// 반원형 끝 공간
-const n=14,r=2.32,cx=-4.32,cz=-7.3;for(let i=0;i<n;i++){const a=Math.PI+(i/n)*Math.PI,b=Math.PI+((i+1)/n)*Math.PI;wall(cx+r*Math.cos(a),cz+r*Math.sin(a),cx+r*Math.cos(b),cz+r*Math.sin(b),2.65,.22)}
-const apse=new THREE.Shape();apse.absarc(cx,-cz,r,Math.PI,0,true);apse.lineTo(cx-r,-cz);const ag=new THREE.ShapeGeometry(apse);ag.rotateX(-Math.PI/2);const am=new THREE.Mesh(ag,matFloor);am.position.y=-.04;architecture.add(am);
-// 스카르파 증축부
-floor(5,-.8,9.3,4.2);wall(.35,-3,9.7,-3,2.2);wall(.35,1.4,9.7,1.4,2.45);wall(9.7,-3,9.7,1.4,2.3);wall(.35,-3,.35,-1.8,2.35);wall(.35,.3,.35,1.4,2.35);wall(3.1,-3,3.1,-1.7,1.5);wall(6.6,-3,6.6,-1.7,1.5);
-box(1.8,.16,.7,7.7,.05,-.1,matEdge);box(.16,1.1,1.6,3.2,.55,.1,matWall);
-// 마당과 문턱
-pathFloor([[-2,3],[-.3,3],[3.2,4],[4.6,7.7],[.7,8.5],[-2,7.3]],matCourt);
-wall(-.3,3,3.2,4,.64,.18);wall(4.6,7.7,.7,8.5,.65,.18);wall(.7,8.5,-2,7.3,.8,.18);
-// 입구와 회랑
-floor(-7.5,8.6,6.8,2.8);wall(-10.9,7.3,-10.9,9.95,1.65);wall(-10.9,9.95,-4.1,9.95,1.65);wall(-10.9,7.3,-6.9,7.3,1.65);for(let x=-10;x<-6.7;x+=1.1)column(x,8.1,.10);
-for(let i=0;i<7;i++)box(2.1,.03,.06,-4.3,-.015,7.6+i*.22,matEdge);
-// 클릭 영역: 거의 투명한 바닥판
-for(const s of SPACES){const g=new THREE.PlaneGeometry(s.w,s.d);g.rotateX(-Math.PI/2);const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0xc8b185,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide}));m.position.set(s.x,.045,s.z);m.userData.space=s;scene.add(m);selectable.push(m)}
-const plate=box(26,.15,26,-.3,-.25,0,new THREE.MeshLambertMaterial({color:0xeae6df}));plate.position.y=-.36;
+/* ── 도면 ── */
+.stage{position:relative;display:grid;place-items:center;min-height:0;padding:8px 3% 24px}
+.plan{position:relative;aspect-ratio:1110/1050;height:min(100%,calc((100vw - 6%) * 1050/1110));max-width:100%}
+.plan > img.base{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;user-select:none;-webkit-user-drag:none}
+.sec{position:absolute;display:block;z-index:2;outline:none}
+.sec span{position:absolute;left:6px;top:5px;font-size:11px;font-weight:600;letter-spacing:.02em;color:#080808;background:#fff;padding:1px 4px;white-space:nowrap}
+.sec::after{content:'';position:absolute;inset:0;background:#eaf751;mix-blend-mode:multiply;opacity:0;transition:opacity .2s}
+.sec:hover::after,.sec:focus-visible::after,.sec.on::after{opacity:1}
+.statue{position:absolute;z-index:3;pointer-events:none;user-select:none;-webkit-user-drag:none;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.18));opacity:0;transition:opacity .6s ease}
+.statue.in{opacity:1}
 
-const fitDist=()=>clamp(36*Math.max(1,1.25/(innerWidth/innerHeight)),18,80);   // 세로 화면일수록 멀리서
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-let az=-.8,pol=.83,dist=0,focused=null,hovered=null;const target=new THREE.Vector3(-.1,0,0);dist=fitDist();
-function paint(){selectable.forEach(m=>{const id=m.userData.space.id;m.material.opacity=focused&&focused.id===id?.28:hovered&&hovered.id===id?.14:0})}
-function render(){camera.position.set(target.x+dist*Math.sin(pol)*Math.sin(az),dist*Math.cos(pol)+2,target.z+dist*Math.sin(pol)*Math.cos(az));camera.lookAt(target);renderer.render(scene,camera)}
-const aside=document.getElementById('aside'),go=document.getElementById('go'),links=[...document.querySelectorAll('#legend a')];
-function open(s){ if(s.ext) window.open(s.link,'_blank','noopener'); else location.href=s.link; }
-function choose(s){
-  if(focused&&focused.id===s.id){ open(s); return; }          // 같은 공간을 한 번 더 누르면 이동
-  focused=s;aside.classList.add('show');
-  aside.querySelector('h2').textContent=s.label;aside.querySelector('.space').textContent=s.space.toUpperCase();aside.querySelector('p').textContent=s.desc;
-  go.href=s.link; if(s.ext){go.target='_blank';go.rel='noopener'}else{go.removeAttribute('target');go.removeAttribute('rel')}
-  links.forEach(a=>a.classList.toggle('active',a.dataset.id===s.id));paint();render();
+@media (max-width:740px){
+  .nav{flex-direction:column;align-items:flex-start;padding:16px 5% 8px;gap:8px}
+  .nav ul{gap:4px 12px;flex-wrap:wrap}
+  .nav li a{font-size:13px}
+  .sec span{font-size:9px;left:3px;top:3px}
 }
-function close(){aside.classList.remove('show');focused=null;links.forEach(a=>a.classList.remove('active'));paint();render()}
-aside.querySelector('.close').onclick=close;
-addEventListener('keydown',e=>{if(e.key==='Escape')close()});
-// 목록: 첫 클릭은 3D에서 선택, 같은 항목을 다시 누르면 이동
-links.forEach(a=>a.addEventListener('click',e=>{const s=SPACES.find(x=>x.id===a.dataset.id);if(!(focused&&focused.id===s.id)){e.preventDefault();choose(s)}}));
-links.forEach(a=>{a.addEventListener('mouseenter',()=>{hovered=SPACES.find(x=>x.id===a.dataset.id);paint();render()});a.addEventListener('mouseleave',()=>{hovered=null;paint();render()})});
+@media (prefers-reduced-motion:reduce){.nav li.on::before{animation:none}.statue{transition:none}}
+</style></head>
+<body>
+<header class="nav">
+  <a class="mark" href="index.html">ficciones</a>
+  <ul id="nav">
+    <li data-id="index" class="on"><a href="index.html">index</a></li>
+    <li data-id="work"><a href="portfolio1.html"><small>(1)</small>work</a></li>
+    <li data-id="career"><a href="career.html"><small>(2)</small>career</a></li>
+    <li data-id="ficciones"><a href="rose.html"><small>(3)</small>ficciones</a></li>
+    <li data-id="sakk"><a href="https://www.sakk.co.kr/" target="_blank" rel="noopener"><small>(4)</small>sakk</a></li>
+    <li data-id="index00"><a href="index00.html"><small>(0)</small>previous</a></li>
+  </ul>
+</header>
 
-const ray=new THREE.Raycaster(),ptr=new THREE.Vector2();
-function pick(e){const b=renderer.domElement.getBoundingClientRect();ptr.set(((e.clientX-b.left)/b.width)*2-1,-((e.clientY-b.top)/b.height)*2+1);ray.setFromCamera(ptr,camera);const f=ray.intersectObjects(selectable);return f.length?f[0].object.userData.space:null}
-let down=null;const cv=renderer.domElement;
-cv.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,az,pol};cv.setPointerCapture(e.pointerId)});
-cv.addEventListener('pointermove',e=>{
-  if(down){const dx=e.clientX-down.x,dy=e.clientY-down.y;az=down.az-dx*.006;pol=clamp(down.pol+dy*.006,.23,1.47);render();return}
-  if(e.pointerType!=='mouse')return;const s=pick(e);if((s&&s.id)!==(hovered&&hovered.id)){hovered=s;cv.style.cursor=s?'pointer':'grab';paint();render()}
-});
-cv.addEventListener('pointerup',e=>{if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<5){const s=pick(e);if(s)choose(s)}down=null});
-cv.addEventListener('dblclick',e=>{const s=pick(e);if(s)open(s)});
-cv.addEventListener('wheel',e=>{e.preventDefault();dist=clamp(dist+Math.sign(e.deltaY)*1.7,18,80);render()},{passive:false});
-document.getElementById('plus').onclick=()=>{dist=clamp(dist-3,18,80);render()};
-document.getElementById('minus').onclick=()=>{dist=clamp(dist+3,18,80);render()};
-addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);render()});
-cv.style.cursor='grab';render();
-</script></body></html>
+<main class="stage">
+  <div class="plan" id="plan">
+    <img class="base" src="idx_plan.png" alt="카노바 석고상 미술관 평면도">
+    <!-- 섹션: 위치는 도면 대비 % -->
+    <a class="sec" data-id="work"      href="portfolio1.html"                                  style="left:14.14%;top:39.24%;width:65.32%;height:24.76%"><span>(1) work</span></a>
+    <a class="sec" data-id="career"    href="career.html"                                      style="left:59.19%;top:69.24%;width:31.53%;height:29.71%"><span>(2) career</span></a>
+    <a class="sec" data-id="ficciones" href="rose.html"                                        style="left:27.66%;top:0.67%;width:32.43%;height:31.43%"><span>(3) ficciones</span></a>
+    <a class="sec" data-id="sakk"      href="https://www.sakk.co.kr/" target="_blank" rel="noopener" style="left:1.08%;top:38.29%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
+    <a class="sec" data-id="index00"   href="index00.html"                                     style="left:79.46%;top:35.43%;width:19.82%;height:33.81%"><span>(0) previous</span></a>
+  </div>
+</main>
+
+<script>
+(() => {
+  const plan = document.getElementById('plan');
+  const navItems = [...document.querySelectorAll('#nav li')];
+  const secs = [...document.querySelectorAll('.sec')];
+
+  // 세모: 가리키는 섹션의 메뉴 위로 이동, 벗어나면 index(현재 위치)로 돌아옴
+  const point = id => {
+    navItems.forEach(li => li.classList.toggle('on', li.dataset.id === id));
+    secs.forEach(s => s.classList.toggle('on', s.dataset.id === id));
+  };
+  secs.forEach(s => {
+    s.addEventListener('mouseenter', () => point(s.dataset.id));
+    s.addEventListener('focus', () => point(s.dataset.id));
+    s.addEventListener('mouseleave', () => point('index'));
+    s.addEventListener('blur', () => point('index'));
+  });
+  navItems.forEach(li => {
+    li.addEventListener('mouseenter', () => point(li.dataset.id));
+    li.addEventListener('mouseleave', () => point('index'));
+  });
+
+  // 조각상: 새로고침마다 섹션 주변 빈자리에 무작위 배치 (높이는 도면 대비 %로 얼추 맞춤)
+  const STATUES = [
+    { src: 'idx_skeleton.webp', h: 30, r: 387/420 },
+    { src: 'idx_head.webp',     h: 22, r: 166/256 },
+    { src: 'idx_hera.webp',     h: 34, r: 233/420 },
+    { src: 'idx_rider.webp',    h: 30, r: 420/418 },
+  ];
+  // 빈자리 중심점 (도면 대비 %): 섹션 바깥쪽 여백
+  const SLOTS = [[12,17],[82,16],[12,84],[42,84],[96,82]];   // 서로 충분히 떨어진 5곳 중 4곳 사용
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const slots = shuffle(SLOTS.slice());
+  const ratio = 1110 / 1050;   // 도면 가로/세로
+  shuffle(STATUES.slice()).forEach((s, i) => {
+    const [cx, cy] = slots[i];
+    const h = s.h * (0.88 + Math.random() * 0.24) * (innerWidth < 740 ? .8 : 1);   // 높이 % (도면 세로 대비)
+    const w = h * s.r / ratio;                              // 가로 % (도면 가로 대비)
+    const x = Math.min(100 - w, Math.max(0, cx - w / 2 + (Math.random() - .5) * 6));
+    const y = Math.min(100 - h, Math.max(0, cy - h / 2 + (Math.random() - .5) * 6));
+    const img = new Image();
+    img.className = 'statue'; img.alt = ''; img.src = s.src;
+    img.style.cssText = `left:${x}%;top:${y}%;width:${w}%;height:${h}%;object-fit:contain;` +
+                        (Math.random() < .5 ? 'transform:scaleX(-1);' : '');
+    img.onload = () => img.classList.add('in');
+    plan.appendChild(img);
+  });
+})();
+</script>
+</body></html>
