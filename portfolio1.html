@@ -224,6 +224,15 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
 #chorus-bar .mark{font-weight:700!important}
 .project-name{font-weight:600!important}
 @media(max-width:740px){.project-name{font-size:25px!important}.v .hl{font-size:17px!important}}
+</style>
+<style id="thumb-zoom">
+/* 목록 이미지: 마우스를 올리면 커서가 있는 부분이 확대 (프레임 크기는 그대로) */
+.thumb img{transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .35s ease}
+@media (hover:hover) and (pointer:fine){
+  .thumb{cursor:zoom-in}
+  .thumb:hover img{transform:scale(1.8);opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.thumb img{transition:none}}
 </style></head>
 <body><header id="chorus-bar"><a class="mark" href="portfolio1.html">WORK</a><nav class="nav"><a href="index.html">Index ↗</a><a href="career.html">Career</a></nav><span class="sub">Art Direction · Design · Strategy</span></header>
 
@@ -636,5 +645,6 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
     }));
   </script>
 
+<script id="thumb-zoom-js">document.querySelectorAll('.thumb').forEach(function(t){t.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse')return;var img=t.querySelector('img');if(!img)return;var b=t.getBoundingClientRect();img.style.transformOrigin=((e.clientX-b.left)/b.width*100).toFixed(1)+'% '+((e.clientY-b.top)/b.height*100).toFixed(1)+'%';});});</script>
 <script id="chorus-effect">(function(){var tones=['#c3c07e','#c5b49b','#bac2a6'];var prev=-1;try{prev=parseInt(localStorage.getItem('jay-chorus-palette'),10)}catch(e){}var i=Number.isFinite(prev)?(prev+1)%tones.length:0;document.documentElement.style.setProperty('--header-tone',tones[i]);try{localStorage.setItem('jay-chorus-palette',i)}catch(e){}var sync=function(){document.body.classList.toggle('chorus-scrolled',window.scrollY>100)};sync();window.addEventListener('scroll',sync,{passive:true});})();</script></body>
 </html>
