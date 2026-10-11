@@ -8,106 +8,111 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300&family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   
   <style>
-    /* Layout: port1과 같은 종이·먹·서체, 색은 쓰지 않음. 선 없이 글자 크기와 간격만으로 나눈다. */
+    /* Layout: portfolio1.html과 같은 서체·바탕·먹색, 포인트 색은 빼고 흑백. 선 없이 글자 크기와 간격만으로 나눈다. */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
-      --paper: #fcfdfa;
-      --ink: #28322e;
-      --mute: #7a857f;
-      --en: "Newsreader", "Iowan Old Style", "Times New Roman", serif;
-      --ko: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      --bg: #eff2f0;
+      --ink: #1c1a18;
+      --text: #3a3836;
+      --mute: #8a7f70;
+      --sans: 'Google Sans', 'Jost', 'Century Gothic', CenturyGothic, AppleGothic, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       --fig-w: 546px;   /* 그림 가로 크기 — 이 숫자만 바꾸면 돼 (세로는 자동) */
     }
     
     html, body {
       min-height: 100%;
-      font-family: var(--ko);
+      background: var(--bg);
+      font-family: var(--sans);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
     }
     
     body {
-      background: var(--paper);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       padding: 0 24px 120px;
     }
     
-    /* ── 오른쪽 상단 Index ── */
+    /* ── 우상단 Index (portfolio1과 동일) ── */
     .top {
       position: fixed;
       top: 0; right: 0;
       width: 100%;
       display: flex;
       justify-content: flex-end;
-      padding: 30px 6% 0;
+      padding: 36px 6% 0;
       z-index: 100;
       pointer-events: none;
     }
     .back {
       pointer-events: auto;
-      font-family: var(--en);
-      font-style: italic;
-      font-weight: 300;
-      font-size: 16px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
       color: var(--mute);
       text-decoration: none;
-      transition: color .3s ease;
+      transition: color .3s;
     }
     .back:hover { color: var(--ink); }
     
-    /* ── 본문 ── */
-    .sheet { position: relative; z-index: 1; width: 100%; max-width: 620px; padding-top: 128px; }
-
-    .masthead { margin-bottom: 88px; }
+    /* ── 좌상단 Essay: portfolio1의 Work 자리·크기, 색은 검정 ── */
+    .masthead {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 30;
+      pointer-events: none;
+    }
     .masthead h1 {
-      font-family: var(--en);
-      font-weight: 600;
-      font-size: 64px;
-      line-height: .95;
-      letter-spacing: -1.5px;
+      font-size: 76px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: .5px;
+      color: var(--ink);
     }
     .masthead p {
-      margin-top: 10px;
-      font-family: var(--en);
-      font-style: italic;
-      font-weight: 300;
-      font-size: 17px;
+      margin-top: 4px;
+      padding-left: 4px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
       color: var(--mute);
     }
     
+    /* ── 본문 ── */
+    .sheet { position: relative; z-index: 1; width: 100%; max-width: 620px; padding-top: 150px; }
     .entries { display: flex; flex-direction: column; gap: 72px; }
     
-    /* 글 머리: 제목(중간) + 날짜(작게), 모두 왼쪽 정렬 */
-    .entry-head { margin-bottom: 18px; }
+    /* 글 머리: 제목(portfolio1 프로젝트 이름 크기) + 날짜(작게), 왼쪽 정렬 */
+    .entry-head { margin-bottom: 16px; }
     .entry-head h2 {
-      font-family: "Newsreader", "Gowun Dodum", "Apple SD Gothic Neo", serif;
+      font-size: 30px;
       font-weight: 400;
-      font-size: 26px;
       line-height: 1.15;
       letter-spacing: -.3px;
+      color: var(--ink);
     }
     .entry-head time {
       display: block;
-      margin-top: 5px;
-      font-family: var(--en);
-      font-weight: 300;
-      font-size: 13px;
-      letter-spacing: .6px;
+      margin-top: 8px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
       color: var(--mute);
       font-variant-numeric: tabular-nums;
     }
     
     /* 본문: 줄 사이는 넉넉히, 문단 사이 빈칸은 좁게 */
     .entry-body {
-      font-family: "Newsreader", "Gowun Dodum", "Apple SD Gothic Neo", serif;   /* 영문은 Newsreader, 한글은 Gowun Dodum */
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.7;
+      color: var(--text);
       letter-spacing: -.1px;
       word-break: keep-all;
       overflow-wrap: anywhere;
@@ -116,7 +121,7 @@
     }
     .entry-body p { white-space: pre-wrap; }
     .entry-body .w { white-space: nowrap; }   /* 글자를 쪼개도 단어 중간에서 줄이 바뀌지 않게 */
-    .entry-body p + p { margin-top: .55em; }
+    .entry-body p + p { margin-top: .5em; }
     
     .entry-body .ch {
       display: inline-block;
@@ -143,28 +148,28 @@
     .slider .bar {
       display: flex; align-items: center; justify-content: space-between;
       margin-top: 8px; color: var(--mute);
-      font-family: var(--en); font-weight: 300; font-size: 14px; font-variant-numeric: tabular-nums;
+      font-size: 12px; letter-spacing: 2px; font-variant-numeric: tabular-nums;
     }
     .slider .nav { display: flex; gap: 2px; }
     .slider button {
       background: none; border: 0; padding: 2px 8px;
-      font-family: var(--en); font-weight: 300; font-size: 26px; line-height: 1;
+      font-family: 'Jost', sans-serif; font-weight: 300; font-size: 26px; line-height: 1;
       color: var(--mute); cursor: pointer; transition: color .3s, opacity .3s;
     }
     .slider button:hover, .slider button:focus-visible { color: var(--ink); outline: none; }
     .slider button:disabled { opacity: .3; cursor: default; }
     
-    .empty { font-family: var(--en); font-style: italic; color: var(--mute); padding: 80px 0; }
+    .empty { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--mute); padding: 80px 0; }
 
-    /* ── 모바일 ── */
-    @media (max-width: 768px) {
-      .top { position: absolute; padding: 24px 5% 0; }
-      .sheet { padding-top: 88px; }
-      .masthead { margin-bottom: 64px; }
-      .masthead h1 { font-size: 48px; }
+    /* ── 모바일 (portfolio1 기준) ── */
+    @media (max-width: 740px) {
+      .top { position: absolute; padding: 15px 5% 0; }
+      .masthead { position: absolute; }
+      .masthead h1 { font-size: 44px; }
+      .sheet { padding-top: 112px; }
       .entries { gap: 56px; }
-      .entry-head h2 { font-size: 22px; }
-      .entry-body { font-size: 16px; }
+      .entry-head h2 { font-size: 24px; }
+      .entry-body { font-size: 15.5px; }
     }
   </style>
 </head>
@@ -175,12 +180,14 @@
     <a href="index.html" class="back">← Index</a>
   </div>
 
+  <!-- 좌상단: Essay -->
+  <header class="masthead">
+    <h1>Essay</h1>
+    <p>blooming my million</p>
+  </header>
+
   <!-- 중앙 스크롤 본문 -->
   <div class="sheet">
-    <header class="masthead">
-      <h1>Essay</h1>
-      <p>blooming my million</p>
-    </header>
     <section class="entries" id="entries"></section>
   </div>
 
