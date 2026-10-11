@@ -39,28 +39,8 @@
     body { min-height: 100vh; }
     .page { display: flex; justify-content: center; padding: 0 24px 120px; }
     
-    /* ── 우상단 Index (portfolio1과 동일) ── */
-    .top {
-      position: absolute;
-      top: 0; right: 0;
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      padding: 36px 6% 0;
-      z-index: 100;
-      pointer-events: none;
-    }
-    .back {
-      pointer-events: auto;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--mute);
-      text-decoration: none;
-      transition: color .3s;
-    }
-    .back:hover { color: var(--ink); }
-    
+    /* ── 우상단: 사이트 공통 메뉴 ── */
+    .sitenav { position: absolute; top: 0; right: 0; z-index: 100; padding: 22px 3% 0; }
     /* ── 좌상단 Essay: portfolio1의 Work 자리·크기, 색은 검정 ── */
     .masthead {
       position: absolute;
@@ -194,7 +174,9 @@
 
     /* ── 모바일 (portfolio1 기준) ── */
     @media (max-width: 740px) {
-      .top { padding: 15px 5% 0; }
+      .sitenav { position: static; padding: 14px 5% 0; }   /* 모바일: 메뉴를 맨 위에 두고 Essay는 그 아래 */
+      .masthead { top: 64px; }
+      .sheet { padding-top: 120px; }
       .bar-top { height: 42px; padding: 0 5%; }
       .bar-top .mark { font-size: 21px; }
       .bar-top .nav { gap: 15px; font-size: 12px; }
@@ -202,19 +184,28 @@
       .foot a { font-size: 18px; }
       .foot .small { margin-left: 0; width: 100%; }
       .masthead h1 { font-size: 44px; }
-      .sheet { padding-top: 112px; }
       .entries { gap: 56px; }
       .entry-head h2 { font-size: 24px; }
       .entry-body { font-size: 15.5px; }
     }
+
+/* ── 사이트 공통 메뉴 (index·career와 같음): 지금 있는 곳 위에서 연두 세모가 돈다 ── */
+.sitenav ul{list-style:none;margin:0;padding:0;display:flex;gap:26px}
+.sitenav li{position:relative}
+.sitenav a{display:block;color:#080808;text-decoration:none;font:600 15px/1.2 'Instrument Sans','Google Sans','Jost',sans-serif;padding-top:20px;transition:opacity .25s}
+.sitenav a:hover{opacity:.55}
+.sitenav small{font-size:inherit;font-weight:400;color:#8a7f70;margin-right:3px}
+.sitenav li.on::before{content:'';position:absolute;top:0;left:50%;width:16px;height:13px;margin-left:-8px;
+  background:#c3d200;clip-path:polygon(0 0,100% 0,50% 100%);animation:sitenav-spin 1.6s linear infinite}
+@keyframes sitenav-spin{from{transform:perspective(60px) rotateY(0)}to{transform:perspective(60px) rotateY(360deg)}}
+@media (max-width:740px){.sitenav ul{gap:4px 12px;flex-wrap:wrap}.sitenav a{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.sitenav li.on::before{animation:none}}
   </style>
 </head>
 <body oncontextmenu="return false" oncopy="return false">
 
-  <!-- 오른쪽 상단 고정: Index 링크 -->
-  <div class="top">
-    <a href="index.html" class="back">← Index</a>
-  </div>
+  <!-- 오른쪽 위: 사이트 공통 메뉴 -->
+  <nav class="sitenav" aria-label="사이트 메뉴"><ul><li><a href="index.html">index</a></li><li><a href="portfolio1.html"><small>(1)</small>work</a></li><li><a href="career.html"><small>(2)</small>career</a></li><li class="on"><a href="rose.html" aria-current="page"><small>(3)</small>ficciones</a></li><li><a href="https://www.sakk.co.kr/" target="_blank" rel="noopener"><small>(4)</small>sakk</a></li><li><a href="mailto:limijay_yonne@naver.com">mail</a></li></ul></nav>
 
   <!-- 스크롤하면 생기는 얇은 바 -->
   <header class="bar-top" aria-label="Essay">
