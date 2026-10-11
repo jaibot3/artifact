@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-  <title>A Million Roses</title>
+  <title>Blooming my million — Essay</title>
   
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,42 +41,6 @@
       padding: 0 24px 120px; /* 상단 여백은 헤더가 아닌 .sheet에서 관리 */
     }
     
-    /* ── 왼쪽 상단 고정 (rose 문구 타이틀 위치) ── */
-    .page-header {
-      position: fixed;
-      top: 6px;
-      left: 2%;
-      z-index: 10;
-      font-family: 'Asta Sans', -apple-system, sans-serif;
-      text-align: left;
-    }
-    
-    .ph-verse {
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 20px;
-      letter-spacing: 0.5px;
-      color: #91908e;
-      white-space: pre-wrap;
-    }
-    
-    .ph-src {
-      margin-top: 8px;
-      font-size: 12px;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 1px;
-      color: var(--ink-3);
-    }
-    
-    .ph-sub {
-      margin-top: 12px;
-      font-size: 15px;
-      font-weight: 300;
-      letter-spacing: 0.5px;
-      color: #ded26e;
-    }
-    
     /* ── 오른쪽 상단 고정 (Work1 Index 위치) ── */
     .top {
       position: fixed;
@@ -110,46 +74,62 @@
       position: relative; 
       z-index: 1; 
       width: 100%; 
-      max-width: 720px; 
-      padding-top: 300px; /* 고정된 시 구절과 글이 겹치지 않게 여백 확보 */
+      max-width: 660px; 
+      padding-top: 140px;
+    }
+
+    /* ── 상단 제목 ── */
+    .masthead { margin-bottom: 96px; }
+    .kicker {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+    .masthead h1 {
+      margin-top: 14px;
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      color: var(--ink);
     }
     
     .entries { 
       display: flex; 
       flex-direction: column; 
-      gap: 80px; 
     }
+    .entries article { padding: 56px 0 64px; border-top: 1px solid var(--rule); }
     
+    /* 날짜: 2026.09.25  THU */
     .entry-meta { 
       display: flex; 
       align-items: baseline; 
-      gap: 22px; 
-      margin-bottom: 48px; 
+      gap: 12px; 
+      margin-bottom: 28px; 
+      color: var(--ink-3);
     }
-    
-    .entry-meta .num {
-      font-size: 42px; 
-      line-height: 1; 
-      letter-spacing: -1px;
-      font-weight: normal; 
-      color: var(--num);
+    .entry-meta .date {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      font-variant-numeric: tabular-nums;
     }
-    
-    .entry-meta .rest {
-      font-size: 11px; 
-      letter-spacing: 4px; 
-      text-transform: uppercase;
-      color: var(--ink-3); 
-      font-style: italic;
+    .entry-meta .wd {
+      font-size: 11px;
+      letter-spacing: 3px;
     }
     
     .entry-body {
-      font-size: 15px; 
-      line-height: 28px; 
+      font-size: 18px; 
+      line-height: 1.85; 
       color: var(--ink);
       white-space: pre-wrap; 
       font-weight: 400; 
-      letter-spacing: -0.2px;
+      letter-spacing: -0.1px;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
       user-select: none; 
       -webkit-user-select: none; 
     }
@@ -162,25 +142,60 @@
       will-change: transform, filter, opacity;
     }
     
-    /* ── 일기 그림 ── */
-    .entry-figs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin: 20px 0 4px;
-    }
-    .entry-figs img {
+    /* ── 일기 그림: 한 장은 그대로, 여러 장은 좌우 슬라이드 ── */
+    .entry-figs { margin: 0 0 32px; }
+    .entry-figs > img {
       width: var(--fig-w);   /* 가로만 고정, 세로는 비율대로 자동 */
       max-width: 100%;
       height: auto;
       display: block;
       border-radius: 2px;
     }
-
-    .entries article:not(:first-child) {
-      opacity: 0.5;
+    .slider { position: relative; }
+    .slider .track {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      outline: none;
     }
-    
+    .slider .track::-webkit-scrollbar { display: none; }
+    .slider .track img {
+      flex: 0 0 100%;
+      width: 100%;
+      max-height: 72vh;
+      object-fit: contain;
+      scroll-snap-align: center;
+      display: block;
+      -webkit-user-drag: none;
+    }
+    .slider .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      color: var(--ink-3);
+      font-size: 13px;
+      letter-spacing: 1px;
+      font-variant-numeric: tabular-nums;
+    }
+    .slider .nav { display: flex; gap: 4px; }
+    .slider button {
+      background: none;
+      border: 0;
+      padding: 4px 10px;
+      font: inherit;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--ink-3);
+      cursor: pointer;
+      transition: color .3s, opacity .3s;
+    }
+    .slider button:hover, .slider button:focus-visible { color: var(--ink); outline: none; }
+    .slider button:disabled { opacity: .3; cursor: default; }
+
     .empty {
       text-align: center; 
       font-size: 12px; 
@@ -192,34 +207,16 @@
 
     /* ── 반응형 모바일 ── */
     @media (max-width: 768px) {
-      .page-header {
-        position: absolute; /* 모바일에서는 화면이 좁으니 스크롤할 때 위로 밀려 올라가도록 변경 */
-        top: 36px;
-        left: 5%;
-        right: 5%;
-      }
-      .ph-verse {
-        font-size: 24px;
-        line-height: 34px;
-      }
-      .top {
-        padding: 36px 5% 0;
-      }
-      .sheet {
-        padding-top: 300px;
-      }
+      .top { position: absolute; padding: 28px 5% 0; }   /* 모바일: 본문 위에 겹치지 않게 함께 스크롤 */
+      .sheet { padding-top: 96px; }
+      .masthead { margin-bottom: 64px; }
+      .masthead h1 { font-size: 34px; }
+      .entries article { padding: 44px 0 52px; }
+      .entry-body { font-size: 17px; line-height: 1.8; }
     }
   </style>
 </head>
 <body oncontextmenu="return false" oncopy="return false">
-
-  <!-- 왼쪽 상단 고정: 시 구절 -->
-  <div class="page-header">
-    <p class="ph-verse">A million flowers bloom,
-and reach the star I have longed for.</p>
-    <p class="ph-src">— from <em>A Million Roses</em></p>
-    <p class="ph-sub">so, still blooming my million.</p>
-  </div>
 
   <!-- 오른쪽 상단 고정: Index 링크 -->
   <div class="top">
@@ -228,6 +225,10 @@ and reach the star I have longed for.</p>
 
   <!-- 중앙 스크롤 본문 -->
   <div class="sheet">
+    <header class="masthead">
+      <p class="kicker">Essay</p>
+      <h1>Blooming my million</h1>
+    </header>
     <section class="entries" id="entries"></section>
   </div>
 
@@ -591,7 +592,6 @@ E. cheers.`
 ];
 
 (() => {
-  const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
   const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const $list = document.getElementById('entries');
 
@@ -600,16 +600,14 @@ E. cheers.`
     return; 
   }
 
-  const sortedAsc = [...ENTRIES].sort((a, b) => a.date.localeCompare(b.date));
-  sortedAsc.forEach((e, i) => { e.__num = i + 1; });
-  const sortedDesc = [...sortedAsc].reverse();
+  const sortedDesc = [...ENTRIES].sort((a, b) => b.date.localeCompare(a.date));
 
   function fmt(iso) {
     const [y, m, d] = iso.split('-').map(Number);
     const dt = new Date(y, m - 1, d);
     return { 
-      day: String(d).padStart(2, '0'), 
-      rest: `${MONTHS[m - 1]} ${y} · ${WEEKDAYS[dt.getDay()]}` 
+      date: `${y}.${String(m).padStart(2, '0')}.${String(d).padStart(2, '0')}`, 
+      wd: WEEKDAYS[dt.getDay()] 
     };
   }
 
@@ -624,23 +622,44 @@ E. cheers.`
   }
 
   $list.innerHTML = sortedDesc.map(e => {
-    const { day, rest } = fmt(e.date);
+    const { date, wd } = fmt(e.date);
     const imgs = [].concat(e.images || e.image || []).filter(Boolean);
-    const figs = imgs.length
-      ? `<div class="entry-figs">${imgs.map(src =>
-          `<img src="${escapeHtml(src)}" alt="">`).join('')}</div>`
-      : '';
+    const tags = imgs.map(src => `<img src="${escapeHtml(src)}" alt="" draggable="false">`).join('');
+    const figs = imgs.length > 1
+      ? `<div class="entry-figs slider">
+           <div class="track" tabindex="0" aria-label="그림 ${imgs.length}장, 좌우로 넘기기">${tags}</div>
+           <div class="bar"><span class="ctr">1 / ${imgs.length}</span>
+             <span class="nav"><button class="prev" aria-label="이전 그림">‹</button><button class="next" aria-label="다음 그림">›</button></span></div>
+         </div>`
+      : imgs.length ? `<div class="entry-figs">${tags}</div>` : '';
     return `
       <article>
         <div class="entry-meta">
-          <span class="num">${String(e.__num).padStart(2, '0')}</span>
-          <span class="rest">${day} ${rest}</span>
+          <time class="date" datetime="${e.date}">${date}</time>
+          <span class="wd">${wd}</span>
         </div>
         ${figs}
-        <div class="entry-body">${escapeHtml(e.text)}</div>
+        <div class="entry-body">${escapeHtml(e.text.trim())}</div>
       </article>
     `;
   }).join('');
+
+  // 여러 장 그림: 스와이프·화살표·키보드로 좌우 이동
+  $list.querySelectorAll('.slider').forEach(sl => {
+    const track = sl.querySelector('.track'), n = track.children.length;
+    const prev = sl.querySelector('.prev'), next = sl.querySelector('.next'), ctr = sl.querySelector('.ctr');
+    const at = () => Math.round(track.scrollLeft / track.clientWidth);
+    const go = i => track.scrollTo({ left: Math.max(0, Math.min(n - 1, i)) * track.clientWidth });
+    const sync = () => { const i = at(); ctr.textContent = `${i + 1} / ${n}`; prev.disabled = i === 0; next.disabled = i === n - 1; };
+    prev.onclick = () => go(at() - 1);
+    next.onclick = () => go(at() + 1);
+    track.addEventListener('keydown', ev => {
+      if (ev.key === 'ArrowLeft') { ev.preventDefault(); go(at() - 1); }
+      if (ev.key === 'ArrowRight') { ev.preventDefault(); go(at() + 1); }
+    });
+    track.addEventListener('scroll', sync, { passive: true });
+    sync();
+  });
 
   function activateScatter(body) {
     const text = body.textContent;
