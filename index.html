@@ -72,7 +72,7 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <img class="base" src="idx_plan.webp" alt="카노바 석고상 미술관 평면도">
     <!-- 섹션: 위치는 도면 대비 % -->
     <a class="sec" data-id="work"      href="portfolio1.html"                                  style="left:20.54%;top:36.00%;width:65.32%;height:24.76%"><span>(1) work</span></a>
-    <a class="sec" data-id="career"    href="career.html"                                      style="left:9.28%;top:1.05%;width:31.53%;height:29.71%"><span>(2) career</span></a>
+    <a class="sec on" data-id="career"    href="career.html"                                      style="left:9.28%;top:1.05%;width:31.53%;height:29.71%"><span>(2) career</span></a>
     <a class="sec" data-id="ficciones" href="rose.html"                                        style="left:39.91%;top:67.90%;width:32.43%;height:31.43%"><span>(3) ficciones</span></a>
     <a class="sec" data-id="sakk"      href="https://www.sakk.co.kr/" target="_blank" rel="noopener" style="left:85.86%;top:35.52%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
     <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram <span>by jaylim</span></small></p>
@@ -88,8 +88,10 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
   // 세모: 가리키는 섹션의 메뉴 위로 이동, 벗어나면 index(현재 위치)로 돌아옴
   const point = id => {
     navItems.forEach(li => li.classList.toggle('on', li.dataset.id === id));
-    secs.forEach(s => s.classList.toggle('on', s.dataset.id === id));
+    const lit = id === 'index' ? 'career' : id;   // 기본 상태: 도면의 초록 칠은 career에 켜져 있음
+    secs.forEach(s => s.classList.toggle('on', s.dataset.id === lit));
   };
+  point('index');
   secs.forEach(s => {
     s.addEventListener('mouseenter', () => point(s.dataset.id));
     s.addEventListener('focus', () => point(s.dataset.id));
