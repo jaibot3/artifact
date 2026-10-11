@@ -125,7 +125,8 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 
   const walkers = shuffle(STATUES.slice()).map((s, i) => {
     const [L, T, Wd, Ht] = rooms[i];
-    let h = Math.min(Ht, 22) * rnd(.55, .95);               // 높이 % (도면 세로 대비)
+    let h = Math.min(Ht, 22) * rnd(.55, .95) * (innerWidth < 740 ? 1.4 : 1);   // 높이 % (도면 세로 대비), 모바일은 1.4배
+    h = Math.min(h, Ht * .98);                              // 방 높이는 넘지 않게
     let w = h * s.r / ratio;                                // 가로 % (도면 가로 대비)
     if (w > Wd * .9) { w = Wd * .9; h = w * ratio / s.r; }
     const box = { x0: L, x1: L + Wd - w, y0: T, y1: T + Ht - h };   // 왼쪽 위 꼭짓점이 움직일 수 있는 범위
