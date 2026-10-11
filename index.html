@@ -22,9 +22,8 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 .nav li a{padding-top:20px}
 .nav li.on::before{content:'';position:absolute;top:0;left:50%;width:16px;height:13px;margin-left:-8px;
   background:#c3d200;clip-path:polygon(0 0,100% 0,50% 100%);   /* 연두를 더 진하게 */
-  animation:spin 1.6s linear infinite,blink 1s steps(1,end) infinite}
+  animation:spin 1.6s linear infinite}
 @keyframes spin{from{transform:perspective(60px) rotateY(0)}to{transform:perspective(60px) rotateY(360deg)}}
-@keyframes blink{50%{opacity:0}}
 
 /* ── 도면 ── */
 .stage{position:relative;display:grid;place-items:center;min-height:0;padding:8px 3% 24px}
