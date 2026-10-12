@@ -55,6 +55,7 @@
     .cv-sub { font-size:14px; font-style:italic; line-height:1.5; color:#666; margin-top:2px; }
     .cv-link { color:var(--ink); text-decoration:none; background:linear-gradient(var(--acid),var(--acid)) 0 88%/100% 35% no-repeat; transition:opacity .25s; }
     .cv-link:hover { opacity:.55; }
+    .cv-highlight { background:linear-gradient(var(--acid),var(--acid)) 0 88%/100% 35% no-repeat; }
 
     /* ── 하단: rose·portfolio1과 같음 ── */
     .foot { background:var(--pink); padding:56px 6% 64px; display:flex; gap:36px; flex-wrap:wrap; align-items:baseline; }
@@ -134,8 +135,8 @@
         <p class="cv-line">Adobe Illustrator · Photoshop · Premiere Pro</p>
         <p class="cv-line">Google Analytics · Meta Ads</p>
         <p class="cv-line">Excel · PowerPoint</p>
-        <p class="cv-line">Python · AI Tools · Vibe Coding</p>
-        <p class="cv-line">GitHub · HTML</p>
+        <p class="cv-line">Python · AI Tools · <span class="cv-highlight">Vibe Coding</span></p>
+        <p class="cv-line"><span class="cv-highlight">GitHub</span> · HTML</p>
       </section>
 
       <section class="cv-section">
@@ -195,7 +196,7 @@
       </section>
 
       <section class="cv-section">
-        <div class="cv-label">Website</div>
+        <div class="cv-label">Web Projects</div>
         <p class="cv-line"><a class="cv-link" href="https://ficciones.me" target="_blank" rel="noopener">Ficciones.me</a></p>
         <p class="cv-line"><a class="cv-link" href="https://jaibot3.github.io/hyunnsatnowhere/" target="_blank" rel="noopener">HYUNNE</a></p>
       </section>
