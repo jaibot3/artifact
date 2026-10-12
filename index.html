@@ -55,24 +55,27 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 @media (max-width:740px){.caption{left:auto;right:0;bottom:auto;top:calc(100% + 28px);max-width:70%}}   /* 모바일: 도면 아래 */
 @media (prefers-reduced-motion:reduce){.nav li.on::before{animation:none}.statue{transition:none}}
 
-/* SAKK — closed room */
+
 .sec[data-id="sakk"],#nav [data-id="sakk"] a{cursor:not-allowed}
 .sec[data-id="sakk"]::after{opacity:0!important}
-.sec[data-id="sakk"]::before{content:"";position:absolute;inset:0;z-index:7;opacity:.7;background:linear-gradient(to top right,transparent calc(50% - 3px),#ed1515 calc(50% - 3px),#ed1515 calc(50% + 3px),transparent calc(50% + 3px)),linear-gradient(to bottom right,transparent calc(50% - 3px),#ed1515 calc(50% - 3px),#ed1515 calc(50% + 3px),transparent calc(50% + 3px))}
-.sec[data-id="sakk"] span::after{content:" / 출입불가";color:#d21b1b;font-size:9px}
-#nav [data-id="sakk"] a{text-decoration:line-through;text-decoration-color:rgba(237,21,21,.7)}
-#fortune-cookie{position:fixed;left:0;top:0;width:156px;height:142px;z-index:12;touch-action:none;cursor:grab;user-select:none;border:0;background:transparent;padding:0;will-change:transform}
+.sec[data-id="sakk"]::before{content:"×";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:300 27px/1 Arial,sans-serif;color:#e51c23;opacity:.7;z-index:7}
+#nav [data-id="sakk"] a::after{content:" ×";color:#e51c23;opacity:.7;font-weight:400}
+#fortune-cookie{position:fixed;left:0;top:0;width:130px;height:118px;z-index:12;touch-action:none;cursor:grab;user-select:none;border:0;background:transparent;padding:0;will-change:transform}
 #fortune-cookie:active{cursor:grabbing}
-#fortune-cookie:focus-visible{outline:1px dashed #b28a51;border-radius:50%}
-#fortune-cookie canvas{width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 8px 7px #62421b26)}
-.cookie-hint{position:absolute;bottom:1px;left:0;right:0;font-size:9px;letter-spacing:.06em;color:#8a7f70;text-align:center;pointer-events:none}
-#fortune-slip{position:fixed;inset:0;border:0;background:#fdf9eb;color:#312718;width:min(360px,calc(100vw - 40px));padding:30px 28px 24px;box-shadow:0 12px 55px #35230930;font-family:inherit;transform:rotate(-2deg)}
-#fortune-slip::backdrop{background:#ffffff70;backdrop-filter:blur(3px)}
-#fortune-slip small{font-size:10px;letter-spacing:.12em;color:#8a7f70}
-#fortune-slip h2{font-size:16px;font-weight:500;margin:18px 0}
-#fortune-slip p{font-size:14px;line-height:1.8;word-break:keep-all}
-#fortune-slip button{display:block;margin:20px 0 0 auto;border:0;background:none;cursor:pointer;font:12px inherit;color:#8a7f70;padding:8px}
-@media(max-width:740px){#fortune-cookie{width:124px;height:116px}}
+#fortune-cookie:focus-visible{outline:1px dotted #ad9170;border-radius:50%}
+#fortune-cookie canvas{width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(1px 6px 5px #604c3020)}
+.cookie-hint{display:none}
+#fortune-slip{position:fixed;inset:auto;margin:0;border:0;background:#faf9f3;color:#59564b;width:min(310px,calc(100vw - 32px));padding:17px 27px 18px;box-shadow:0 2px 3px #3028190c,0 9px 17px #30281912;font-family:inherit;transform:rotate(-3deg);overflow:visible}
+#fortune-slip:not([open]){display:none}
+#fortune-slip[open]{animation:unfold .5s cubic-bezier(.2,.8,.2,1)}
+#fortune-slip::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 32%,#8d877d0c 33%,#fff9 34%,transparent 35%,transparent 65%,#8d877d0c 66%,#fff9 67%,transparent 68%);pointer-events:none}
+#fortune-slip h2{display:none}#fortune-luck{display:block;margin-top:11px;font-size:10px;line-height:1.6;color:#858075}#quote-source{display:block;margin-top:5px;font-size:9px;color:#a49f92;text-decoration:none}
+#fortune-date{display:block;font:9px/1.3 'Courier New',monospace;letter-spacing:.13em;color:#9a978d}
+#fortune-text{font-size:12px;line-height:1.8;font-weight:400;word-break:keep-all;margin:9px 0 0;letter-spacing:.015em}
+#fortune-slip button{position:absolute;right:5px;top:3px;border:0;background:transparent;padding:5px;font:15px/1 Arial;color:#aaa69a;cursor:pointer}
+@keyframes unfold{from{opacity:0;transform:translateX(-18px) rotate(-6deg) scaleX(.75)}to{opacity:1;transform:translateX(0) rotate(-3deg) scaleX(1)}}
+@media(max-width:740px){#fortune-cookie{width:112px;height:104px}}
+@media(prefers-reduced-motion:reduce){#fortune-slip[open]{animation:none}}
 </style></head>
 <body>
 <header class="nav">
@@ -82,7 +85,7 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <li data-id="work"><a href="portfolio1.html"><small>(1)</small>work</a></li>
     <li data-id="career"><a href="career.html"><small>(2)</small>career</a></li>
     <li data-id="ficciones"><a href="rose.html"><small>(3)</small>ficciones</a></li>
-    <li data-id="sakk"><a aria-disabled="true" tabindex="-1" title="출입불가"><small>(4)</small>sakk</a></li>
+    <li data-id="sakk"><a aria-disabled="true" tabindex="-1" title="No entry"><small>(4)</small>sakk</a></li>
   </ul>
 </header>
 
@@ -93,13 +96,13 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <a class="sec" data-id="work"      href="portfolio1.html"                                  style="left:20.54%;top:36.00%;width:65.32%;height:24.76%"><span>(1) work</span></a>
     <a class="sec on" data-id="career"    href="career.html"                                      style="left:9.28%;top:1.05%;width:31.53%;height:29.71%"><span>(2) career</span></a>
     <a class="sec" data-id="ficciones" href="rose.html"                                        style="left:39.91%;top:67.90%;width:32.43%;height:31.43%"><span>(3) ficciones</span></a>
-    <a class="sec" data-id="sakk"      aria-disabled="true" tabindex="-1" title="출입불가" style="left:85.86%;top:35.52%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
+    <a class="sec" data-id="sakk"      aria-disabled="true" tabindex="-1" title="No entry" style="left:85.86%;top:35.52%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
     <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram <span>by jaylim</span></small></p>
   </div>
 </main>
-<button id="fortune-cookie" type="button" aria-label="3D 포춘쿠키. 드래그해서 회전, 더블클릭 또는 Enter로 오늘의 운세 열기" title="drag to roll · double-click to open">
+<button id="fortune-cookie" type="button" aria-label="3D 포춘쿠키. Drag to move and rotate. Double-click or press Enter to unfold a philosophical quote." title="drag to roll · double-click to open">
 <canvas aria-hidden="true"></canvas><span class="cookie-hint">drag · double click</span></button>
-<dialog id="fortune-slip" aria-labelledby="fortune-title"><small id="fortune-date"></small><h2 id="fortune-title">오늘의 포춘</h2><p id="fortune-text"></p><small id="fortune-luck"></small><button type="button">접어두기 ×</button></dialog>
+<dialog id="fortune-slip" aria-label="철학자의 문장"><small id="fortune-date"></small><h2 id="fortune-title">철학자의 문장</h2><p id="fortune-text"></p><small id="fortune-luck"></small><a id="quote-source" target="_blank" rel="noopener">source ↗</a><button type="button">×</button></dialog>
 
 
 <script>
@@ -228,71 +231,64 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 (() => {
 const el=document.querySelector('#fortune-cookie'),cv=el.querySelector('canvas'),ctx=cv.getContext('2d'),slip=document.querySelector('#fortune-slip');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let w,h,x=innerWidth*.72,y=innerHeight*.56,vx=19,vy=-13,ax=-.65,ay=.25,rx=0,ry=.18,drag=null,hover=false,last=0;
+let w,h,x=innerWidth*.68,y=innerHeight*.42,vx=12,vy=-9,ax=-.45,ay=-.35,rx=0,ry=.18,drag=null,hover=false,last=0;
 function resize(){w=el.clientWidth;h=el.clientHeight;const d=Math.min(devicePixelRatio||1,2);cv.width=w*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);x=Math.max(0,Math.min(x,innerWidth-w));y=Math.max(0,Math.min(y,innerHeight-h));}
 resize();addEventListener('resize',resize);
-// A pinched, tapered crescent shell, with a narrow baked seam.
-const verts=[],faces=[],U=56,V=24;
-for(let i=0;i<=U;i++){
- const t=i/U,a=-2.35+t*4.7,taper=Math.pow(Math.sin(Math.PI*t),.55),r=.39*taper+.008;
- for(let j=0;j<=V;j++){
-  const b=j/V*Math.PI*2,fold=1-.18*Math.pow(Math.cos(b),8);
-  verts.push([(0.69+r*Math.cos(b)*fold)*Math.sin(a),(0.69+r*Math.cos(b)*fold)*Math.cos(a)-.12,r*Math.sin(b)*.78]);
- }
+// Thin folded shell: broad curved wings, pointed ends and a central crease.
+const verts=[],normals=[],faces=[],U=96,V=40;
+function surface(i,j){
+ const u=-Math.PI/2+i/U*Math.PI,v=j/V*Math.PI*2,s=Math.sin(u),c=Math.cos(u);
+ const crease=1-.20*Math.pow(Math.abs(Math.cos(v)),16);
+ return [.95*s,.48*c*Math.cos(v)*crease,.34*c*Math.sin(v)+.58*Math.pow(Math.abs(s),1.8)-.18];
 }
-for(let i=0;i<U;i++)for(let j=0;j<V;j++){
- const a=i*(V+1)+j,b=a+V+1;faces.push([a,b,a+1,j],[a+1,b,b+1,j]);
+for(let i=0;i<=U;i++)for(let j=0;j<=V;j++){
+ const p=surface(i,j),a=surface(Math.min(U,i+.1),j),b=surface(i,Math.min(V,j+.1));
+ const u=a.map((v,k)=>v-p[k]),v=b.map((v,k)=>v-p[k]);
+ let n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],len=Math.hypot(...n)||1;
+ verts.push(p);normals.push(n.map(x=>x/len));
 }
+for(let i=0;i<U;i++)for(let j=0;j<V;j++){const a=i*(V+1)+j,b=a+V+1;faces.push([a,b,a+1,j],[a+1,b,b+1,j]);}
 function rotate(p){const c=Math.cos(ay),s=Math.sin(ay),c2=Math.cos(ax),s2=Math.sin(ax),xx=p[0]*c+p[2]*s,zz=-p[0]*s+p[2]*c;return[xx,p[1]*c2-zz*s2,p[1]*s2+zz*c2];}
 function draw(){
  ctx.clearRect(0,0,w,h);
- const ps=verts.map(rotate),scale=w*.37;
- const projected=ps.map(p=>{const f=4/(4-p[2]);return[w/2+p[0]*scale*f,h*.46-p[1]*scale*f];});
+ const ps=verts.map(rotate),ns=normals.map(rotate),scale=w*.42;
+ const projected=ps.map(p=>{const f=5/(5-p[2]);return[w/2+p[0]*scale*f,h*.47-p[1]*scale*f];});
  const sorted=faces.map(f=>({f,z:(ps[f[0]][2]+ps[f[1]][2]+ps[f[2]][2])/3})).sort((a,b)=>a.z-b.z);
  for(const {f} of sorted){
-  const a=ps[f[0]],b=ps[f[1]],c=ps[f[2]],u=b.map((v,i)=>v-a[i]),v=c.map((v,i)=>v-a[i]);
-  let n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],len=Math.hypot(...n)||1;
-  const light=.52+.48*Math.abs((n[0]*-.4+n[1]*.6+n[2]*.7)/len),seam=(f[3]===0||f[3]===V/2)?.77:1;
-  const noise=1+.035*Math.sin(f[0]*12.9898),tone=light*seam*noise;
-  ctx.fillStyle='rgb('+[238,181,94].map(c=>Math.round(c*tone)).join(',')+')';
-  ctx.beginPath();f.slice(0,3).forEach((id,i)=>{const p=projected[id];i?ctx.lineTo(...p):ctx.moveTo(...p)});ctx.closePath();ctx.fill();ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.45;ctx.stroke();
+  const n=[0,1,2].map(k=>(ns[f[0]][k]+ns[f[1]][k]+ns[f[2]][k])/3);
+  const light=.72+.28*Math.abs(-.35*n[0]+.64*n[1]+.68*n[2]);
+  const seam=(f[3]===0||f[3]===V/2)?.90:1;
+  const highlight=Math.pow(Math.max(0,n[2]),14)*15;
+  ctx.fillStyle='rgb('+[231,190,128].map(c=>Math.round(Math.min(255,c*light*seam+highlight))).join(',')+')';
+  ctx.beginPath();f.slice(0,3).forEach((id,i)=>{const p=projected[id];i?ctx.lineTo(...p):ctx.moveTo(...p)});ctx.closePath();ctx.fill();ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.3;ctx.stroke();
  }
 }
-const fortunes=[
-'미뤄둔 질문 하나를 꺼내면, 예상하지 못한 문이 열린다.',
-'오늘의 행운은 덜어내는 쪽에 있다. 하나를 포기하면 하나가 선명해진다.',
-'낯선 제안을 바로 거절하지 말 것. 쓸모는 첫인상보다 늦게 도착한다.',
-'생각보다 작은 시작이 멀리 간다. 완성보다 첫 움직임을 택할 것.',
-'답을 찾으려 애쓰는 대신 질문의 방향을 바꿔볼 것.',
-'우연히 눈에 들어온 사물이 오늘의 단서가 된다.',
-'서두르지 않는 사람이 놓친 것을 발견한다. 오늘은 한 번 더 볼 것.',
-'오래된 일을 다른 방식으로 해보면 새로운 길이 생긴다.',
-'말을 줄이고 하나를 보여줄 것. 작은 결과가 큰 설명을 대신한다.',
-'오늘은 타이밍보다 선택이 중요하다. 결정 하나를 끝낼 것.',
-'뜻밖의 연결은 익숙한 바깥에서 생긴다. 평소와 다른 길로 갈 것.',
-'남겨둔 빈자리가 좋은 것을 불러온다. 일정 하나를 비워둘 것.',
-'거절 하나가 필요한 날. 여유가 생긴 곳에 운이 들어온다.',
-'마무리에 운이 있다. 시작한 일 중 가장 작은 것부터 끝낼 것.',
-'당연하다고 여긴 조건 하나를 의심하면 선택지가 늘어난다.',
-'기다리던 신호는 작은 형태로 온다. 지나치지 말 것.'
-];
+const quotes=[{"text":"The unexamined life is not worth living.","author":"Socrates","work":"Plato, Apology · 38a","url":"https://www.gutenberg.org/files/1656/1656-h/1656-h.htm"},{"text":"Men are disturbed, not by things, but by the principles and notions which they form concerning things.","author":"Epictetus","work":"Enchiridion · 5","url":"https://classics.mit.edu/Epictetus/epicench.html"},{"text":"I think, therefore I am.","author":"René Descartes","work":"Discourse on Method · Part IV","url":"https://www.gutenberg.org/files/59/59-h/59-h.htm"},{"text":"Have the courage to use your own understanding.","author":"Immanuel Kant","work":"An Answer to the Question: What Is Enlightenment?","url":"https://www.columbia.edu/acis/ets/CCREAD/kant.htm"},{"text":"The limits of my language mean the limits of my world.","author":"Ludwig Wittgenstein","work":"Tractatus Logico-Philosophicus · 5.6","url":"https://wittgensteinproject.org/w/index.php/Tractatus_Logico-Philosophicus_%28English%29"},{"text":"Reason is, and ought only to be the slave of the passions.","author":"David Hume","work":"A Treatise of Human Nature · 2.3.3.4 · excerpt","url":"https://davidhume.org/texts/t/2/3/3"}];
+let quoteIndex=-1;
 function open(){
  if(slip.open)return;
  const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  let seed=2166136261;for(const c of date)seed=Math.imul(seed^c.charCodeAt(0),16777619);seed>>>=0;
- document.querySelector('#fortune-date').textContent=date+' · FORTUNE COOKIE';
- document.querySelector('#fortune-text').textContent=fortunes[seed%fortunes.length];
- document.querySelector('#fortune-luck').textContent='행운의 숫자 '+(seed%9+1)+' · FOR FUN';
- slip.showModal();
+ document.querySelector('#fortune-date').textContent='a thought, folded';
+ quoteIndex=quoteIndex<0?seed%quotes.length:(quoteIndex+1)%quotes.length;
+ const q=quotes[quoteIndex];
+ document.querySelector('#fortune-text').textContent='“'+q.text+'”';
+ document.querySelector('#quote-source').href=q.url;
+ document.querySelector('#fortune-luck').textContent=q.author+' — '+q.work;
+ const sw=Math.min(310,innerWidth-32),left=Math.max(16,Math.min(x+w*.48,innerWidth-sw-16)),top=Math.max(16,Math.min(y+h*.7,innerHeight-180));
+ slip.style.left=left+'px';slip.style.top=top+'px';slip.show();
 }
 el.addEventListener('dblclick',open);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')slip.close();});
 el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
 slip.querySelector('button').addEventListener('click',()=>slip.close());
 slip.addEventListener('click',e=>{if(e.target===slip){const r=slip.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)slip.close();}});
 el.addEventListener('pointerenter',()=>hover=true);el.addEventListener('pointerleave',()=>hover=false);
 el.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY};rx=ry=0;el.setPointerCapture(e.pointerId);});
 el.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
- ay+=dx*.022;ax+=dy*.022;ry=dx*.8;rx=dy*.8;drag.x=e.clientX;drag.y=e.clientY;draw();});
+ x=Math.max(0,Math.min(innerWidth-w,x+dx));y=Math.max(0,Math.min(innerHeight-h,y+dy));
+ ay+=dx*.012;ax+=dy*.012;ry=dx*.45;rx=dy*.45;drag.x=e.clientX;drag.y=e.clientY;
+ el.style.transform='translate3d('+x+'px,'+y+'px,0)';draw();});
 let tapTime=0;
 function release(e){if(!drag||e.pointerId!==drag.id)return;
  const tapped=Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)<8;
