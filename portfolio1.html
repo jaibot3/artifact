@@ -705,6 +705,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
     document.querySelectorAll('.toggle').forEach(b => b.addEventListener('click', () => {
       const a = b.closest('.project');
       const open = a.classList.toggle('open');
+      if (window.playSfx) window.playSfx(open);
       b.textContent = open ? 'less' : 'more';
       b.setAttribute('aria-expanded', open);
       b.setAttribute('aria-label', open ? '상세 이미지 접기' : '상세 이미지 펼치기');
