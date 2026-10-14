@@ -25,6 +25,8 @@
       --acid: #eaf751;
       --sans: 'Instrument Sans', 'Google Sans', 'Jost', 'Century Gothic', CenturyGothic, AppleGothic, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       --fig-w: 546px;   /* 그림 가로 크기 — 이 숫자만 바꾸면 돼 (세로는 자동) */
+      --para-gap: .5em;   /* 빈 줄 1개(엔터 두 번)일 때의 문단 간격 */
+      --enter-gap: 1.5em; /* 빈 줄을 하나 더 칠 때마다 추가되는 간격 (1.5em = 글 한 줄 높이) */
     }
     
     html, body {
@@ -100,7 +102,7 @@
     }
     .entry-body p { white-space: pre-wrap; }
     .entry-body .w { white-space: nowrap; }   /* 글자를 쪼개도 단어 중간에서 줄이 바뀌지 않게 */
-    .entry-body p + p { margin-top: .5em; }
+    .entry-body p + p { margin-top: var(--para-gap); }
     
     .entry-body .ch {
       display: inline-block;
@@ -614,7 +616,19 @@ E. cheers.`
              <span class="nav"><button class="prev" aria-label="이전 그림">‹</button><button class="next" aria-label="다음 그림">›</button></span></div>
          </div>`
       : imgs.length ? `<div class="entry-figs">${tags}</div>` : '';
-    const paras = e.text.replace(/[ \t]+$/gm, '').trim().split(/\n\s*\n/).filter(t => t.trim());
+    // 빈 줄 개수를 세서 간격에 반영: 빈 줄 1개 = 기본 문단 간격, 2개 이상이면 하나 늘 때마다 --enter-gap씩 추가
+    const paras = [];
+    {
+      const src = e.text.replace(/\r\n?/g, '\n').replace(/[ \t]+$/gm, '').trim();
+      const re = /\n{2,}/g;
+      let last = 0, blanks = 0, m;
+      while ((m = re.exec(src))) {
+        paras.push({ t: src.slice(last, m.index), blanks });
+        blanks = m[0].length - 1;
+        last = m.index + m[0].length;
+      }
+      paras.push({ t: src.slice(last), blanks });
+    }
     const head = (e.title
       ? `<h2>${escapeHtml(e.title)}</h2>`
       : `<h2 class="untitled">Untitled</h2>`) + `<time datetime="${e.date}">${date} ${wd}</time>`;
@@ -622,7 +636,7 @@ E. cheers.`
       <article>
         <header class="entry-head">${head}</header>
         ${figs}
-        <div class="entry-body">${paras.map(t => `<p>${escapeHtml(t.trim())}</p>`).join('')}</div>
+        <div class="entry-body">${paras.filter(p => p.t.trim()).map(p => `<p${p.blanks > 1 ? ` style="margin-top:calc(var(--para-gap) + ${p.blanks - 1} * var(--enter-gap))"` : ''}>${escapeHtml(p.t.trim())}</p>`).join('')}</div>
       </article>
     `;
   }).join('');
