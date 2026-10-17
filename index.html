@@ -100,9 +100,9 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram <span>by jaylim</span></small></p>
   </div>
 </main>
-<button id="fortune-cookie" type="button" aria-label="3D 포춘쿠키. Drag to move and rotate. Double-click or press Enter to unfold a philosophical quote." title="drag to roll · double-click to open">
+<button id="fortune-cookie" type="button" aria-label="3D 포춘쿠키. Drag to move and rotate. Double-click or press Enter to unfold a line from rose.html." title="drag to roll · double-click to open">
 <canvas aria-hidden="true"></canvas><span class="cookie-hint">drag · double click</span></button>
-<dialog id="fortune-slip" aria-label="철학자의 문장"><small id="fortune-date"></small><h2 id="fortune-title">철학자의 문장</h2><p id="fortune-text"></p><small id="fortune-luck"></small><a id="quote-source" target="_blank" rel="noopener">source ↗</a><button type="button">×</button></dialog>
+<dialog id="fortune-slip" aria-label="ficciones의 한 줄"><small id="fortune-date"></small><h2 id="fortune-title">ficciones의 한 줄</h2><p id="fortune-text"></p><small id="fortune-luck"></small><a id="quote-source" target="_blank" rel="noopener">source ↗</a><button type="button">×</button></dialog>
 
 
 <script>
@@ -263,20 +263,56 @@ function draw(){
   ctx.beginPath();f.slice(0,3).forEach((id,i)=>{const p=projected[id];i?ctx.lineTo(...p):ctx.moveTo(...p)});ctx.closePath();ctx.fill();ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.3;ctx.stroke();
  }
 }
-const quotes=[{"text":"The unexamined life is not worth living.","author":"Socrates","work":"Plato, Apology · 38a","url":"https://www.gutenberg.org/files/1656/1656-h/1656-h.htm"},{"text":"Men are disturbed, not by things, but by the principles and notions which they form concerning things.","author":"Epictetus","work":"Enchiridion · 5","url":"https://classics.mit.edu/Epictetus/epicench.html"},{"text":"I think, therefore I am.","author":"René Descartes","work":"Discourse on Method · Part IV","url":"https://www.gutenberg.org/files/59/59-h/59-h.htm"},{"text":"Have the courage to use your own understanding.","author":"Immanuel Kant","work":"An Answer to the Question: What Is Enlightenment?","url":"https://www.columbia.edu/acis/ets/CCREAD/kant.htm"},{"text":"The limits of my language mean the limits of my world.","author":"Ludwig Wittgenstein","work":"Tractatus Logico-Philosophicus · 5.6","url":"https://wittgensteinproject.org/w/index.php/Tractatus_Logico-Philosophicus_%28English%29"},{"text":"Reason is, and ought only to be the slave of the passions.","author":"David Hume","work":"A Treatise of Human Nature · 2.3.3.4 · excerpt","url":"https://davidhume.org/texts/t/2/3/3"}];
-let quoteIndex=-1;
-function open(){
+let roseLines=null, roseRequest=null, lastLine=-1, opening=0;
+function loadRoseLines(){
+ if(roseLines)return Promise.resolve(roseLines);
+ if(roseRequest)return roseRequest;
+ roseRequest=fetch('rose.html',{cache:'no-cache'}).then(response=>{
+  if(!response.ok)throw new Error('rose unavailable');
+  return response.text();
+ }).then(html=>{
+  // 데이터의 text 필드만 읽고 rose.html의 스크립트는 실행하지 않는다.
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const script=[...doc.scripts].map(s=>s.textContent).find(s=>s.includes('const ENTRIES'));
+  if(!script)throw new Error('entries unavailable');
+  const data=script.slice(script.indexOf('const ENTRIES'),script.indexOf('\n];',script.indexOf('const ENTRIES')));
+  const lines=[];
+  for(const match of data.matchAll(/text:\s*\x60((?:\\[\s\S]|[^\x60\\])*)\x60/g)){
+   const text=match[1].replace(/\\n/g,'\n').replace(/\\r/g,'\r').replace(/\\t/g,'\t').replace(/\\([\x60\\$])/g,'$1');
+   for(const raw of text.split(/[\r\n\u2028\u2029]+/)){
+    const line=raw.trim();
+    if(!line||!/\p{L}/u.test(line)||/^[—–]\s/.test(line))continue;
+    if(/^\d{4}[./-]\d{1,2}[./-]\d{1,2}/.test(line)||/^\d{1,2}[./-]\d{1,2}[./-]\d{4}/.test(line))continue;
+    if(/^\d{4}년\s*\d{1,2}월|^\d{1,2}월\s*\d{1,2}일/.test(line))continue;
+    lines.push(line);
+   }
+  }
+  roseLines=[...new Set(lines)];
+  if(!roseLines.length){roseLines=null;throw new Error('no lines');}
+  return roseLines;
+ }).finally(()=>{roseRequest=null;});
+ return roseRequest;
+}
+async function open(){
  if(slip.open)return;
- const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
- let seed=2166136261;for(const c of date)seed=Math.imul(seed^c.charCodeAt(0),16777619);seed>>>=0;
+ const request=++opening;
  document.querySelector('#fortune-date').textContent='a thought, folded';
- quoteIndex=quoteIndex<0?seed%quotes.length:(quoteIndex+1)%quotes.length;
- const q=quotes[quoteIndex];
- document.querySelector('#fortune-text').textContent='“'+q.text+'”';
- document.querySelector('#quote-source').href=q.url;
- document.querySelector('#fortune-luck').textContent=q.author+' — '+q.work;
+ document.querySelector('#fortune-text').textContent='…';
+ document.querySelector('#fortune-luck').textContent='ficciones';
+ const source=document.querySelector('#quote-source');
+ source.href='rose.html';source.textContent='read in rose ↗';
  const sw=Math.min(310,innerWidth-32),left=Math.max(16,Math.min(x+w*.48,innerWidth-sw-16)),top=Math.max(16,Math.min(y+h*.7,innerHeight-180));
  slip.style.left=left+'px';slip.style.top=top+'px';slip.show();
+ try{
+  const lines=await loadRoseLines();
+  if(!slip.open||request!==opening)return;
+  let i=Math.floor(Math.random()*lines.length);
+  if(lines.length>1&&i===lastLine)i=(i+1+Math.floor(Math.random()*(lines.length-1)))%lines.length;
+  lastLine=i;
+  document.querySelector('#fortune-text').textContent='“'+lines[i]+'”';
+ }catch(error){
+  if(slip.open&&request===opening)document.querySelector('#fortune-text').textContent='글을 불러오지 못했어요. 다시 열어주세요.';
+ }
 }
 el.addEventListener('dblclick',open);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')slip.close();});
