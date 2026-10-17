@@ -123,7 +123,7 @@
     }
     .slider .track::-webkit-scrollbar { display: none; }
     .slider .track img {
-      flex: 0 0 100%; width: 100%; max-height: 72vh; object-fit: contain;
+      flex: 0 0 100%; min-width: 0; width: 100%; max-height: 72vh; object-fit: contain;
       scroll-snap-align: center; display: block; -webkit-user-drag: none;
     }
     .slider .bar {
@@ -608,7 +608,7 @@ E. cheers.`
   $list.innerHTML = sortedDesc.map(e => {
     const { date, wd } = fmt(e.date);
     const imgs = [].concat(e.images || e.image || []).filter(Boolean);
-    const tags = imgs.map(src => `<img src="${escapeHtml(src)}" alt="" draggable="false">`).join('');
+    const tags = imgs.map((src, i) => `<img ${i === 0 ? 'src' : 'data-src'}="${escapeHtml(src)}"${i === 0 ? ' fetchpriority="high"' : ''} decoding="async" alt="" draggable="false">`).join('');
     const figs = imgs.length > 1
       ? `<div class="entry-figs slider">
            <div class="track" tabindex="0" aria-label="그림 ${imgs.length}장, 좌우로 넘기기">${tags}</div>
@@ -646,8 +646,19 @@ E. cheers.`
     const track = sl.querySelector('.track'), n = track.children.length;
     const prev = sl.querySelector('.prev'), next = sl.querySelector('.next'), ctr = sl.querySelector('.ctr');
     const at = () => Math.round(track.scrollLeft / track.clientWidth);
-    const go = i => track.scrollTo({ left: Math.max(0, Math.min(n - 1, i)) * track.clientWidth });
-    const sync = () => { const i = at(); ctr.textContent = `${i + 1} / ${n}`; prev.disabled = i === 0; next.disabled = i === n - 1; };
+    const loadImage = i => {
+      const img = track.children[i];
+      if (img && img.dataset.src) {
+        img.src = img.dataset.src;
+        delete img.dataset.src;
+      }
+    };
+    const go = i => {
+      i = Math.max(0, Math.min(n - 1, i));
+      loadImage(i);
+      track.scrollTo({ left: i * track.clientWidth });
+    };
+    const sync = () => { const i = at(); if (track.scrollLeft > 0) loadImage(Math.min(n - 1, Math.ceil(track.scrollLeft / track.clientWidth))); loadImage(i); ctr.textContent = `${i + 1} / ${n}`; prev.disabled = i === 0; next.disabled = i === n - 1; };
     prev.onclick = () => go(at() - 1);
     next.onclick = () => go(at() + 1);
     track.addEventListener('keydown', ev => {
@@ -655,7 +666,11 @@ E. cheers.`
       if (ev.key === 'ArrowRight') { ev.preventDefault(); go(at() + 1); }
     });
     track.addEventListener('scroll', sync, { passive: true });
-    sync();
+    // 방문 기록 복원과 이미지 로딩 중 스크롤 스냅 이동을 방지.
+    const reset = () => { track.scrollTo({ left: 0, behavior: 'instant' }); sync(); };
+    track.children[0].addEventListener('load', reset, { once: true });
+    window.addEventListener('pageshow', reset);
+    reset();
   });
 
   function activateScatter(body) {
