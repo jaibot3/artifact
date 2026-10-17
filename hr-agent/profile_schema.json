@@ -28,7 +28,14 @@
     "Manufacturing Coordination",
     "Web / Digital Structure",
     "Customer Journey Thinking",
-    "Digital / AI Experimentation"
+    "Digital / AI Experimentation",
+    "Form Development",
+    "Pattern Cutting & Draping",
+    "Material & Silhouette Development",
+    "Object Development",
+    "Packaging & Print Production",
+    "Interaction Design & Responsive Web Implementation",
+    "Performance / Sound / Video Direction"
   ],
   "domains": [
     "Fashion",
@@ -66,7 +73,224 @@
       "Unstated team size",
       "Unstated leadership scope",
       "Unstated client results",
-      "Unstated technical depth"
+      "Unstated technical depth",
+      "3billion as employment, paid client work or deployed results",
+      "Kinetic garments / memory fabric as robotics, actuators or engineered shape-memory materials",
+      "Spatial presentation as built architecture or licensed interior design",
+      "Vibe coding, Python or HTML as professional software engineering",
+      "All Star Top 3: CV states Top 3 for Season 4 only"
     ]
+  },
+  "updated_at": "2026-10-17",
+  "source_snapshot": {
+    "portfolio": {
+      "path": "portfolio1.html",
+      "blob_sha": "ecbe45024d3db4145953c944589fc521f80c9e1e"
+    },
+    "career": {
+      "path": "career.html",
+      "blob_sha": "848604f2c17c64631b21e2b575b0d623fd01406f"
+    },
+    "policy": "Repository snapshot, not live fetch. Refresh against both pages before a new matching session."
+  },
+  "project_evidence": [
+    {
+      "id": "P01",
+      "project": "Das Ding · SAKK, 2026",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_0.html",
+      "evidence": "Starting point ‘Basic’을 단순함이나 미니멀리즘으로 반복하지 않고, 형태를 덜어내면서도 물성과 무게가 남는 방향 설정. Direction Das Ding / The Thing 대상을 다른 의미로 환원하기보다, 하나의 물체가 그 자체로 존재하는 상태에 집중. 응축된 형태, 반복되는 단위, 원단의 무게와 구조를 제품 언어로 설정. Execution Concept development Product design Material & silhouette development Object development Spatial presentation Launch direction Contribution Creative Direction / Product Development 시즌 개념을 제품, 오브제, 공간 연출까지 연결하는 전체 구조 기획 및 디렉션."
+    },
+    {
+      "id": "P02",
+      "project": "Das Ding ( ) Holder",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_0.html",
+      "evidence": "Starting point 시즌 개념을 제품 설명이 아닌 물리적 오브제로 확장하는 방향 설정. Direction ( ) / An Open Container 비어 있는 괄호를 무엇이든 담길 수 있는 자리로 해석. Brancusi의 응축된 형태를 참고해 시즌의 무게와 물성을 오브제로 번역. Execution Object design Form development 3D rotation render Contribution Object Design Das Ding 개념을 독립 오브제로 확장."
+    },
+    {
+      "id": "P03",
+      "project": "GAP Skirt · 2024",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_02.html",
+      "evidence": "Starting point 의복의 안과 밖을 고정된 관계가 아닌, 이동하고 뒤집힐 수 있는 구조로 재해석. Direction Inside / Outside Richard Wilson의 Turning the Place Over를 레퍼런스로 내부와 외부의 역전 구조 설정. 건축적 회전과 절개의 개념을 의복 구조로 변환. Execution Reference research Form development Garment design Contribution Designer 건축적 레퍼런스를 절개, 구조, 실루엣으로 번역한 의복 디자인 개발."
+    },
+    {
+      "id": "P04",
+      "project": "OPERA & CURTAIN Top · 2024",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/opera.html",
+      "evidence": "Starting point 신체를 통제하기 위한 장치와 부드러운 원단의 대비를 의복 구조로 전환하는 디자인 방향 설정. Direction Restraint / Draping Elaine Cameron-Weir의 작업을 기반으로 천, 프레임, 벨트, 긴장 관계를 조형 언어로 설정. Christo and Jeanne-Claude의 L'Arc de Triomphe, Wrapped에서 천으로 감싸고 로프로 묶을 때 생기는 주름과 긴장을 함께 참고. 구속 구조에서 발생하는 드레이프와 셔링 개발. Execution Reference research Garment design Draping development Lookbook styling Visual documentation Contribution Designer 조각적 레퍼런스를 의복 구조로 전환하고 디자인, 스타일링, 비주얼 기록까지 전 과정 수행."
+    },
+    {
+      "id": "P05",
+      "project": "The Syntax of Your Movement · 2025",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/syntax.html",
+      "evidence": "Starting point SAKK(Syntax of Aesthetic Kinetic Kinship)를 움직임, 형태, 감정이 어떻게 연결을 만드는지 탐구하는 시스템으로 설정. Direction Movement / Memory 형태를 감정의 흔적으로 해석해, 조각적이면서 입을 수 있고 직관적이면서 정밀한 옷으로 구성. 실루엣이 몸의 리듬에 따라 바뀌며, 입는 사람이 창작에 참여하도록 설계. Execution Kinetic Top Memory Skirt Twill memory fabric Lookbook Contribution Founder & Creative Director Kinetic Top: 움직임을 미세한 단위로 나눠 동작을 예술로 다듬는 옷. Memory Skirt: 형태를 기억하는 트윌 메모리 원단으로 앞뒤 구분 없이, 입을 때마다 여밈 위치를 골라 실루엣을 직접 만드는 스커트."
+    },
+    {
+      "id": "P06",
+      "project": "Pattern Cutting · SAKK",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/pattern.html",
+      "evidence": "Starting point 디자인이 실제 옷이 되는 첫 단계인 패턴을 직접 설계하는 방향 설정. Direction Pattern / Construction SAKK 전 시즌의 직기(우븐), 다이마루(저지), 액세서리 패턴을 모두 직접 제도. 니트 생산 경험을 바탕으로 소재별 구조와 생산 조건까지 고려. Execution Woven pattern Jersey (Daimaru) pattern Accessory pattern Knit production Contribution Pattern Maker SAKK 전 시즌 패턴 제작과 니트 생산을 직접 수행하며 디자인을 생산 가능한 구조로 연결."
+    },
+    {
+      "id": "P07",
+      "project": "Lethe, Still Shimmering",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_00.html",
+      "evidence": "Starting point 제품을 직접 설명하는 영상 대신, 제품이 장면 안에서 나타나고 사라지는 방식으로 경험되는 구조 기획. Direction Lethe / Différance / Disappearance 기억과 망각 사이에서 이미지가 지연되는 구조 설정. 스카프를 중심 오브제가 아닌 시선 속에서 반복적으로 출현하는 매개체로 설정. Execution Artist collaboration Performance direction Location direction Sound direction Editing Color grading Contribution Director 제품 런칭을 퍼포먼스 기반 영상 작업으로 확장. 아티스트 협업, 퍼포먼스, 사운드, 편집 전반 디렉션."
+    },
+    {
+      "id": "P08",
+      "project": "Hangtag & Color Research · SAKK / ébauche, 2025–2026",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": null,
+      "evidence": "Starting point 행택을 정보 표기용 부자재가 아닌, 시즌 개념과 컬러가 고객의 손에 처음 닿는 매체로 설정. Direction Tag as a Season Sheet 시즌마다 태그 지류 컬러를 바꿔 컬렉션의 색 감도를 기록. 2025 웜그레이 · 레드 → 2026 Spring ébauche 「Lethe, still shimmering」 레드 · 마젠타 → Apr.2026 올리브 옐로. 반투명 포장 위에 태그를 스테이플로 고정해 태그 컬러와 제품 컬러를 함께 노출. Execution Hangtag design Color research Paper & thickness test Print layout Packaging Contribution Designer 태그 그래픽, 지류 · 컬러 선정, 인쇄 레이아웃, 포장 방식까지 직접 진행. 1차 태그 샘플에서 얇은 원단 대비 두께 문제를 확인하고 기록."
+    },
+    {
+      "id": "P09",
+      "project": "I LOVE U ___ · SAKK, 2023",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/interview.html",
+      "evidence": "Starting point 제품 중심 콘텐츠에서 벗어나, 고객이 자신과 유사한 인물을 통해 브랜드에 진입하는 콘텐츠 구조 기획. Direction Identity before Product “I LOVE U ___”라는 열린 문장을 기반으로 인터뷰이를 브랜드 서사의 주체로 설정. 제품보다 인물과 태도를 선행시키는 커뮤니케이션 방식 설계. Execution Persona selection Interview planning Reels production A/B testing Content strategy Community development Contribution Content & Community Strategy 타깃 고객과 유사한 페르소나 선정 및 인터뷰 콘텐츠 시리즈 기획. 기존 피드 게시물 대비 조회수 약 3배 증가."
+    },
+    {
+      "id": "P10",
+      "project": "AOLADO",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_01.html",
+      "evidence": "Starting point 가방, 여성복, 파티시에 세 사업자의 개별 역량을 하나의 브랜드 안에서 작동시키는 구조 설계. Direction Color as a Common Language Roberto Burle Marx의 색채와 유기적 형태를 공통 시각 언어로 설정. 장난감, 가구, 과일, 음식 등 일상 오브제를 활용한 브랜드 이미지 확장. Execution Business proposal Brand concept development Content direction Video & sound production Website production Production setup Wholesale sales Retail negotiation Contribution Co-founder / COO 지원사업 제안부터 브랜드 구축, 생산, 콘텐츠, 웹사이트, 영업까지 전체 사업 운영 구조 설계. 지원사업 최종 선정 및 백화점 완사입 계약 성사."
+    },
+    {
+      "id": "P11",
+      "project": "Immanuel Kant · Critique of Pure Reason",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio_kant.html",
+      "evidence": "Starting point 철학을 단순 인용이 아닌, 특정 사상과 관심사를 공유하는 집단의 착용 가능한 표식으로 전환하는 제품 기획. Direction Idea as Affiliation 『순수이성비판』 텍스트를 장식 요소가 아닌 정체성과 관심사를 드러내는 기호로 설정. Fraktur typography를 활용한 역사성과 시각적 무게 강화. Execution Product concept Graphic design Manufacturer sourcing Sampling & production Influencer partnership Fulfillment structure Contribution Project Lead 제품 기획, 디자인, 생산, 인플루언서 협업 및 수익 배분 구조 설계. 제작·배송과 판매 채널을 분리한 50:50 협업 모델 구축. 제품 완판."
+    },
+    {
+      "id": "P12",
+      "project": "Kommt. Art Gallery",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_03.html",
+      "evidence": "Starting point 온라인 아트 콘텐츠를 정보 피드가 아닌, 특정 감각과 정서로 기억되는 브랜드로 전환하는 방향 설정. Direction Art Comes with Emotion 독일어 kommt와 영어 comes의 언어적 연결을 브랜드 이름과 슬로건으로 발전. Execution Naming Logo design Slogan development Video content Brand concept Contribution Brand Design 이름, 언어, 그래픽, 영상이 하나의 브랜드 인상으로 작동하는 기본 아이덴티티 설계."
+    },
+    {
+      "id": "P13",
+      "project": "Kahee Jeong · Artist Product",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": null,
+      "evidence": "Starting point 작가의 작업 언어를 복제하지 않으면서 판매 가능한 제품으로 변환할 필요 발생. Direction Artwork → Product 작가의 시각 언어와 제품 기능 사이의 균형 설정. Execution Product development Material sourcing Production coordination Contribution Product Developer 작가 아이디어의 생산 가능한 제품화 및 제작 과정 조율."
+    },
+    {
+      "id": "P14",
+      "project": "Dew Kim · Art Piece",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": null,
+      "evidence": "Starting point 의상을 독립된 패션 제품이 아닌, 작품의 일부로 기능하는 매체로 개발. Direction Garment as Medium 작가의 영상과 퍼포먼스 안에서 의상을 하나의 시각 매체로 설정. Execution Garment development Production Art video styling Contribution Garment Developer 작가의 작업 의도를 의상 구조와 스타일링으로 변환."
+    },
+    {
+      "id": "P15",
+      "project": "Cactusholic Maniac",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_04.html",
+      "evidence": "Starting point 십대 특유의 불안정함과 과잉된 감각을 하나의 시각 캐릭터로 전환하는 방향 설정. Direction Cactus / Color / Thorn 선인장의 강한 색과 가시를 감정적 긴장과 연결. Execution Brand concept Copywriting Graphic design Contribution Brand Design 개념, 언어, 그래픽을 캐릭터 중심 아이덴티티로 구성."
+    },
+    {
+      "id": "P16",
+      "project": "AL Studio · Apron",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_05.html",
+      "evidence": "Starting point 기능적 작업복인 앞치마를 스튜디오의 시각 정체성으로 확장하는 방향 설정. Direction Uniform as Identity 작업복과 브랜드 이미지 사이의 경계 축소. Execution Apron design Styling Lookbook direction Contribution Designer / Stylist 제품 디자인과 착장 이미지의 동시 설계."
+    },
+    {
+      "id": "P17",
+      "project": "MASKA",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_06.html",
+      "evidence": "Starting point 클라이언트가 요청한 Gucci 중심 맥시멀 스타일의 제품 이미지 구현. Direction Product within Character 제품 단독 강조가 아닌 인물, 의상, 액세서리를 하나의 캐릭터로 구성. Execution Styling research Wardrobe selection Accessory coordination On-set styling Contribution Stylist 클라이언트 레퍼런스의 실제 촬영 이미지 번역."
+    },
+    {
+      "id": "P18",
+      "project": "LEBLUE",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/portfolio1_07.html",
+      "evidence": "Starting point 주얼리가 의상에 묻히지 않으면서 전체 이미지와 분리되지 않는 균형 필요. Direction Image as a Whole 제품, 의상, 인물 사이의 비율과 시선 조정. Execution Fashion styling Jewelry coordination Visual direction Contribution Stylist 주얼리와 착장의 관계 조율을 통한 하나의 이미지 완성."
+    },
+    {
+      "id": "P19",
+      "project": "Women in Art",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/women.html",
+      "evidence": "Starting point 프로젝트 메시지를 일회성 그래픽이 아닌, 소유하고 사용할 수 있는 물건으로 확장. Direction Editorial Object 노트를 정보 전달물이 아닌 작은 출판물이자 오브제로 설정. Execution Graphic design Paper selection Color direction Stationery design Contribution Stationery Designer 브랜드 콘셉트의 그래픽, 종이, 색상, 제작 사양 구체화."
+    },
+    {
+      "id": "P20",
+      "project": "3billion · Digital & Marketing Case Study",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://ficciones.me/3bil.html",
+      "evidence": "Starting point 문제 발생 이후 검색을 통해 유입되는 유전자 검사 서비스의 기존 고객 흐름 분석. Direction Search-driven → Proactive 사후 검색 중심 서비스에서 예방 및 사전 관리 중심 서비스로 포지셔닝 전환 제안. 고객 유형에 따른 별도 사용자 여정 설계. Execution Customer research User segmentation Customer journey design Positioning Content strategy Portal structure Contribution Independent Case Study 고객 행동 분석, 포지셔닝 재정의, 신규 진입 경로 및 콘텐츠 구조 제안."
+    },
+    {
+      "id": "P21",
+      "project": "POET · Cordpress",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": null,
+      "evidence": "Starting point 텍스트를 설명 도구가 아닌 독립된 작업 형식으로 다룬 프로젝트. Direction Text as Work 이미지나 제품이 아닌 언어 자체를 결과물로 설정. Execution Writing Editing Publication participation Contribution Participant Poet Cordpress 프로젝트 시 작업 참여."
+    },
+    {
+      "id": "P22",
+      "project": "Project Runway Korea",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": null,
+      "evidence": "Direction Season 4 / All Star Contribution Designer Project Runway Korea 시즌 4, 올스타 참가."
+    },
+    {
+      "id": "P23",
+      "project": "King Kong Shower",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": null,
+      "evidence": "Starting point 명확한 클라이언트 요구사항을 외부 그래픽 디자이너가 실행 가능한 작업 언어로 변환할 필요 발생. Direction Translate the Brief 클라이언트 요구와 디자이너 실행 사이의 정보 손실 최소화를 목표로 커뮤니케이션 구조 설정. Execution Client communication Designer sourcing Creative coordination Feedback management Production supervision Contribution Creative Producer 클라이언트와 디자이너 간 요구사항 정리, 피드백 전달, 제작 과정 조율 및 결과물 품질 관리."
+    }
+  ],
+  "tools": {
+    "cv_listed": [
+      "Adobe Illustrator",
+      "Photoshop",
+      "Premiere Pro",
+      "Google Analytics",
+      "Meta Ads",
+      "Excel",
+      "PowerPoint",
+      "Python",
+      "AI Tools",
+      "Vibe Coding",
+      "GitHub",
+      "HTML"
+    ],
+    "qualification": "Self-reported CV tools; advanced proficiency and engineering depth are not established."
+  },
+  "career_evidence": {
+    "source": "https://ficciones.me/career.html",
+    "education": "Central Saint Martins, BA Fashion Design, Womenswear, 2008–2012",
+    "experience": [
+      "SAKK — Founder & Creative Director, 2019–Present",
+      "AOLADO — Co-founder & COO",
+      "Jeonghwa Arts University — Lecturer, 2025, Fashion History & Design Application",
+      "Art in Studio — Portfolio Instructor, 2018",
+      "Project Runway Korea — Season 4 Top 3; All Star Participant"
+    ],
+    "part_time": [
+      "ALLOSO — Sales, 2021–2022",
+      "FUROA Cafe — Café Staff, 2025"
+    ],
+    "languages": [
+      "Korean",
+      "English"
+    ],
+    "language_limit": "No certified score or proficiency level stated."
   }
 }
