@@ -58,3 +58,11 @@ Each job should include:
 - Why the gap may or may not matter
 - Recommended action
 - Source URL
+
+## Evidence snapshot (2026-10-17)
+
+The server reads profile_schema.json and matching_rules.md on every analysis; it does not fetch the live portfolio automatically.
+
+The profile contains 23 project records from portfolio1.html, career evidence from career.html, source URLs and source Git blob revisions. Refresh this snapshot when those pages change. Cite project IDs and distinguish proposed work from delivered results.
+
+Pull these files into the local HR Agent folder to use the new evidence on the next analysis; no server restart is needed. Existing history scores remain unchanged. Re-analyze a posting to replace its previous result.
