@@ -254,6 +254,13 @@
       "source": "https://ficciones.me/portfolio1.html",
       "detail_url": null,
       "evidence": "Starting point 명확한 클라이언트 요구사항을 외부 그래픽 디자이너가 실행 가능한 작업 언어로 변환할 필요 발생. Direction Translate the Brief 클라이언트 요구와 디자이너 실행 사이의 정보 손실 최소화를 목표로 커뮤니케이션 구조 설정. Execution Client communication Designer sourcing Creative coordination Feedback management Production supervision Contribution Creative Producer 클라이언트와 디자이너 간 요구사항 정리, 피드백 전달, 제작 과정 조율 및 결과물 품질 관리."
+    },
+    {
+      "id": "P24",
+      "project": "Hyunne · Artist Website",
+      "source": "https://ficciones.me/portfolio1.html",
+      "detail_url": "https://jaibot3.github.io/hyunnsatnowhere/port1.html",
+      "evidence": "Hyunne · Artist Website Starting point 작품을 세로로 나열하는 목록에서 벗어나, 한 점에 집중하며 다음 작품으로 이동하는 관람 구조 설정. Direction Works in Orbit 작품이 수직 궤도를 따라 천천히 회전하는 갤러리. 전면의 작품과 위아래로 이어지는 작품 사이에 깊이와 리듬을 구성. Execution Web design Interaction design Motion development Responsive layout Contribution Web Design / Development 갤러리 구조, 회전 모션, 드래그와 스크롤 탐색, 반응형 화면 구현."
     }
   ],
   "tools": {
