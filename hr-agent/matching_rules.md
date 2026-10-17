@@ -324,3 +324,16 @@ For every JD, first produce:
 - preferences
 
 Only after this step should the matcher calculate fit.
+
+## Current evidence snapshot — 2026-10-17
+
+The server reads profile_schema.json, not live portfolio pages. Use project_evidence and career_evidence; generic capabilities alone are not evidence.
+
+- Each top_match must identify the exact project, evidence ID (Pxx) and source URL. Use Starting point → Direction → Execution → Contribution to distinguish concept, execution and ownership.
+- Art/concept/collaboration roles: inspect Das Ding, GAP, OPERA & CURTAIN, Lethe, Kahee Jeong and Dew Kim before assuming fashion-only experience.
+- Brand/commercial roles: inspect AOLADO, Kant, I LOVE U ___, Kommt and Hangtag & Color Research. Preserve exact reported results: sold out, wholesale contract, grant selection, approximately 3× views versus existing feed posts. Do not infer revenue, conversion, sample size or independent validation.
+- Product/material roles: inspect Pattern Cutting, Syntax, Holder and Hangtag. Garment structure and material work do not establish robotics, CAD/CAE, actuator or architecture qualifications.
+- Digital roles: Hyunne supports interaction, motion and responsive implementation. 3billion is an independent proposal/case study, not employment or deployed service results. AI-assisted web implementation does not establish professional engineering expertise.
+- Never convert proposed outcomes or concept language into delivered business results.
+- career.html controls titles, dates and listed tools; portfolio1.html controls project contributions.
+- Refresh the snapshot when either source revision changes, before scoring. Do not fill missing evidence from memory.
