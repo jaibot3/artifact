@@ -245,7 +245,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
 @media(max-width:740px){.more-desc{padding:8px 5.3% 20px}}
 </style>
 <style id="project-index-style">
-/* 왼쪽 책갈피 탭 → 클릭하면 프로젝트 목록 바 */
+/* Left bookmark tab → slide-out project index */
 .project{scroll-margin-top:60px}
 #pi-tab{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:900;writing-mode:vertical-rl;
   padding:16px 8px;border:0;border-radius:0 10px 10px 0;background:var(--acid);color:#080808;cursor:pointer;
@@ -267,7 +267,7 @@ body.pi-open #pi-panel{transform:none}
 #pi-panel a:hover{background:#f4f4f0}
 #pi-panel a.on{border-left-color:var(--brown);background:#fbfce6}
 #pi-panel .pi-name{display:block;font-size:14px;font-weight:500;line-height:1.3}
-#pi-panel .pi-cat{display:block;margin-top:2px;font-size:12px;color:#777}
+#pi-panel .pi-cat{display:block;margin-top:2px;font-size:12px;font-style:italic;color:#777}
 @media(prefers-reduced-motion:reduce){#pi-tab,#pi-panel{transition:none}}
 </style>
 </head>
@@ -278,7 +278,7 @@ body.pi-open #pi-panel{transform:none}
 
   <div class="projects">
 
-    <article class="project" id="das-ding" data-cat="기획 · 디자인">
+    <article class="project" id="das-ding" data-cat="Planning · Design">
       <a class="thumb" href="portfolio1_0.html">
         <img src="das.jpg" alt="Das Ding · SAKK, 2026" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -298,7 +298,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="das-ding-holder" data-cat="디자인">
+    <article class="project" id="das-ding-holder" data-cat="Design">
       <a class="thumb" href="portfolio1_0.html" style="background:#eff2f0;">
         <img src="das_spin.webp" alt="Das Ding ( ) Holder" style="background:#eff2f0;" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -311,7 +311,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="gap-skirt" data-cat="디자인">
+    <article class="project" id="gap-skirt" data-cat="Design">
       <a class="thumb" href="portfolio1_02.html">
         <img src="gap1.jpg" alt="GAP Skirt · 2024" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -331,7 +331,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="opera-curtain" data-cat="디자인">
+    <article class="project" id="opera-curtain" data-cat="Design">
       <a class="thumb" href="opera.html">
         <img src="opera0.jpg" alt="OPERA &amp; CURTAIN Top · 2024" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -351,7 +351,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="syntax" data-cat="기획 · 디자인">
+    <article class="project" id="syntax" data-cat="Planning · Design">
       <a class="thumb" href="syntax.html">
         <img src="syntax.jpg" alt="The Syntax of Your Movement · 2025" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -369,7 +369,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="pattern-cutting" data-cat="디자인">
+    <article class="project" id="pattern-cutting" data-cat="Design">
       <a class="thumb" href="pattern.html">
         <img src="pattern1.jpg" alt="Pattern Cutting · SAKK" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -387,7 +387,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="lethe" data-cat="기획 · 디렉션">
+    <article class="project" id="lethe" data-cat="Planning · Direction">
       <a class="thumb" href="portfolio1_00.html">
         <img src="lethe.jpg" alt="Lethe, Still Shimmering" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -413,7 +413,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="hangtag" data-cat="디자인">
+    <article class="project" id="hangtag" data-cat="Design">
       <a class="thumb" href="">
         <img src="tag.jpg" alt="Hangtag &amp; Color Research · SAKK / ébauche" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -447,7 +447,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="i-love-u" data-cat="기획">
+    <article class="project" id="i-love-u" data-cat="Planning">
       <a class="thumb" href="interview.html">
         <img src="interview.jpg" alt="I LOVE U ___ · SAKK, 2023" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -467,7 +467,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="aolado" data-cat="기획 · 디자인">
+    <article class="project" id="aolado" data-cat="Planning · Design">
       <a class="thumb" href="portfolio1_01.html">
         <img src="ao.jpg" alt="AOLADO" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -507,7 +507,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="kant" data-cat="기획 · 디자인">
+    <article class="project" id="kant" data-cat="Planning · Design">
       <a class="thumb" href="portfolio_kant.html">
         <img src="kant.jpg" alt="Immanuel Kant · Critique of Pure Reason" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -527,7 +527,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="hyunne-web" data-cat="디자인">
+    <article class="project" id="hyunne-web" data-cat="Design">
       <a class="thumb hyunne-preview" href="https://jaibot3.github.io/hyunnsatnowhere/port1.html" target="_blank" rel="noopener" aria-label="Hyunne 작가 웹사이트 — 회전형 갤러리 열기">
         <span class="hyunne-mark" aria-hidden="true">Hyunne</span>
         <span class="hyunne-count" aria-hidden="true">00 / 14</span>
@@ -549,7 +549,7 @@ body.pi-open #pi-panel{transform:none}
 
     <p class="group-label">Other Projects</p>
 
-    <article class="project" id="kommt" data-cat="디자인">
+    <article class="project" id="kommt" data-cat="Design">
       <a class="thumb" href="portfolio1_03.html">
         <img src="kom.jpg" alt="Kommt. Art Gallery" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -570,7 +570,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="kahee-jeong" data-cat="기획">
+    <article class="project" id="kahee-jeong" data-cat="Planning">
       <a class="thumb" href="">
         <img src="ka.jpg" alt="Kahee Jeong · Artist Product" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -584,7 +584,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="dew-kim" data-cat="디자인">
+    <article class="project" id="dew-kim" data-cat="Design">
       <a class="thumb" href="">
         <img src="dew.jpg" alt="Dew Kim · Art Piece" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -598,7 +598,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="cactusholic" data-cat="디자인">
+    <article class="project" id="cactusholic" data-cat="Design">
       <a class="thumb" href="portfolio1_04.html">
         <img src="cac.jpg" alt="Cactusholic Maniac" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -614,7 +614,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="al-studio" data-cat="디자인 · 스타일링">
+    <article class="project" id="al-studio" data-cat="Design · Styling">
       <a class="thumb" href="portfolio1_05.html">
         <img src="al.jpg" alt="AL Studio · Apron" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -634,7 +634,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="maska" data-cat="스타일링">
+    <article class="project" id="maska" data-cat="Styling">
       <a class="thumb" href="portfolio1_06.html">
         <img src="maska.jpg" alt="MASKA" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -654,7 +654,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="leblue" data-cat="스타일링">
+    <article class="project" id="leblue" data-cat="Styling">
       <a class="thumb" href="portfolio1_07.html">
         <img src="leblue.jpg" alt="LEBLUE" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -674,7 +674,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="women-in-art" data-cat="디자인">
+    <article class="project" id="women-in-art" data-cat="Design">
       <a class="thumb" href="women.html">
         <img src="women.jpg" alt="Women in Art" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -694,7 +694,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="3billion" data-cat="기획">
+    <article class="project" id="3billion" data-cat="Planning">
       <a class="thumb" href="3bil.html">
         <img src="casest.jpg" alt="3billion · Digital &amp; Marketing Case Study" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -714,7 +714,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="poet" data-cat="글">
+    <article class="project" id="poet" data-cat="Writing">
       <a class="thumb" href="">
         <img src="poet.jpg" alt="POET · Cordpress" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -728,7 +728,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="project-runway" data-cat="디자인">
+    <article class="project" id="project-runway" data-cat="Design">
       <a class="thumb" href="">
         <img src="runway.jpg" alt="Project Runway Korea" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -742,7 +742,7 @@ body.pi-open #pi-panel{transform:none}
       </div>
     </article>
 
-    <article class="project" id="king-kong" data-cat="기획">
+    <article class="project" id="king-kong" data-cat="Planning">
       <a class="thumb" href="">
         <img src="kingking.jpg" alt="King Kong Shower" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -835,8 +835,8 @@ body.pi-open #pi-panel{transform:none}
 })();
 </script>
 <button id="pi-tab" type="button" aria-expanded="false" aria-controls="pi-panel">Projects</button>
-<nav id="pi-panel" aria-label="프로젝트 목록" aria-hidden="true">
-  <div class="pi-head"><span class="pi-title">Projects<span></span></span><button id="pi-close" type="button" aria-label="목록 닫기">×</button></div>
+<nav id="pi-panel" aria-label="Project index" aria-hidden="true">
+  <div class="pi-head"><span class="pi-title">Projects<span></span></span><button id="pi-close" type="button" aria-label="Close project index">×</button></div>
   <ol></ol>
 </nav>
 <script id="project-index">
