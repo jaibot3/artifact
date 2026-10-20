@@ -323,26 +323,30 @@ el.addEventListener('pointerenter',()=>hover=true);el.addEventListener('pointerl
 el.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,trail:[[e.timeStamp,e.clientX,e.clientY]]};rx=ry=rz=0;thrown=null;el.setPointerCapture(e.pointerId);});
 el.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
  x=Math.max(0,Math.min(innerWidth-w,x+dx));y=Math.max(0,Math.min(innerHeight-h,y+dy));
- ay+=dx*.25;ax+=dy*.25;ry=Math.max(-1500,Math.min(1500,dx*70));rx=Math.max(-1500,Math.min(1500,dy*70));drag.x=e.clientX;drag.y=e.clientY;
+ ay+=dx*.012;ax+=dy*.012;drag.x=e.clientX;drag.y=e.clientY;   // 잡고 있을 땐 손 따라 살짝만 기울고, 빠른 회전은 던진 뒤에만
  drag.trail.push([e.timeStamp,e.clientX,e.clientY]);while(drag.trail.length>2&&e.timeStamp-drag.trail[0][0]>100)drag.trail.shift();});
 let tapTime=0;
 function release(e){if(!drag||e.pointerId!==drag.id)return;
  const tapped=Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)<8;
  if(e.type!=='pointercancel'&&e.pointerType==='touch'&&tapped){const now=performance.now();if(now-tapTime<350){open();tapTime=0;}else tapTime=now;}
  // 놓기 직전 0.1초 동안 손이 움직인 속도로 던진다 (멈췄다 놓으면 그냥 내려놓기)
- if(e.type!=='pointercancel'&&!tapped&&!reduce){const [t0,x0,y0]=drag.trail[0],dt=(e.timeStamp-t0)/1000;if(dt>.008)fling((e.clientX-x0)/dt,(e.clientY-y0)/dt);}
+ if(e.type!=='pointercancel'&&!tapped&&!reduce){const [t0,x0,y0]=drag.trail[0],dt=(e.timeStamp-t0)/1000;
+  if(dt>.008){const sx=(e.clientX-x0)/dt,sy=(e.clientY-y0)/dt;if(!fling(sx,sy)){ry=clamp(sx*.003,2);rx=clamp(sy*.003,2);}}}
  drag=null;
 }
 // 던지기: 세기에 따라 벽(창의 네 면)에 1·2·3번 튕기고, 마지막 튕김 뒤엔 다음 벽 앞에서 미끄러지듯 멈춰 다시 둥둥 떠다님.
 // 부메랑처럼 화면 평면에서 빙글 돌고, 그 회전 방향으로 길도 살짝 휜다.
 function fling(sx,sy){
  const sc=Math.max(.6,Math.min(1,Math.min(innerWidth,innerHeight)/900));   // 작은 화면은 약하게 던져도 같은 단계
- let sp=Math.hypot(sx,sy);if(sp<350*sc)return;
+ let sp=Math.hypot(sx,sy);if(sp<350*sc)return false;
  const cap=3400*sc;if(sp>cap){sx*=cap/sp;sy*=cap/sp;sp=cap;}
  const n=sp<1300*sc?1:sp<2400*sc?2:3,dir=sx>=0?1:-1;
  vx=sx;vy=sy;thrown={n,hits:0,min:Math.max(420*sc,sp*.35),curve:dir*1.1,k:0};
- rz=dir*Math.min(30,sp*.011);
+ // 회전 상한 14rad/s(초당 약 2바퀴): 이보다 빠르면 60fps에서 바퀴살처럼 끊겨 보임
+ rz=dir*Math.min(14,sp*.006);ry=clamp(sx*.0015,3.5);rx=clamp(sy*.0015,3.5);
+ return true;
 }
+const clamp=(v,m)=>Math.max(-m,Math.min(m,v));
 function reach(dx,dy){   // 지금 방향으로 다음 벽까지 거리
  const mx=innerWidth-w,my=innerHeight-h;
  return Math.min(dx>0?(mx-x)/dx:dx<0?x/-dx:1e9,dy>0?(my-y)/dy:dy<0?y/-dy:1e9);
@@ -379,7 +383,7 @@ function frame(now){
  if(!drag&&!slip.open){
   if(thrown)fly(dt);
   else if(!reduce&&!hover){x+=vx*dt;y+=vy*dt;if(x<=0||x>=innerWidth-w){vx=-vx;x=Math.max(0,Math.min(x,innerWidth-w));}if(y<=0||y>=innerHeight-h){vy=-vy;y=Math.max(0,Math.min(y,innerHeight-h));}}
-  ax+=rx*dt;ay+=ry*dt;rx*=Math.exp(-.3*dt);ry*=Math.exp(-.3*dt);
+  ax+=rx*dt;ay+=ry*dt;rx*=Math.exp(-.6*dt);ry*=Math.exp(-.6*dt);
   az+=rz*dt;rz*=Math.exp(-(thrown?.35:.9)*dt);
   if(!reduce)ay+=.13*dt;
  }
