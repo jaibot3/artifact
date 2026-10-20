@@ -244,6 +244,32 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
 .more-desc .v .hl{margin-bottom:8px!important}
 @media(max-width:740px){.more-desc{padding:8px 5.3% 20px}}
 </style>
+<style id="project-index-style">
+/* Left bookmark tab → slide-out project index */
+.project{scroll-margin-top:60px}
+#pi-tab{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:900;writing-mode:vertical-rl;
+  padding:16px 8px;border:0;border-radius:0 10px 10px 0;background:var(--acid);color:#080808;cursor:pointer;
+  font:600 13px/1 'Instrument Sans','Jost',sans-serif;letter-spacing:.06em;box-shadow:2px 0 10px rgba(0,0,0,.08);
+  transition:transform .3s ease,opacity .3s ease}
+#pi-tab:hover{padding-left:12px}
+body.pi-open #pi-tab{opacity:0;pointer-events:none;transform:translate(-100%,-50%)}
+#pi-panel{position:fixed;left:0;top:0;bottom:0;z-index:1100;width:290px;max-width:84vw;background:#fff;
+  border-right:1px solid #080808;display:flex;flex-direction:column;transform:translateX(-102%);
+  transition:transform .38s cubic-bezier(.2,.8,.2,1);font-family:'Instrument Sans','Google Sans',sans-serif}
+body.pi-open #pi-panel{transform:none}
+#pi-panel .pi-head{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 14px;border-bottom:1px solid #e5e5e5}
+#pi-panel .pi-title{font:600 15px/1 'Instrument Sans',sans-serif;color:#080808}
+#pi-panel .pi-title span{margin-left:6px;font-weight:400;color:#888}
+#pi-close{width:30px;height:30px;border:0;border-radius:50%;background:var(--acid);color:#080808;font:400 20px/1 'Jost',sans-serif;cursor:pointer}
+#pi-panel ol{list-style:none;margin:0;padding:6px 0 24px;overflow-y:auto;overscroll-behavior:contain;flex:1}
+#pi-panel .pi-group{padding:16px 18px 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--brown)}
+#pi-panel a{display:block;padding:8px 18px 8px 15px;border-left:3px solid transparent;text-decoration:none;color:#080808;transition:background .2s}
+#pi-panel a:hover{background:#f4f4f0}
+#pi-panel a.on{border-left-color:var(--brown);background:#fbfce6}
+#pi-panel .pi-name{display:block;font-size:14px;font-weight:500;line-height:1.3}
+#pi-panel .pi-cat{display:block;margin-top:2px;font-size:12px;font-style:italic;color:#777}
+@media(prefers-reduced-motion:reduce){#pi-tab,#pi-panel{transition:none}}
+</style>
 </head>
 <body><header id="chorus-bar"><a class="mark" href="portfolio1.html">WORK</a><nav class="nav"><a href="index.html">Index ↗</a><a href="career.html">Career</a></nav><span class="sub">Art Direction · Design · Strategy</span></header>
 
@@ -252,7 +278,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
 
   <div class="projects">
 
-    <article class="project">
+    <article class="project" id="das-ding" data-cat="Planning · Design">
       <a class="thumb" href="portfolio1_0.html">
         <img src="das.jpg" alt="Das Ding · SAKK, 2026" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -272,7 +298,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="das-ding-holder" data-cat="Design">
       <a class="thumb" href="portfolio1_0.html" style="background:#eff2f0;">
         <img src="das_spin.webp" alt="Das Ding ( ) Holder" style="background:#eff2f0;" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -285,7 +311,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="gap-skirt" data-cat="Design">
       <a class="thumb" href="portfolio1_02.html">
         <img src="gap1.jpg" alt="GAP Skirt · 2024" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -305,7 +331,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="opera-curtain" data-cat="Design">
       <a class="thumb" href="opera.html">
         <img src="opera0.jpg" alt="OPERA &amp; CURTAIN Top · 2024" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -325,7 +351,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="syntax" data-cat="Planning · Design">
       <a class="thumb" href="syntax.html">
         <img src="syntax.jpg" alt="The Syntax of Your Movement · 2025" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -343,7 +369,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="pattern-cutting" data-cat="Design">
       <a class="thumb" href="pattern.html">
         <img src="pattern1.jpg" alt="Pattern Cutting · SAKK" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -361,7 +387,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="lethe" data-cat="Planning · Direction">
       <a class="thumb" href="portfolio1_00.html">
         <img src="lethe.jpg" alt="Lethe, Still Shimmering" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -387,7 +413,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="hangtag" data-cat="Design">
       <a class="thumb" href="">
         <img src="tag.jpg" alt="Hangtag &amp; Color Research · SAKK / ébauche" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -421,7 +447,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="i-love-u" data-cat="Planning">
       <a class="thumb" href="interview.html">
         <img src="interview.jpg" alt="I LOVE U ___ · SAKK, 2023" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -441,7 +467,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="aolado" data-cat="Planning · Design">
       <a class="thumb" href="portfolio1_01.html">
         <img src="ao.jpg" alt="AOLADO" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -481,7 +507,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="kant" data-cat="Planning · Design">
       <a class="thumb" href="portfolio_kant.html">
         <img src="kant.jpg" alt="Immanuel Kant · Critique of Pure Reason" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -501,7 +527,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project" id="hyunne-web">
+    <article class="project" id="hyunne-web" data-cat="Design">
       <a class="thumb hyunne-preview" href="https://jaibot3.github.io/hyunnsatnowhere/port1.html" target="_blank" rel="noopener" aria-label="Hyunne 작가 웹사이트 — 회전형 갤러리 열기">
         <span class="hyunne-mark" aria-hidden="true">Hyunne</span>
         <span class="hyunne-count" aria-hidden="true">00 / 14</span>
@@ -523,7 +549,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
 
     <p class="group-label">Other Projects</p>
 
-    <article class="project">
+    <article class="project" id="kommt" data-cat="Design">
       <a class="thumb" href="portfolio1_03.html">
         <img src="kom.jpg" alt="Kommt. Art Gallery" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -544,7 +570,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="kahee-jeong" data-cat="Planning">
       <a class="thumb" href="">
         <img src="ka.jpg" alt="Kahee Jeong · Artist Product" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -558,7 +584,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="dew-kim" data-cat="Design">
       <a class="thumb" href="">
         <img src="dew.jpg" alt="Dew Kim · Art Piece" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -572,7 +598,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="cactusholic" data-cat="Design">
       <a class="thumb" href="portfolio1_04.html">
         <img src="cac.jpg" alt="Cactusholic Maniac" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -588,7 +614,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="al-studio" data-cat="Design · Styling">
       <a class="thumb" href="portfolio1_05.html">
         <img src="al.jpg" alt="AL Studio · Apron" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -608,7 +634,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="maska" data-cat="Styling">
       <a class="thumb" href="portfolio1_06.html">
         <img src="maska.jpg" alt="MASKA" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -628,7 +654,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="leblue" data-cat="Styling">
       <a class="thumb" href="portfolio1_07.html">
         <img src="leblue.jpg" alt="LEBLUE" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -648,7 +674,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="women-in-art" data-cat="Design">
       <a class="thumb" href="women.html">
         <img src="women.jpg" alt="Women in Art" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -668,7 +694,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="3billion" data-cat="Planning">
       <a class="thumb" href="3bil.html">
         <img src="casest.jpg" alt="3billion · Digital &amp; Marketing Case Study" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -688,7 +714,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="poet" data-cat="Writing">
       <a class="thumb" href="">
         <img src="poet.jpg" alt="POET · Cordpress" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -702,7 +728,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="project-runway" data-cat="Design">
       <a class="thumb" href="">
         <img src="runway.jpg" alt="Project Runway Korea" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -716,7 +742,7 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
       </div>
     </article>
 
-    <article class="project">
+    <article class="project" id="king-kong" data-cat="Planning">
       <a class="thumb" href="">
         <img src="kingking.jpg" alt="King Kong Shower" loading="lazy"
              onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
@@ -806,6 +832,39 @@ html,body,#chorus-bar .mark,#chorus-bar .nav a,#chorus-bar .sub,.toggle,.foot a,
   document.addEventListener('visibilitychange',sync);
   reduced.addEventListener('change',sync);
   draw();
+})();
+</script>
+<button id="pi-tab" type="button" aria-expanded="false" aria-controls="pi-panel">Projects</button>
+<nav id="pi-panel" aria-label="Project index" aria-hidden="true">
+  <div class="pi-head"><span class="pi-title">Projects<span></span></span><button id="pi-close" type="button" aria-label="Close project index">×</button></div>
+  <ol></ol>
+</nav>
+<script id="project-index">
+(function(){
+  var tab=document.getElementById('pi-tab'),panel=document.getElementById('pi-panel'),list=panel.querySelector('ol');
+  var items=[],group='Selected Projects',n=0;
+  function head(t){var li=document.createElement('li');li.className='pi-group';li.textContent=t;list.appendChild(li);}
+  head(group);
+  document.querySelectorAll('.projects > .group-label, .projects > .project').forEach(function(el){
+    if(el.classList.contains('group-label')){head(el.textContent);return;}
+    var name=el.querySelector('.project-name');if(!name||!el.id)return;n++;
+    var li=document.createElement('li'),a=document.createElement('a');a.href='#'+el.id;
+    a.innerHTML='<span class="pi-name"></span><span class="pi-cat"></span>';
+    a.firstChild.textContent=name.textContent.trim();a.lastChild.textContent=el.getAttribute('data-cat')||'';
+    li.appendChild(a);list.appendChild(li);items.push([el,a]);
+  });
+  panel.querySelector('.pi-title span').textContent=n;
+  function set(open){document.body.classList.toggle('pi-open',open);tab.setAttribute('aria-expanded',open);panel.setAttribute('aria-hidden',!open);
+    if(open)panel.querySelector('#pi-close').focus();else tab.focus({preventScroll:true});}
+  tab.addEventListener('click',function(){set(true);});
+  document.getElementById('pi-close').addEventListener('click',function(){set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.body.classList.contains('pi-open'))set(false);});
+  list.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();
+    var t=document.getElementById(a.hash.slice(1));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+    history.replaceState(null,'',a.hash);if(matchMedia('(max-width:740px)').matches)set(false);});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
+    items.forEach(function(p){p[1].classList.toggle('on',p[0]===e.target);});});},{rootMargin:'-45% 0px -50% 0px'});
+  items.forEach(function(p){io.observe(p[0]);});
 })();
 </script>
 <script id="chorus-effect">(function(){var tones=['#c3c07e','#c5b49b','#bac2a6'];var prev=-1;try{prev=parseInt(localStorage.getItem('jay-chorus-palette'),10)}catch(e){}var i=Number.isFinite(prev)?(prev+1)%tones.length:0;document.documentElement.style.setProperty('--header-tone',tones[i]);try{localStorage.setItem('jay-chorus-palette',i)}catch(e){}var sync=function(){document.body.classList.toggle('chorus-scrolled',window.scrollY>100)};sync();window.addEventListener('scroll',sync,{passive:true});})();</script><script src="click.js"></script>
