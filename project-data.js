@@ -221,15 +221,18 @@ window.PROJECTS = {
       },
       { k: "Execution",
         p: [
-          "지원사업 제안서를 작성하고 브랜드 콘셉트, 생산 체계, 콘텐츠와 웹사이트 구축을 연결했다. SNS 영상과 사운드 제작, 콘텐츠 디렉션을 담당하며 초기 브랜드가 소비자에게 전달되는 방식을 구성했다.",
-          "유통에서는 브랜드 초기 팔로워가 약 100명이던 시점에 직접 영업해 백화점 완사입 계약을 성사시켰다. 생산과 판매 채널이 실제로 연결되도록 도매 영업과 리테일 협의까지 맡았다.",
+          "소상공인 협업화 지원사업에 지원하며, 2022년 유아동 시장 성장 데이터를 근거로 매출 다각화를 위한 유아동 브랜드 설립을 사업 목표로 설정했다. 사업계획서를 작성하고, 멤버 3인의 동업 계약 구조를 설계해 운영했다.",
+          "컬러 리서치를 바탕으로 제품 디자인과 패키징 디자인을 진행했다. 신규 생산라인을 단독으로 구축하고, 아동 제품에 필요한 KOTITI 안전사용 시험을 진행했다.",
+          "웹사이트 구축 과정에서 개발사 커뮤니케이션을 전담했고, 영상 콘텐츠 제작과 시딩을 맡아 초기 브랜드가 소비자에게 전달되는 방식을 구성했다.",
+          "유통에서는 인스타그램 팔로워가 약 300명이던 초기 브랜드로 직접 영업해, 백화점 상위 브랜드에 완사입 방식으로 입점을 성사시켰다. 상대의 니즈를 파악하고 거래 단가를 맞춰 계약을 이끌었다.",
+          "팀 운영에서는 Notion 도입을 추진했다. 지분이 동일한 구조에서 각자의 업무 시간을 사업 기여도로 환산하기 위한 장치로 활용했다.",
         ],
-        ex: ["Business proposal", "Brand concept development", "Content direction", "Video & sound production", "Website production", "Production setup", "Wholesale sales", "Retail negotiation"]
+        ex: ["Grant proposal & business plan", "Partnership structure", "Color research", "Product & packaging design", "Production line setup", "KOTITI safety testing", "Website production", "Video & sound production", "Content seeding", "Wholesale & retail sales", "Team operations"]
       },
       { k: "Contribution",
         hl: "Co-founder / COO",
         p: [
-          "지원사업 제안부터 브랜드 구축, 생산, 콘텐츠, 웹사이트와 영업까지 사업 운영 전반을 담당했다. 지원사업 최종 선정과 백화점 완사입 계약이 주요 결과다. 특히 완사입 계약은 단순한 팀 리드 업무가 아니라 직접 수행한 영업 성과다.",
+          "정부 지원사업 선정을 리드하고, 동업 구조 설계부터 디자인, 생산, 웹사이트, 콘텐츠, 영업, 팀 운영까지 사업 전반을 담당했다. 지원사업 최종 선정과 백화점 상위 브랜드 완사입 입점이 주요 결과다. 특히 완사입 계약은 팔로워 약 300명의 초기 브랜드로 직접 영업해 만든 성과다.",
         ]
       },
     ]
