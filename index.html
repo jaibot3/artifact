@@ -56,10 +56,6 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 @media (prefers-reduced-motion:reduce){.nav li.on::before{animation:none}.statue{transition:none}}
 
 
-.sec[data-id="sakk"],#nav [data-id="sakk"] a{cursor:not-allowed}
-.sec[data-id="sakk"]::after{opacity:0!important}
-.sec[data-id="sakk"]::before{content:"×";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:300 27px/1 Arial,sans-serif;color:#e51c23;opacity:.7;z-index:7}
-#nav [data-id="sakk"] a::after{content:" ×";color:#e51c23;opacity:.7;font-weight:400}
 #fortune-cookie{position:fixed;left:0;top:0;width:130px;height:118px;z-index:12;touch-action:none;cursor:grab;user-select:none;border:0;background:transparent;padding:0;will-change:transform;filter:drop-shadow(1px 6px 5px #604c3020)}
 #fortune-cookie:active{cursor:grabbing}
 #fortune-cookie:focus-visible{outline:1px dotted #ad9170;border-radius:50%}
@@ -85,7 +81,7 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <li data-id="work"><a href="portfolio1.html"><small>(1)</small>work</a></li>
     <li data-id="career"><a href="career.html"><small>(2)</small>career</a></li>
     <li data-id="ficciones"><a href="rose.html"><small>(3)</small>ficciones</a></li>
-    <li data-id="sakk"><a aria-disabled="true" tabindex="-1" title="No entry"><small>(4)</small>sakk</a></li>
+    <li data-id="sakk"><a href="https://www.sakk.co.kr/" target="_blank" rel="noopener"><small>(4)</small>sakk</a></li>
   </ul>
 </header>
 
@@ -96,7 +92,7 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <a class="sec" data-id="work"      href="portfolio1.html"                                  style="left:20.54%;top:36.00%;width:65.32%;height:24.76%"><span>(1) work</span></a>
     <a class="sec on" data-id="career"    href="career.html"                                      style="left:9.28%;top:1.05%;width:31.53%;height:29.71%"><span>(2) career</span></a>
     <a class="sec" data-id="ficciones" href="rose.html"                                        style="left:39.91%;top:67.90%;width:32.43%;height:31.43%"><span>(3) ficciones</span></a>
-    <a class="sec" data-id="sakk"      aria-disabled="true" tabindex="-1" title="No entry" style="left:85.86%;top:35.52%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
+    <a class="sec" data-id="sakk"      href="https://www.sakk.co.kr/" target="_blank" rel="noopener" style="left:85.86%;top:35.52%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
     <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram <span>by jaylim</span></small></p>
   </div>
 </main>
