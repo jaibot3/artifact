@@ -279,9 +279,12 @@ header.nav{position:relative;z-index:30;background:#fff}   /* 메뉴는 꽃 위�
   addEventListener('touchmove', e => { const t = e.touches[0]; at(t.clientX, t.clientY, true); }, { passive: true });
   addEventListener('touchend', () => { mouse = null; });
   addEventListener('resize', resize);
+  // 꽃 아래 숨은 것(고양이)이 지금 얼마나 덮여 있는지: 그 영역 안에 걸친 꽃 개수
+  window.petalsCover = r => flowers.reduce((n, f) => n + (f.x + f.w * .3 > r.left && f.x - f.w * .3 < r.right && f.y + f.h * .3 > r.top && f.y - f.h * .3 < r.bottom ? 1 : 0), 0);
   let n = 0;
   srcs.forEach((s, i) => { const im = new Image(); im.onload = () => { if (++n === srcs.length) { resize(); for (let k = 0; k < START; k++) flowers.push(make(true)); requestAnimationFrame(step); } }; im.src = s; imgs[i] = im; });
 })();
 </script>
 <script>window.CLICK_SFX=false; /* index는 자체 클릭음 사용 */</script><script src="click.js"></script>
+<script src="cat-peek.js"></script>
 </body></html>
