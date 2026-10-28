@@ -174,7 +174,7 @@
     }
   </style>
 <style id="chorus-prototype">
-:root{--header-tone:#c3c07e;--acid:#eaf751;--brown:#75481b;--ink:#080808;--pink:#f1cace}
+:root{--header-tone:#d4c8a8;--acid:#eaf751;--brown:#75481b;--ink:#080808;--pink:#f1cace}
 html,body{background:#fff!important;color:var(--ink)!important}
 .top,.page-title{display:none!important}
 .projects{padding-top:186px!important}
@@ -867,6 +867,6 @@ body.pi-open #pi-panel{transform:none}
   items.forEach(function(p){io.observe(p[0]);});
 })();
 </script>
-<script id="chorus-effect">(function(){var tones=['#c3c07e','#c5b49b','#bac2a6'];var prev=-1;try{prev=parseInt(localStorage.getItem('jay-chorus-palette'),10)}catch(e){}var i=Number.isFinite(prev)?(prev+1)%tones.length:0;document.documentElement.style.setProperty('--header-tone',tones[i]);try{localStorage.setItem('jay-chorus-palette',i)}catch(e){}var sync=function(){document.body.classList.toggle('chorus-scrolled',window.scrollY>100)};sync();window.addEventListener('scroll',sync,{passive:true});})();</script><script src="click.js"></script>
+<script id="chorus-effect">(function(){var tones=['#d4c8a8','#c5b49b','#bac2a6'];var prev=-1;try{prev=parseInt(localStorage.getItem('jay-chorus-palette'),10)}catch(e){}var i=Number.isFinite(prev)?(prev+1)%tones.length:0;document.documentElement.style.setProperty('--header-tone',tones[i]);try{localStorage.setItem('jay-chorus-palette',i)}catch(e){}var sync=function(){document.body.classList.toggle('chorus-scrolled',window.scrollY>100)};sync();window.addEventListener('scroll',sync,{passive:true});})();</script><script src="click.js"></script>
 </body>
 </html>
