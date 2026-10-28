@@ -73,7 +73,7 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 @media(max-width:740px){#fortune-cookie{width:112px;height:104px}}
 @media(prefers-reduced-motion:reduce){#fortune-slip[open]{animation:none}}
 #petals{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none}
-header.nav{position:relative;z-index:30}   /* 메뉴는 꽃 위에 */   /* 꽃 더미: 클릭은 아래 도면으로 통과 */
+header.nav{position:relative;z-index:30;background:#fff}   /* 메뉴는 꽃 위에, 바탕을 깔아 글씨가 묻히지 않게 */   /* 꽃 더미: 클릭은 아래 도면으로 통과 */
 </style></head>
 <body>
 <header class="nav">
@@ -274,6 +274,11 @@ header.nav{position:relative;z-index:30}   /* 메뉴는 꽃 위에 */   /* 꽃 �
     mouse = mouse ? { x: e.clientX, y: e.clientY, vx: e.clientX - mouse.x, vy: e.clientY - mouse.y } : { x: e.clientX, y: e.clientY, vx: 0, vy: 0 };
   }, { passive: true });
   document.addEventListener('pointerleave', () => { mouse = null; });
+  // 폰: 손가락으로 쓸어도 같은 효과 (pointermove는 스크롤 판정 때 끊기므로 touchmove로 보강)
+  addEventListener('touchmove', e => { const t = e.touches[0];
+    mouse = mouse ? { x: t.clientX, y: t.clientY, vx: t.clientX - mouse.x, vy: t.clientY - mouse.y } : { x: t.clientX, y: t.clientY, vx: 0, vy: 0 };
+  }, { passive: true });
+  addEventListener('touchend', () => { mouse = null; });
   addEventListener('resize', resize);
   let n = 0;
   srcs.forEach((s, i) => { const im = new Image(); im.onload = () => { if (++n === srcs.length) { resize(); for (let k = 0; k < START; k++) flowers.push(make(true)); requestAnimationFrame(step); } }; im.src = s; imgs[i] = im; });
