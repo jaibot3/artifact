@@ -56,22 +56,9 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 @media (prefers-reduced-motion:reduce){.nav li.on::before{animation:none}.statue{transition:none}}
 
 
-#fortune-cookie{position:fixed;left:0;top:0;width:130px;height:118px;z-index:12;touch-action:none;cursor:grab;user-select:none;border:0;background:transparent;padding:0;will-change:transform;filter:drop-shadow(1px 6px 5px #604c3020)}
-#fortune-cookie:active{cursor:grabbing}
-#fortune-cookie:focus-visible{outline:1px dotted #ad9170;border-radius:50%}
-#fortune-cookie canvas{width:100%;height:100%;display:block;pointer-events:none;transform-origin:50% 47%}   /* 그림자는 버튼에: 캔버스가 부메랑처럼 돌아도 그림자 방향은 그대로 */
-.cookie-hint{display:none}
-#fortune-slip{position:fixed;inset:auto;margin:0;border:0;background:#faf9f3;color:#59564b;width:min(310px,calc(100vw - 32px));padding:17px 27px 18px;box-shadow:0 2px 3px #3028190c,0 9px 17px #30281912;font-family:inherit;transform:rotate(-3deg);overflow:visible}
-#fortune-slip:not([open]){display:none}
-#fortune-slip[open]{animation:unfold .5s cubic-bezier(.2,.8,.2,1)}
-#fortune-slip::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 32%,#8d877d0c 33%,#fff9 34%,transparent 35%,transparent 65%,#8d877d0c 66%,#fff9 67%,transparent 68%);pointer-events:none}
-#fortune-slip h2{display:none}#fortune-luck{display:block;margin-top:11px;font-size:10px;line-height:1.6;color:#858075}#quote-source{display:block;margin-top:5px;font-size:9px;color:#a49f92;text-decoration:none}
-#fortune-date{display:block;font:9px/1.3 'Courier New',monospace;letter-spacing:.13em;color:#9a978d}
-#fortune-text{font-size:12px;line-height:1.8;font-weight:400;word-break:keep-all;margin:9px 0 0;letter-spacing:.015em}
-#fortune-slip button{position:absolute;right:5px;top:3px;border:0;background:transparent;padding:5px;font:15px/1 Arial;color:#aaa69a;cursor:pointer}
-@keyframes unfold{from{opacity:0;transform:translateX(-18px) rotate(-6deg) scaleX(.75)}to{opacity:1;transform:translateX(0) rotate(-3deg) scaleX(1)}}
-@media(max-width:740px){#fortune-cookie{width:112px;height:104px}}
-@media(prefers-reduced-motion:reduce){#fortune-slip[open]{animation:none}}
+#petals{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none}   /* 꽃 더미: 클릭은 아래 도면으로 통과 */
+html,body{overscroll-behavior:none}   /* 손가락으로 옆으로 쓸 때 브라우저 뒤로가기·당김 새로고침이 끼어들지 않게 */
+header.nav{position:relative;z-index:30;background:#fff}   /* 메뉴는 꽃 위에, 바탕을 깔아 글씨가 묻히지 않게 */
 </style></head>
 <body>
 <header class="nav">
@@ -96,9 +83,6 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
     <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram <span>by jaylim</span></small></p>
   </div>
 </main>
-<button id="fortune-cookie" type="button" aria-label="3D 포춘쿠키. Drag to move and rotate, flick to throw it off the walls. Double-click or press Enter to unfold a line from rose.html." title="drag to roll · flick to throw · double-click to open">
-<canvas aria-hidden="true"></canvas><span class="cookie-hint">drag · double click</span></button>
-<dialog id="fortune-slip" aria-label="ficciones의 한 줄"><small id="fortune-date"></small><h2 id="fortune-title">ficciones의 한 줄</h2><p id="fortune-text"></p><small id="fortune-luck"></small><a id="quote-source" target="_blank" rel="noopener">source ↗</a><button type="button">×</button></dialog>
 
 
 <script>
@@ -222,173 +206,82 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
   });
 })();
 </script>
-
-<script>
+<canvas id="petals" aria-hidden="true"></canvas>
+<script id="petal-pile">
+// 꽃 더미: 처음엔 화면이 수북히 덮여 있고, 마우스가 지나간 자리는 꽃이 밀려나 도면이 드러남. 위에서 계속 떨어져 다시 쌓임.
 (() => {
-const el=document.querySelector('#fortune-cookie'),cv=el.querySelector('canvas'),ctx=cv.getContext('2d'),slip=document.querySelector('#fortune-slip');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let w,h,x=innerWidth*.68,y=innerHeight*.42,vx=12,vy=-9,ax=-.45,ay=-.35,az=0,rx=0,ry=.18,rz=0,drag=null,hover=false,last=0,thrown=null,bobA=1;
-function resize(){w=el.clientWidth;h=el.clientHeight;const d=Math.min(devicePixelRatio||1,2);cv.width=w*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);x=Math.max(0,Math.min(x,innerWidth-w));y=Math.max(0,Math.min(y,innerHeight-h));}
-resize();addEventListener('resize',resize);
-// Thin folded shell: broad curved wings, pointed ends and a central crease.
-const verts=[],normals=[],faces=[],U=96,V=40;
-function surface(i,j){
- const u=-Math.PI/2+i/U*Math.PI,v=j/V*Math.PI*2,s=Math.sin(u),c=Math.cos(u);
- const crease=1-.20*Math.pow(Math.abs(Math.cos(v)),16);
- return [.95*s,.48*c*Math.cos(v)*crease,.34*c*Math.sin(v)+.58*Math.pow(Math.abs(s),1.8)-.18];
-}
-for(let i=0;i<=U;i++)for(let j=0;j<=V;j++){
- const p=surface(i,j),a=surface(Math.min(U,i+.1),j),b=surface(i,Math.min(V,j+.1));
- const u=a.map((v,k)=>v-p[k]),v=b.map((v,k)=>v-p[k]);
- let n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],len=Math.hypot(...n)||1;
- verts.push(p);normals.push(n.map(x=>x/len));
-}
-for(let i=0;i<U;i++)for(let j=0;j<V;j++){const a=i*(V+1)+j,b=a+V+1;faces.push([a,b,a+1,j],[a+1,b,b+1,j]);}
-function rotate(p){const c=Math.cos(ay),s=Math.sin(ay),c2=Math.cos(ax),s2=Math.sin(ax),xx=p[0]*c+p[2]*s,zz=-p[0]*s+p[2]*c;return[xx,p[1]*c2-zz*s2,p[1]*s2+zz*c2];}
-function draw(){
- ctx.clearRect(0,0,w,h);
- const ps=verts.map(rotate),ns=normals.map(rotate),scale=w*.42;
- const projected=ps.map(p=>{const f=5/(5-p[2]);return[w/2+p[0]*scale*f,h*.47-p[1]*scale*f];});
- const sorted=faces.map(f=>({f,z:(ps[f[0]][2]+ps[f[1]][2]+ps[f[2]][2])/3})).sort((a,b)=>a.z-b.z);
- for(const {f} of sorted){
-  const n=[0,1,2].map(k=>(ns[f[0]][k]+ns[f[1]][k]+ns[f[2]][k])/3);
-  const light=.72+.28*Math.abs(-.35*n[0]+.64*n[1]+.68*n[2]);
-  const seam=(f[3]===0||f[3]===V/2)?.90:1;
-  const highlight=Math.pow(Math.max(0,n[2]),14)*15;
-  ctx.fillStyle='rgb('+[231,190,128].map(c=>Math.round(Math.min(255,c*light*seam+highlight))).join(',')+')';
-  ctx.beginPath();f.slice(0,3).forEach((id,i)=>{const p=projected[id];i?ctx.lineTo(...p):ctx.moveTo(...p)});ctx.closePath();ctx.fill();ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=.3;ctx.stroke();
- }
-}
-let roseLines=null, roseRequest=null, lastLine=-1, opening=0;
-function loadRoseLines(){
- if(roseLines)return Promise.resolve(roseLines);
- if(roseRequest)return roseRequest;
- roseRequest=fetch('rose.html',{cache:'no-cache'}).then(response=>{
-  if(!response.ok)throw new Error('rose unavailable');
-  return response.text();
- }).then(html=>{
-  // 데이터의 text 필드만 읽고 rose.html의 스크립트는 실행하지 않는다.
-  const doc=new DOMParser().parseFromString(html,'text/html');
-  const script=[...doc.scripts].map(s=>s.textContent).find(s=>s.includes('const ENTRIES'));
-  if(!script)throw new Error('entries unavailable');
-  const data=script.slice(script.indexOf('const ENTRIES'),script.indexOf('\n];',script.indexOf('const ENTRIES')));
-  const lines=[];
-  for(const match of data.matchAll(/text:\s*\x60((?:\\[\s\S]|[^\x60\\])*)\x60/g)){
-   const text=match[1].replace(/\\n/g,'\n').replace(/\\r/g,'\r').replace(/\\t/g,'\t').replace(/\\([\x60\\$])/g,'$1');
-   for(const raw of text.split(/[\r\n\u2028\u2029]+/)){
-    const line=raw.trim();
-    if(!line||!/\p{L}/u.test(line)||/^[—–]\s/.test(line))continue;
-    if(/^\d{4}[./-]\d{1,2}[./-]\d{1,2}/.test(line)||/^\d{1,2}[./-]\d{1,2}[./-]\d{4}/.test(line))continue;
-    if(/^\d{4}년\s*\d{1,2}월|^\d{1,2}월\s*\d{1,2}일/.test(line))continue;
-    lines.push(line);
-   }
+  const cv = document.getElementById('petals'), ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const srcs = ['flower_cluster.webp', 'flower_branch.webp'], imgs = [];
+  const small = matchMedia('(max-width:740px)').matches;
+  const MAX = small ? 420 : 800;          // 화면에 남는 꽃 최대 개수
+  const START = small ? 340 : 620;         // 처음 쌓여 있는 양
+  const R = small ? 60 : 90;               // 마우스가 쓸어내는 반경
+  let W, H, dpr, flowers = [], mouse = null, last = performance.now();
+  let plan = null;
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    plan = document.getElementById('plan').getBoundingClientRect();
   }
-  roseLines=[...new Set(lines)];
-  if(!roseLines.length){roseLines=null;throw new Error('no lines');}
-  return roseLines;
- }).finally(()=>{roseRequest=null;});
- return roseRequest;
-}
-async function open(){
- if(slip.open)return;
- const request=++opening;
- document.querySelector('#fortune-date').textContent='a thought, folded';
- document.querySelector('#fortune-text').textContent='…';
- document.querySelector('#fortune-luck').textContent='ficciones';
- const source=document.querySelector('#quote-source');
- source.href='rose.html';source.textContent='read in rose ↗';
- const sw=Math.min(310,innerWidth-32),left=Math.max(16,Math.min(x+w*.48,innerWidth-sw-16)),top=Math.max(16,Math.min(y+h*.7,innerHeight-180));
- slip.style.left=left+'px';slip.style.top=top+'px';slip.show();
- try{
-  const lines=await loadRoseLines();
-  if(!slip.open||request!==opening)return;
-  let i=Math.floor(Math.random()*lines.length);
-  if(lines.length>1&&i===lastLine)i=(i+1+Math.floor(Math.random()*(lines.length-1)))%lines.length;
-  lastLine=i;
-  document.querySelector('#fortune-text').textContent='“'+lines[i]+'”';
- }catch(error){
-  if(slip.open&&request===opening)document.querySelector('#fortune-text').textContent='글을 불러오지 못했어요. 다시 열어주세요.';
- }
-}
-el.addEventListener('dblclick',open);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')slip.close();});
-el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
-slip.querySelector('button').addEventListener('click',()=>slip.close());
-slip.addEventListener('click',e=>{if(e.target===slip){const r=slip.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)slip.close();}});
-el.addEventListener('pointerenter',()=>hover=true);el.addEventListener('pointerleave',()=>hover=false);
-el.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,trail:[[e.timeStamp,e.clientX,e.clientY]]};rx=ry=rz=0;thrown=null;el.setPointerCapture(e.pointerId);});
-el.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
- x=Math.max(0,Math.min(innerWidth-w,x+dx));y=Math.max(0,Math.min(innerHeight-h,y+dy));
- ay+=dx*.012;ax+=dy*.012;drag.x=e.clientX;drag.y=e.clientY;   // 잡고 있을 땐 손 따라 살짝만 기울고, 빠른 회전은 던진 뒤에만
- drag.trail.push([e.timeStamp,e.clientX,e.clientY]);while(drag.trail.length>2&&e.timeStamp-drag.trail[0][0]>100)drag.trail.shift();});
-let tapTime=0;
-function release(e){if(!drag||e.pointerId!==drag.id)return;
- const tapped=Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)<8;
- if(e.type!=='pointercancel'&&e.pointerType==='touch'&&tapped){const now=performance.now();if(now-tapTime<350){open();tapTime=0;}else tapTime=now;}
- // 놓기 직전 0.1초 동안 손이 움직인 속도로 던진다 (멈췄다 놓으면 그냥 내려놓기)
- if(e.type!=='pointercancel'&&!tapped&&!reduce){const [t0,x0,y0]=drag.trail[0],dt=(e.timeStamp-t0)/1000;
-  if(dt>.008){const sx=(e.clientX-x0)/dt,sy=(e.clientY-y0)/dt;if(!fling(sx,sy)){ry=clamp(sx*.003,2);rx=clamp(sy*.003,2);}}}
- drag=null;
-}
-// 던지기: 세기에 따라 벽(창의 네 면)에 1·2·3번 튕기고, 마지막 튕김 뒤엔 다음 벽 앞에서 미끄러지듯 멈춰 다시 둥둥 떠다님.
-// 부메랑처럼 화면 평면에서 빙글 돌고, 그 회전 방향으로 길도 살짝 휜다.
-function fling(sx,sy){
- const sc=Math.max(.6,Math.min(1,Math.min(innerWidth,innerHeight)/900));   // 작은 화면은 약하게 던져도 같은 단계
- let sp=Math.hypot(sx,sy);if(sp<350*sc)return false;
- const cap=3400*sc;if(sp>cap){sx*=cap/sp;sy*=cap/sp;sp=cap;}
- const n=sp<1300*sc?1:sp<2400*sc?2:3,dir=sx>=0?1:-1;
- vx=sx;vy=sy;thrown={n,hits:0,min:Math.max(420*sc,sp*.35),curve:dir*1.1,k:0};
- // 회전 상한 14rad/s(초당 약 2바퀴): 이보다 빠르면 60fps에서 바퀴살처럼 끊겨 보임
- rz=dir*Math.min(14,sp*.006);ry=clamp(sx*.0015,3.5);rx=clamp(sy*.0015,3.5);
- return true;
-}
-const clamp=(v,m)=>Math.max(-m,Math.min(m,v));
-function reach(dx,dy){   // 지금 방향으로 다음 벽까지 거리
- const mx=innerWidth-w,my=innerHeight-h;
- return Math.min(dx>0?(mx-x)/dx:dx<0?x/-dx:1e9,dy>0?(my-y)/dy:dy<0?y/-dy:1e9);
-}
-function fly(dt){
- const t=thrown;
- if(t.curve){const a=t.curve*dt,c=Math.cos(a),s=Math.sin(a);[vx,vy]=[vx*c-vy*s,vx*s+vy*c];t.curve*=Math.exp(-1.1*dt);}
- let sp=Math.hypot(vx,vy)||1;
- const ns=t.k?sp*Math.exp(-t.k*dt):Math.max(t.min,sp*Math.exp(-.5*dt));   // 정해진 횟수 전에는 벽에 닿을 만큼의 속도는 유지
- vx*=ns/sp;vy*=ns/sp;sp=ns;
- x+=vx*dt;y+=vy*dt;
- const mx=innerWidth-w,my=innerHeight-h;let hit=false;
- if(x<0||x>mx){vx=-vx;x=Math.max(0,Math.min(x,mx));hit=true;}
- if(y<0||y>my){vy=-vy;y=Math.max(0,Math.min(y,my));hit=true;}
- if(hit&&!t.k){
-  t.hits++;vx*=.82;vy*=.82;rz*=.85;knock(t.hits);
-  if(t.hits>=t.n){sp=Math.hypot(vx,vy)||1;t.curve=0;t.k=Math.max(1.4,sp/(reach(vx/sp,vy/sp)*.6+1));}   // 남은 거리의 60% 안에서 멈추도록 감속
- }else if(hit){vx*=.5;vy*=.5;}
- if(t.k&&sp<16){const s=sp>1?13/sp:0;vx=s?vx*s:12;vy=s?vy*s:-9;thrown=null;}
-}
-let ac=null;
-function knock(i){   // 벽에 닿는 '톡' (튕길수록 한 음씩 높게)
- try{
-  ac=ac||new(window.AudioContext||window.webkitAudioContext)();
-  const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();
-  o.type='triangle';o.frequency.setValueAtTime(240+i*80,t);o.frequency.exponentialRampToValueAtTime(90,t+.08);
-  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.12,t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+.12);
-  o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.13);
- }catch(_){}
-}
-el.addEventListener('pointerup',release);el.addEventListener('pointercancel',release);el.addEventListener('lostpointercapture',()=>drag=null);
-function frame(now){
- const dt=last?Math.min((now-last)/1000,.04):0;last=now;
- if(!drag&&!slip.open){
-  if(thrown)fly(dt);
-  else if(!reduce&&!hover){x+=vx*dt;y+=vy*dt;if(x<=0||x>=innerWidth-w){vx=-vx;x=Math.max(0,Math.min(x,innerWidth-w));}if(y<=0||y>=innerHeight-h){vy=-vy;y=Math.max(0,Math.min(y,innerHeight-h));}}
-  ax+=rx*dt;ay+=ry*dt;rx*=Math.exp(-.6*dt);ry*=Math.exp(-.6*dt);
-  az+=rz*dt;rz*=Math.exp(-(thrown?.35:.9)*dt);
-  if(!reduce)ay+=.13*dt;
- }
- bobA+=((!drag&&!thrown&&!reduce?1:0)-bobA)*Math.min(1,dt*2);   // 떠 있을 때만 위아래로 둥둥
- el.style.transform='translate3d('+x+'px,'+(y+Math.sin(now/900)*3.5*bobA)+'px,0)';
- cv.style.transform=az?'rotate('+az+'rad)':'';
- draw();requestAnimationFrame(frame);
-}
-requestAnimationFrame(frame);
+  // 쌓일 자리: 아래로 갈수록 수북하게, 도면·조각상 위는 덜 쌓이게
+  function spot() {
+    for (let i = 0; i < 6; i++) {
+      const x = Math.random() * W, y = H * Math.pow(Math.random(), .6);   // .6: 1보다 작을수록 아래쪽에 몰림
+      const onPlan = plan && x > plan.left && x < plan.right && y > plan.top && y < plan.bottom;
+      if (!onPlan || Math.random() < .4) return { x, y };                // 도면 위는 10개 중 4개만 남김
+    }
+    return { x: Math.random() * W, y: H * (.85 + Math.random() * .15) };
+  }
+  function make(settled) {
+    const img = imgs[Math.random() < .6 ? 0 : 1], s = (small ? 40 : 56) + Math.random() * (small ? 46 : 70), p = spot();
+    const f = { img, w: s, h: s * img.height / img.width, x: p.x, rot: Math.random() * Math.PI * 2,
+      vx: 0, vy: 0, vr: (Math.random() - .5) * .04, sway: Math.random() * 6.28, rest: settled };
+    f.y = settled ? p.y : -f.h - Math.random() * H * .3;
+    f.land = p.y;                            // 떨어지다 멈출 높이
+    return f;
+  }
+  function step(now) {
+    const dt = Math.min(48, now - last) / 16.7; last = now;
+    if (!reduce && Math.random() < .35 * dt) flowers.push(make(false));  // 계속 떨어지는 꽃 (천천히 다시 쌓이게)
+    if (flowers.length > MAX) flowers.splice(0, flowers.length - MAX);   // 오래된 것부터 정리
+    ctx.clearRect(0, 0, W, H);
+    for (const f of flowers) {
+      if (mouse) {                           // 쓸어내기: 반경 안의 꽃을 바깥으로 밀어냄
+        const dx = f.x - mouse.x, dy = f.y - mouse.y, d = Math.hypot(dx, dy);
+        const r = mouse.touch ? R * 1.7 : R;  // 손가락은 더 넓게
+        if (d < r) {
+          const p = mouse.touch ? 2.4 + mouse.burst * 3 : 1, k = ((r - d) / r * 3.2 + .4) * p, m = mouse.touch ? .28 : .12;   // 손가락은 훅 날아가게
+          f.vx += dx / (d || 1) * k + mouse.vx * m; f.vy += dy / (d || 1) * k + mouse.vy * m;
+          f.vr += (Math.random() - .5) * (mouse.touch ? .14 : .05); f.fr = mouse.touch ? .935 : .88; f.rest = false; f.land = f.y;
+        }
+      }
+      if (!f.rest) {
+        if (f.y < f.land && Math.abs(f.vx) + Math.abs(f.vy) < 1.2) {     // 낙하 중: 낙엽처럼 좌우로 흔들리며
+          f.sway += .02 * dt; f.x += Math.sin(f.sway) * .6 * dt; f.y += (.7 + Math.cos(f.sway * 2) * .25) * dt; f.rot += f.vr * .6 * dt;
+        } else {                             // 밀려나는 중: 마찰로 서서히 멈춤
+          f.x += f.vx * dt; f.y += f.vy * dt; f.rot += f.vr * dt;
+          const fr = f.fr || .88; f.vx *= Math.pow(fr, dt); f.vy *= Math.pow(fr, dt); f.vr *= Math.pow(.92, dt);   // 손가락에 날린 꽃은 더 멀리 미끄러짐
+          if (Math.abs(f.vx) + Math.abs(f.vy) < .05 && f.y >= f.land) f.rest = true;
+        }
+      }
+      ctx.save(); ctx.translate(f.x, f.y); ctx.rotate(f.rot);
+      ctx.drawImage(f.img, -f.w / 2, -f.h / 2, f.w, f.h); ctx.restore();
+    }
+    if (mouse) { mouse.vx *= .7; mouse.vy *= .7; mouse.burst = 0; }
+    requestAnimationFrame(step);
+  }
+  const at = (x, y, touch) => mouse = mouse ? { x, y, vx: x - mouse.x, vy: y - mouse.y, touch, burst: 0 } : { x, y, vx: 0, vy: 0, touch, burst: 0 };
+  addEventListener('pointermove', e => { at(e.clientX, e.clientY, e.pointerType === 'touch'); }, { passive: true });
+  document.addEventListener('pointerleave', () => { mouse = null; });
+  // 폰: 손가락으로 쓸어도 같은 효과 (pointermove는 스크롤 판정 때 끊기므로 touchmove로 보강)
+  addEventListener('touchstart', e => { const t = e.touches[0]; mouse = null; at(t.clientX, t.clientY, true).burst = 1; }, { passive: true });   // 닿는 순간 훅
+  addEventListener('touchmove', e => { const t = e.touches[0]; at(t.clientX, t.clientY, true); }, { passive: true });
+  addEventListener('touchend', () => { mouse = null; });
+  addEventListener('resize', resize);
+  let n = 0;
+  srcs.forEach((s, i) => { const im = new Image(); im.onload = () => { if (++n === srcs.length) { resize(); for (let k = 0; k < START; k++) flowers.push(make(true)); requestAnimationFrame(step); } }; im.src = s; imgs[i] = im; });
 })();
-</script><script>window.CLICK_SFX=false; /* index는 자체 클릭음 사용 */</script><script src="click.js"></script>
+</script>
+<script>window.CLICK_SFX=false; /* index는 자체 클릭음 사용 */</script><script src="click.js"></script>
 </body></html>
