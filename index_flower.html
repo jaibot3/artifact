@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ficciones — index</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Jost:wght@400;700&display=swap" rel="stylesheet">
+<!-- 인덱스: 카노바 석고상 미술관 평면도를 가로로 눕힌 도면. 각 공간(섹션)이 링크.
+     조각상은 새로고침할 때마다 무작위 방·자리·크기로 놓이고, 그 방 안에서만 천천히 돌아다님 (클릭은 섹션에만 걸림).
+     섹션 위치·링크는 아래 .sec 의 style / href 만 바꾸면 됨. -->
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','Jost','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  display:grid;grid-template-rows:auto 1fr;overflow:hidden}
+
+/* ── 상단 내비게이션: 지금 가리키는 곳 위에 세모가 깜빡임 ── */
+.nav{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:22px 3% 14px}
+.mark{font:700 23px/1 'Instrument Sans','Jost',sans-serif;letter-spacing:-.05em;color:#080808;text-decoration:none}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:26px}
+.nav li{position:relative}
+.nav li a{display:block;color:#080808;text-decoration:none;font-size:15px;font-weight:600;padding-top:14px}
+.nav li a small{font-weight:400;color:#8a7f70;margin-right:3px}
+.nav li a{padding-top:20px}
+.nav li.on::before{content:'';position:absolute;top:0;left:50%;width:16px;height:13px;margin-left:-8px;
+  background:#c3d200;clip-path:polygon(0 0,100% 0,50% 100%);   /* 연두를 더 진하게 */
+  animation:spin 1.6s linear infinite}
+@keyframes spin{from{transform:perspective(60px) rotateY(0)}to{transform:perspective(60px) rotateY(360deg)}}
+
+/* ── 도면 ── */
+.stage{position:relative;display:grid;place-items:center;min-height:0;padding:8px 3% 24px}
+.plan{position:relative;aspect-ratio:1110/1050;height:min(100%,calc((100vw - 6%) * 1050/1110));max-width:100%}
+.plan > img.base{position:absolute;inset:0;width:100%;height:100%;user-select:none;-webkit-user-drag:none}
+.sec{position:absolute;display:block;z-index:4;outline:none}   /* 이름표·노랑 칠이 조각상 위로 */
+.sec span{position:absolute;left:6px;top:5px;font-size:11px;font-weight:600;letter-spacing:.02em;color:#080808;background:#fff;padding:1px 4px;white-space:nowrap}
+.sec::after{content:'';position:absolute;inset:0;background:#eaf751;mix-blend-mode:multiply;opacity:0;transition:opacity .2s}
+.sec:hover::after,.sec:focus-visible::after,.sec.on::after{opacity:.7}
+.statue{position:absolute;z-index:3;pointer-events:none;user-select:none;-webkit-user-drag:none;
+  filter:drop-shadow(0 4px 6px rgba(0,0,0,.16));opacity:0;transition:opacity .6s ease;will-change:left,top}
+.statue.in{opacity:1}
+
+@media (max-width:740px){
+  .nav{flex-direction:column;align-items:flex-start;padding:16px 5% 8px;gap:8px}
+  .nav ul{gap:4px 12px;flex-wrap:wrap}
+  .nav li a{font-size:13px}
+  .sec span{font-size:9px;left:3px;top:3px}
+}
+/* 도면 출처: 미술관 작품 캡션 같은 흰 종이 */
+.caption{position:absolute;left:calc(100% + 48px);bottom:0;margin:0;z-index:5;background:#fff;padding:9px 12px 10px;width:max-content;max-width:240px;   /* PC: 도면 오른쪽, 떨어뜨려서 */
+ 
+  font-size:11px;line-height:1.45;color:#080808;box-shadow:0 1px 2px rgba(0,0,0,.18),0 4px 12px rgba(0,0,0,.08)}
+.caption b{display:block;font-weight:600;font-size:12px}
+.caption i{display:block;font-style:italic}
+.caption small{display:block;margin-top:5px;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#8a7f70}
+.caption small span{text-transform:none;letter-spacing:.02em}
+@media (min-width:741px){.plan{max-width:calc(100vw - 6% - 600px)}.caption{max-width:none}.caption small{white-space:nowrap}}   /* 양옆에 캡션 자리 확보 → 도면은 가운데 */
+@media (max-width:740px){.caption{left:auto;right:0;bottom:auto;top:calc(100% + 28px);max-width:70%}}   /* 모바일: 도면 아래 */
+@media (prefers-reduced-motion:reduce){.nav li.on::before{animation:none}.statue{transition:none}}
+
+
+#fortune-cookie{position:fixed;left:0;top:0;width:130px;height:118px;z-index:12;touch-action:none;cursor:grab;user-select:none;border:0;background:transparent;padding:0;will-change:transform;filter:drop-shadow(1px 6px 5px #604c3020)}
+#fortune-cookie:active{cursor:grabbing}
+#fortune-cookie:focus-visible{outline:1px dotted #ad9170;border-radius:50%}
+#fortune-cookie canvas{width:100%;height:100%;display:block;pointer-events:none;transform-origin:50% 47%}   /* 그림자는 버튼에: 캔버스가 부메랑처럼 돌아도 그림자 방향은 그대로 */
+.cookie-hint{display:none}
+#fortune-slip{position:fixed;inset:auto;margin:0;border:0;background:#faf9f3;color:#59564b;width:min(310px,calc(100vw - 32px));padding:17px 27px 18px;box-shadow:0 2px 3px #3028190c,0 9px 17px #30281912;font-family:inherit;transform:rotate(-3deg);overflow:visible}
+#fortune-slip:not([open]){display:none}
+#fortune-slip[open]{animation:unfold .5s cubic-bezier(.2,.8,.2,1)}
+#fortune-slip::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 32%,#8d877d0c 33%,#fff9 34%,transparent 35%,transparent 65%,#8d877d0c 66%,#fff9 67%,transparent 68%);pointer-events:none}
+#fortune-slip h2{display:none}#fortune-luck{display:block;margin-top:11px;font-size:10px;line-height:1.6;color:#858075}#quote-source{display:block;margin-top:5px;font-size:9px;color:#a49f92;text-decoration:none}
+#fortune-date{display:block;font:9px/1.3 'Courier New',monospace;letter-spacing:.13em;color:#9a978d}
+#fortune-text{font-size:12px;line-height:1.8;font-weight:400;word-break:keep-all;margin:9px 0 0;letter-spacing:.015em}
+#fortune-slip button{position:absolute;right:5px;top:3px;border:0;background:transparent;padding:5px;font:15px/1 Arial;color:#aaa69a;cursor:pointer}
+@keyframes unfold{from{opacity:0;transform:translateX(-18px) rotate(-6deg) scaleX(.75)}to{opacity:1;transform:translateX(0) rotate(-3deg) scaleX(1)}}
+@media(max-width:740px){#fortune-cookie{width:112px;height:104px}}
+@media(prefers-reduced-motion:reduce){#fortune-slip[open]{animation:none}}
+#petals{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none}
+header.nav{position:relative;z-index:30}   /* 메뉴는 꽃 위에 */   /* 꽃 더미: 클릭은 아래 도면으로 통과 */
+</style></head>
+<body>
+<header class="nav">
+  <a class="mark" href="index.html">ficciones</a>
+  <ul id="nav">
+    <li data-id="index" class="on"><a href="index.html">index</a></li>
+    <li data-id="work"><a href="portfolio1.html"><small>(1)</small>work</a></li>
+    <li data-id="career"><a href="career.html"><small>(2)</small>career</a></li>
+    <li data-id="ficciones"><a href="rose.html"><small>(3)</small>ficciones</a></li>
+    <li data-id="sakk"><a href="https://www.sakk.co.kr/" target="_blank" rel="noopener"><small>(4)</small>sakk</a></li>
+  </ul>
+</header>
+
+<main class="stage">
+  <div class="plan" id="plan">
+    <img class="base" src="idx_plan.webp" alt="카노바 석고상 미술관 평면도">
+    <!-- 섹션: 위치는 도면 대비 % -->
+    <a class="sec" data-id="work"      href="portfolio1.html"                                  style="left:20.54%;top:36.00%;width:65.32%;height:24.76%"><span>(1) work</span></a>
+    <a class="sec on" data-id="career"    href="career.html"                                      style="left:9.28%;top:1.05%;width:31.53%;height:29.71%"><span>(2) career</span></a>
+    <a class="sec" data-id="ficciones" href="rose.html"                                        style="left:39.91%;top:67.90%;width:32.43%;height:31.43%"><span>(3) ficciones</span></a>
+    <a class="sec" data-id="sakk"      href="https://www.sakk.co.kr/" target="_blank" rel="noopener" style="left:85.86%;top:35.52%;width:13.06%;height:26.19%"><span>(4) sakk</span></a>
+    <p class="caption"><b>Carlo Scarpa</b><i>Museo Canoviano, Possagno</i><small>Floor plan, reproduced as a diagram <span>by jaylim</span></small></p>
+  </div>
+</main>
+
+
+<script>
+(() => {
+  const plan = document.getElementById('plan');
+  const navItems = [...document.querySelectorAll('#nav li')];
+  const secs = [...document.querySelectorAll('.sec')];
+
+  // 세모: 가리키는 섹션의 메뉴 위로 이동, 벗어나면 index(현재 위치)로 돌아옴
+  const point = id => {
+    navItems.forEach(li => li.classList.toggle('on', li.dataset.id === id));
+    const lit = id === 'index' ? 'career' : id;   // 기본 상태: 도면의 초록 칠은 career에 켜져 있음
+    secs.forEach(s => s.classList.toggle('on', s.dataset.id === lit));
+  };
+  point('index');
+  secs.forEach(s => {
+    s.addEventListener('mouseenter', () => point(s.dataset.id));
+    s.addEventListener('focus', () => point(s.dataset.id));
+    s.addEventListener('mouseleave', () => point('index'));
+    s.addEventListener('blur', () => point('index'));
+  });
+  navItems.forEach(li => {
+    li.addEventListener('mouseenter', () => point(li.dataset.id));
+    li.addEventListener('mouseleave', () => point('index'));
+  });
+
+  // 조각상: 새로고침마다 방(ROOMS)을 골라 무작위 자리에 놓고, 그 방 안에서만 천천히 돌아다님.
+  const STATUES = [
+    { src: 'idx_skeleton.webp', r: 387/420 },
+    { src: 'idx_head.webp',     r: 166/256 },
+    { src: 'idx_hera.webp',     r: 233/420 },
+    { src: 'idx_rider.webp',    r: 420/418 },
+  ];
+  // 방 안쪽 [left, top, width, height] (도면 대비 %). 전시홀은 넓어서 두 번 뽑힐 수 있음.
+  const NAVE = [21.44,37.43,63.96,21.90];
+  const ROOMS = [
+    NAVE, NAVE,
+    [10.63, 2.19,28.83,27.62],   // career 동
+    [41.26,68.86,29.73,29.52],   // ficciones 동
+    [ 1.62,31.71,18.47,31.90],   // 입구
+    [86.31,37.43,12.16,22.38],   // 반원 끝
+  ];
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const ratio = 1110 / 1050;   // 도면 가로/세로
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rooms = shuffle(ROOMS.slice());
+
+  const walkers = shuffle(STATUES.slice()).map((s, i) => {
+    const [L, T, Wd, Ht] = rooms[i];
+    let h = Math.min(Ht, 22) * rnd(.55, .95) * (innerWidth < 740 ? 1.4 : 1);   // 높이 % (도면 세로 대비), 모바일은 1.4배
+    h = Math.min(h, Ht * .98);                              // 방 높이는 넘지 않게
+    let w = h * s.r / ratio;                                // 가로 % (도면 가로 대비)
+    if (w > Wd * .9) { w = Wd * .9; h = w * ratio / s.r; }
+    const box = { x0: L, x1: L + Wd - w, y0: T, y1: T + Ht - h };   // 왼쪽 위 꼭짓점이 움직일 수 있는 범위
+    const img = new Image();
+    img.className = 'statue'; img.alt = ''; img.src = s.src;
+    img.style.width = w + '%'; img.style.height = h + '%'; img.style.objectFit = 'contain';
+    img.onload = () => img.classList.add('in');
+    plan.appendChild(img);
+    const m = { img, box, x: rnd(box.x0, box.x1), y: rnd(box.y0, box.y1), tx: 0, ty: 0,
+                speed: rnd(1.2, 2.6), wait: rnd(0, 1.5), face: Math.random() < .5 ? 1 : -1 };
+    pick(m); place(m);
+    return m;
+  });
+
+  function pick(m) { m.tx = rnd(m.box.x0, m.box.x1); m.ty = rnd(m.box.y0, m.box.y1); }
+  function place(m) {
+    m.img.style.left = m.x + '%'; m.img.style.top = m.y + '%';
+    m.img.style.transform = m.face < 0 ? 'scaleX(-1)' : '';
+  }
+
+  // 천천히 걷다가 멈췄다가 다시 다른 곳으로 (방 밖으로는 나가지 않음)
+  let last = 0;
+  function tick(now) {
+    const dt = last ? Math.min((now - last) / 1000, .1) : 0; last = now;
+    for (const m of walkers) {
+      if (m.wait > 0) { m.wait -= dt; continue; }
+      const dx = m.tx - m.x, dy = m.ty - m.y, d = Math.hypot(dx, dy);
+      if (d < .3) { m.wait = rnd(.8, 3); pick(m); continue; }
+      const step = Math.min(d, m.speed * dt);
+      m.x += dx / d * step; m.y += dy / d * step;
+      if (Math.abs(dx) > .5) m.face = dx > 0 ? 1 : -1;
+      place(m);
+    }
+    requestAnimationFrame(tick);
+  }
+  if (!still) requestAnimationFrame(tick);
+})();
+
+// 클릭 소리: 우주선 버튼 같은 짧은 '삐용' (파일 없이 브라우저에서 합성). 소리가 들리도록 0.15초 뒤에 이동.
+(() => {
+  let ac = null;
+  const audio = () => (ac = ac || new (window.AudioContext || window.webkitAudioContext)());
+  function beep() {
+    const a = audio(), t = a.currentTime;
+    const out = a.createGain(); out.gain.value = .16;
+    const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
+    lp.connect(out); out.connect(a.destination);
+    // 1) 위로 쓸어올리는 두 겹 사각파
+    [0, 7].forEach(det => {
+      const o = a.createOscillator(), g = a.createGain();
+      o.type = 'square'; o.detune.value = det;
+      o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(1560, t + .09);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.5, t + .005); g.gain.exponentialRampToValueAtTime(.001, t + .13);
+      o.connect(g); g.connect(lp); o.start(t); o.stop(t + .14);
+    });
+    // 2) 끝에 붙는 높은 '띵'
+    const o2 = a.createOscillator(), g2 = a.createGain();
+    o2.type = 'sine'; o2.frequency.value = 2093;
+    g2.gain.setValueAtTime(0, t + .07); g2.gain.linearRampToValueAtTime(.6, t + .075); g2.gain.exponentialRampToValueAtTime(.001, t + .2);
+    o2.connect(g2); g2.connect(out); o2.start(t + .07); o2.stop(t + .21);
+  }
+  document.querySelectorAll('.sec:not([aria-disabled]), #nav a:not([aria-disabled]), .mark').forEach(el => {
+    el.addEventListener('click', e => {
+      try { beep(); } catch (_) { return; }                 // 소리를 못 내는 환경이면 그냥 이동
+      if (el.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;   // 새 탭은 바로 열림
+      e.preventDefault();
+      setTimeout(() => { location.href = el.href; }, 150);
+    });
+  });
+})();
+</script>
+<canvas id="petals" aria-hidden="true"></canvas>
+<script id="petal-pile">
+// 꽃 더미: 처음엔 화면이 수북히 덮여 있고, 마우스가 지나간 자리는 꽃이 밀려나 도면이 드러남. 위에서 계속 떨어져 다시 쌓임.
+(() => {
+  const cv = document.getElementById('petals'), ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const srcs = ['flower_cluster.webp', 'flower_branch.webp'], imgs = [];
+  const small = matchMedia('(max-width:740px)').matches;
+  const MAX = small ? 420 : 800;          // 화면에 남는 꽃 최대 개수
+  const START = small ? 340 : 620;         // 처음 쌓여 있는 양
+  const R = small ? 60 : 90;               // 마우스가 쓸어내는 반경
+  let W, H, dpr, flowers = [], mouse = null, last = performance.now();
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function make(settled) {
+    const img = imgs[Math.random() < .6 ? 0 : 1], s = (small ? 40 : 56) + Math.random() * (small ? 46 : 70);
+    const f = { img, w: s, h: s * img.height / img.width, x: Math.random() * W, rot: Math.random() * Math.PI * 2,
+      vx: 0, vy: 0, vr: (Math.random() - .5) * .04, sway: Math.random() * 6.28, rest: settled };
+    f.y = settled ? Math.random() * H : -f.h - Math.random() * H * .3;
+    f.land = Math.random() * H;              // 떨어지다 멈출 높이: 화면 전체에 고르게 쌓이도록
+    return f;
+  }
+  function step(now) {
+    const dt = Math.min(48, now - last) / 16.7; last = now;
+    if (!reduce && Math.random() < .5 * dt) flowers.push(make(false));   // 계속 떨어지는 꽃
+    if (flowers.length > MAX) flowers.splice(0, flowers.length - MAX);   // 오래된 것부터 정리
+    ctx.clearRect(0, 0, W, H);
+    for (const f of flowers) {
+      if (mouse) {                           // 쓸어내기: 반경 안의 꽃을 바깥으로 밀어냄
+        const dx = f.x - mouse.x, dy = f.y - mouse.y, d = Math.hypot(dx, dy);
+        if (d < R) { const k = (R - d) / R * 3.2 + .4; f.vx += dx / (d || 1) * k + mouse.vx * .12; f.vy += dy / (d || 1) * k + mouse.vy * .12; f.vr += (Math.random() - .5) * .05; f.rest = false; f.land = f.y; }
+      }
+      if (!f.rest) {
+        if (f.y < f.land && Math.abs(f.vx) + Math.abs(f.vy) < 1.2) {     // 낙하 중: 낙엽처럼 좌우로 흔들리며
+          f.sway += .03 * dt; f.x += Math.sin(f.sway) * .7 * dt; f.y += (1.1 + Math.cos(f.sway * 2) * .35) * dt; f.rot += f.vr * dt;
+        } else {                             // 밀려나는 중: 마찰로 서서히 멈춤
+          f.x += f.vx * dt; f.y += f.vy * dt; f.rot += f.vr * dt;
+          f.vx *= Math.pow(.88, dt); f.vy *= Math.pow(.88, dt); f.vr *= Math.pow(.92, dt);
+          if (Math.abs(f.vx) + Math.abs(f.vy) < .05 && f.y >= f.land) f.rest = true;
+        }
+      }
+      ctx.save(); ctx.translate(f.x, f.y); ctx.rotate(f.rot);
+      ctx.drawImage(f.img, -f.w / 2, -f.h / 2, f.w, f.h); ctx.restore();
+    }
+    if (mouse) { mouse.vx *= .7; mouse.vy *= .7; }
+    requestAnimationFrame(step);
+  }
+  addEventListener('pointermove', e => {
+    mouse = mouse ? { x: e.clientX, y: e.clientY, vx: e.clientX - mouse.x, vy: e.clientY - mouse.y } : { x: e.clientX, y: e.clientY, vx: 0, vy: 0 };
+  }, { passive: true });
+  document.addEventListener('pointerleave', () => { mouse = null; });
+  addEventListener('resize', resize);
+  let n = 0;
+  srcs.forEach((s, i) => { const im = new Image(); im.onload = () => { if (++n === srcs.length) { resize(); for (let k = 0; k < START; k++) flowers.push(make(true)); requestAnimationFrame(step); } }; im.src = s; imgs[i] = im; });
+})();
+</script>
+<script>window.CLICK_SFX=false; /* index는 자체 클릭음 사용 */</script><script src="click.js"></script>
+</body></html>
