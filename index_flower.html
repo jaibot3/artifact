@@ -73,6 +73,7 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 @media(max-width:740px){#fortune-cookie{width:112px;height:104px}}
 @media(prefers-reduced-motion:reduce){#fortune-slip[open]{animation:none}}
 #petals{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none}
+html,body{overscroll-behavior:none}   /* 손가락으로 옆으로 쓸 때 브라우저 뒤로가기·당김 새로고침이 끼어들지 않게 */
 header.nav{position:relative;z-index:30;background:#fff}   /* 메뉴는 꽃 위에, 바탕을 깔아 글씨가 묻히지 않게 */   /* 꽃 더미: 클릭은 아래 도면으로 통과 */
 </style></head>
 <body>
@@ -247,37 +248,40 @@ header.nav{position:relative;z-index:30;background:#fff}   /* 메뉴는 꽃 위�
   }
   function step(now) {
     const dt = Math.min(48, now - last) / 16.7; last = now;
-    if (!reduce && Math.random() < .5 * dt) flowers.push(make(false));   // 계속 떨어지는 꽃
+    if (!reduce && Math.random() < .35 * dt) flowers.push(make(false));  // 계속 떨어지는 꽃 (천천히 다시 쌓이게)
     if (flowers.length > MAX) flowers.splice(0, flowers.length - MAX);   // 오래된 것부터 정리
     ctx.clearRect(0, 0, W, H);
     for (const f of flowers) {
       if (mouse) {                           // 쓸어내기: 반경 안의 꽃을 바깥으로 밀어냄
         const dx = f.x - mouse.x, dy = f.y - mouse.y, d = Math.hypot(dx, dy);
-        if (d < R) { const k = (R - d) / R * 3.2 + .4; f.vx += dx / (d || 1) * k + mouse.vx * .12; f.vy += dy / (d || 1) * k + mouse.vy * .12; f.vr += (Math.random() - .5) * .05; f.rest = false; f.land = f.y; }
+        const r = mouse.touch ? R * 1.7 : R;  // 손가락은 더 넓게
+        if (d < r) {
+          const p = mouse.touch ? 2.4 + mouse.burst * 3 : 1, k = ((r - d) / r * 3.2 + .4) * p, m = mouse.touch ? .28 : .12;   // 손가락은 훅 날아가게
+          f.vx += dx / (d || 1) * k + mouse.vx * m; f.vy += dy / (d || 1) * k + mouse.vy * m;
+          f.vr += (Math.random() - .5) * (mouse.touch ? .14 : .05); f.fr = mouse.touch ? .935 : .88; f.rest = false; f.land = f.y;
+        }
       }
       if (!f.rest) {
         if (f.y < f.land && Math.abs(f.vx) + Math.abs(f.vy) < 1.2) {     // 낙하 중: 낙엽처럼 좌우로 흔들리며
-          f.sway += .03 * dt; f.x += Math.sin(f.sway) * .7 * dt; f.y += (1.1 + Math.cos(f.sway * 2) * .35) * dt; f.rot += f.vr * dt;
+          f.sway += .02 * dt; f.x += Math.sin(f.sway) * .6 * dt; f.y += (.7 + Math.cos(f.sway * 2) * .25) * dt; f.rot += f.vr * .6 * dt;
         } else {                             // 밀려나는 중: 마찰로 서서히 멈춤
           f.x += f.vx * dt; f.y += f.vy * dt; f.rot += f.vr * dt;
-          f.vx *= Math.pow(.88, dt); f.vy *= Math.pow(.88, dt); f.vr *= Math.pow(.92, dt);
+          const fr = f.fr || .88; f.vx *= Math.pow(fr, dt); f.vy *= Math.pow(fr, dt); f.vr *= Math.pow(.92, dt);   // 손가락에 날린 꽃은 더 멀리 미끄러짐
           if (Math.abs(f.vx) + Math.abs(f.vy) < .05 && f.y >= f.land) f.rest = true;
         }
       }
       ctx.save(); ctx.translate(f.x, f.y); ctx.rotate(f.rot);
       ctx.drawImage(f.img, -f.w / 2, -f.h / 2, f.w, f.h); ctx.restore();
     }
-    if (mouse) { mouse.vx *= .7; mouse.vy *= .7; }
+    if (mouse) { mouse.vx *= .7; mouse.vy *= .7; mouse.burst = 0; }
     requestAnimationFrame(step);
   }
-  addEventListener('pointermove', e => {
-    mouse = mouse ? { x: e.clientX, y: e.clientY, vx: e.clientX - mouse.x, vy: e.clientY - mouse.y } : { x: e.clientX, y: e.clientY, vx: 0, vy: 0 };
-  }, { passive: true });
+  const at = (x, y, touch) => mouse = mouse ? { x, y, vx: x - mouse.x, vy: y - mouse.y, touch, burst: 0 } : { x, y, vx: 0, vy: 0, touch, burst: 0 };
+  addEventListener('pointermove', e => { at(e.clientX, e.clientY, e.pointerType === 'touch'); }, { passive: true });
   document.addEventListener('pointerleave', () => { mouse = null; });
   // 폰: 손가락으로 쓸어도 같은 효과 (pointermove는 스크롤 판정 때 끊기므로 touchmove로 보강)
-  addEventListener('touchmove', e => { const t = e.touches[0];
-    mouse = mouse ? { x: t.clientX, y: t.clientY, vx: t.clientX - mouse.x, vy: t.clientY - mouse.y } : { x: t.clientX, y: t.clientY, vx: 0, vy: 0 };
-  }, { passive: true });
+  addEventListener('touchstart', e => { const t = e.touches[0]; mouse = null; at(t.clientX, t.clientY, true).burst = 1; }, { passive: true });   // 닿는 순간 훅
+  addEventListener('touchmove', e => { const t = e.touches[0]; at(t.clientX, t.clientY, true); }, { passive: true });
   addEventListener('touchend', () => { mouse = null; });
   addEventListener('resize', resize);
   let n = 0;
