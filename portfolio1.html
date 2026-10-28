@@ -868,5 +868,6 @@ body.pi-open #pi-panel{transform:none}
 })();
 </script>
 <script id="chorus-effect">(function(){var tones=['#d4c8a8','#c5b49b','#bac2a6'];var prev=-1;try{prev=parseInt(localStorage.getItem('jay-chorus-palette'),10)}catch(e){}var i=Number.isFinite(prev)?(prev+1)%tones.length:0;document.documentElement.style.setProperty('--header-tone',tones[i]);try{localStorage.setItem('jay-chorus-palette',i)}catch(e){}var sync=function(){document.body.classList.toggle('chorus-scrolled',window.scrollY>100)};sync();window.addEventListener('scroll',sync,{passive:true});})();</script><script src="click.js"></script>
+<script src="cat-peek.js"></script>
 </body>
 </html>
