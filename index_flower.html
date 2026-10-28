@@ -234,16 +234,27 @@ header.nav{position:relative;z-index:30;background:#fff}   /* 메뉴는 꽃 위�
   const START = small ? 340 : 620;         // 처음 쌓여 있는 양
   const R = small ? 60 : 90;               // 마우스가 쓸어내는 반경
   let W, H, dpr, flowers = [], mouse = null, last = performance.now();
+  let plan = null;
   function resize() {
     dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    plan = document.getElementById('plan').getBoundingClientRect();
+  }
+  // 쌓일 자리: 아래로 갈수록 수북하게, 도면·조각상 위는 덜 쌓이게
+  function spot() {
+    for (let i = 0; i < 6; i++) {
+      const x = Math.random() * W, y = H * Math.pow(Math.random(), .6);   // .6: 1보다 작을수록 아래쪽에 몰림
+      const onPlan = plan && x > plan.left && x < plan.right && y > plan.top && y < plan.bottom;
+      if (!onPlan || Math.random() < .4) return { x, y };                // 도면 위는 10개 중 4개만 남김
+    }
+    return { x: Math.random() * W, y: H * (.85 + Math.random() * .15) };
   }
   function make(settled) {
-    const img = imgs[Math.random() < .6 ? 0 : 1], s = (small ? 40 : 56) + Math.random() * (small ? 46 : 70);
-    const f = { img, w: s, h: s * img.height / img.width, x: Math.random() * W, rot: Math.random() * Math.PI * 2,
+    const img = imgs[Math.random() < .6 ? 0 : 1], s = (small ? 40 : 56) + Math.random() * (small ? 46 : 70), p = spot();
+    const f = { img, w: s, h: s * img.height / img.width, x: p.x, rot: Math.random() * Math.PI * 2,
       vx: 0, vy: 0, vr: (Math.random() - .5) * .04, sway: Math.random() * 6.28, rest: settled };
-    f.y = settled ? Math.random() * H : -f.h - Math.random() * H * .3;
-    f.land = Math.random() * H;              // 떨어지다 멈출 높이: 화면 전체에 고르게 쌓이도록
+    f.y = settled ? p.y : -f.h - Math.random() * H * .3;
+    f.land = p.y;                            // 떨어지다 멈출 높이
     return f;
   }
   function step(now) {
