@@ -59,6 +59,7 @@
       background:#2b2b2b;
     }
     .thumb:hover img { opacity:.86; }
+    .thumb video { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:#2b2b2b; cursor:pointer; }
     .img-ph {
       width:100%; aspect-ratio:16/9; background:#2b2b2b;
       display:flex; align-items:center; justify-content:center;
@@ -548,6 +549,22 @@ body.pi-open #pi-panel{transform:none}
     </article>
 
     <p class="group-label">Other Projects</p>
+
+    <article class="project" id="ai-video" data-cat="AI Video · Self Project">
+      <div class="thumb">
+        <!-- 자동재생(무음) 반복. 영상 누르면 소리 켜기/끄기 -->
+        <video src="ai_video.mp4" poster="ai_video.jpg" aria-label="AI Video"
+               autoplay muted loop playsinline preload="metadata"
+               onclick="this.muted=!this.muted"></video>
+      </div>
+      <div class="meta">
+        <a class="project-name">AI Video</a>
+        <div class="process">
+          <div class="step"><h3 class="k">Direction</h3><div class="v"><p class="hl">AI Video Production</p></div></div><div class="step"><h3 class="k">Execution</h3><ul class="v ex"><li>Runway generation</li><li>Post editing</li></ul></div><div class="step"><h3 class="k">Contribution</h3><div class="v"><p class="hl">Self Project</p><p>Runway로 영상을 생성한 뒤, 후편집을 별도로 다시 진행.</p></div></div>
+        </div>
+        
+      </div>
+    </article>
 
     <article class="project" id="kommt" data-cat="Design">
       <a class="thumb" href="portfolio1_03.html">
