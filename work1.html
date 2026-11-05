@@ -117,6 +117,12 @@
       background: #d8cfbf;
     }
     .project-img-wrap:hover img { opacity: 0.86; }
+    .project-img-wrap video {
+      width: 100%;
+      display: block;
+      background: #d8cfbf;
+      cursor: pointer;
+    }
 
     .img-ph {
       width: 100%;
@@ -201,6 +207,22 @@ Performed by Sungeun Park Filmed by Sungsu Directed by Jaylim </span>
         <img src="lethe_video.jpg" alt="Project 01"
              onerror="this.outerHTML='<div class=\'img-ph\'>project 01</div>'">
       </a>
+    </div>
+
+    <div class="project">
+      <div class="project-info">
+        <p class="project-name">AI video</p>
+        <div class="project-meta">
+          <span>AI video production, Self project</span>
+          <span>Seoul, 2026</span>
+        </div>
+      </div>
+      <div class="project-img-wrap">
+        <!-- 자동재생(무음) 반복. 영상 누르면 소리 켜기/끄기 -->
+        <video src="ai_video.mp4" poster="ai_video.jpg"
+               autoplay muted loop playsinline preload="metadata"
+               onclick="this.muted=!this.muted"></video>
+      </div>
     </div>
 
     <div class="project">
