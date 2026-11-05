@@ -389,10 +389,12 @@ body.pi-open #pi-panel{transform:none}
     </article>
 
     <article class="project" id="lethe" data-cat="Planning · Direction · Content">
-      <a class="thumb" href="portfolio1_00.html">
-        <img src="lethe.jpg" alt="Lethe, Still Shimmering" loading="lazy"
-             onerror="this.outerHTML='&lt;div class=\'img-ph\'&gt;image&lt;/div&gt;'">
-      </a>
+      <div class="thumb">
+        <!-- 자동재생(무음) 반복. 영상 누르면 소리 켜기/끄기 -->
+        <video src="lethe_1.mp4" poster="lethe_1.jpg" aria-label="Lethe, Still Shimmering"
+               autoplay muted loop playsinline preload="metadata"
+               onclick="this.muted=!this.muted"></video>
+      </div>
       <div class="meta">
         <a class="project-name" href="portfolio1_00.html">Lethe, Still Shimmering</a>
         <div class="process">
