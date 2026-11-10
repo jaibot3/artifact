@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- 링크로만 들어오는 페이지: 메뉴에 안 걸고, 검색엔진에도 안 뜨게 -->
+<meta name="robots" content="noindex,nofollow">
+<title>2026 Spring–Summer Collection</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="ss26_1.jpg">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#fff;color:#1a1a1a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;font-size:17px;line-height:1.45;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+
+/* ── 상단: 사진 위에 떠 있는 메뉴 / 오른쪽 컬렉션 링크 (배경에 따라 글자색 반전) ── */
+.top{position:absolute;inset:0 0 auto 0;z-index:10;display:flex;justify-content:space-between;align-items:flex-start;
+  padding:28px 18px 0;color:#fff;mix-blend-mode:difference;pointer-events:none}
+.top a{pointer-events:auto}
+.menu{display:flex;gap:22px}
+.menu a{opacity:.55;transition:opacity .2s}
+.menu a.on,.menu a:hover{opacity:1}
+.season{margin-top:60px;font-size:21px;transition:opacity .2s}
+.season:hover{opacity:.6}
+
+/* ── 사진 3장: 가로로 나란히, 화면 폭 가득 (원본 4:5 비율 그대로, 잘림 없음) ── */
+.hero{display:grid;grid-template-columns:repeat(3,1fr);background:#d9dde0}
+.hero figure{position:relative;overflow:hidden;aspect-ratio:4/5}
+.hero img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+
+/* ── 컬렉션 글 ── */
+.text{display:grid;grid-template-columns:148px minmax(0,640px);padding:84px 18px 140px}
+.text h1{grid-column:2;font-size:17px;font-weight:500;margin-bottom:28px}
+.text p{grid-column:2;margin-bottom:1.2em;color:#333}
+
+/* ── 모바일: 사진은 옆으로 넘기기 (한 장씩 꽉 차게) ── */
+@media (max-width:740px){
+  body{font-size:15px}
+  .top{padding:20px 16px 0}
+  .menu{gap:16px}
+  .season{display:none}
+  .hero{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+  .hero::-webkit-scrollbar{display:none}
+  .hero figure{flex:0 0 100%;scroll-snap-align:start}
+  .text{display:block;padding:48px 16px 96px}
+  .text h1{font-size:16px;margin-bottom:20px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav class="menu">
+    <a href="index.html">Home</a>
+    <a href="#collection" class="on">Collection</a>
+    <a href="portfolio1.html">Project</a>
+  </nav>
+  <a class="season" href="#collection">2026 Spring–Summer Collection →</a>
+</header>
+
+<main>
+  <section class="hero" aria-label="2026 Spring–Summer Collection">
+    <figure><img src="ss26_1.jpg" alt="Black pleated dress, white bag and black mules against a pale wall" width="1080" height="1350"></figure>
+    <figure><img src="ss26_2.jpg" alt="Model in a black pleated top with a white scarf tied at the neck" width="1080" height="1350"></figure>
+    <figure><img src="ss26_3.jpg" alt="Black fan-shaped bag on a car roof, fields and mountains behind" width="1080" height="1350"></figure>
+  </section>
+
+  <section class="text" id="collection">
+    <h1>2026 Spring–Summer Collection</h1>
+    <p>The 26’ SPRING–SUMMER collection begins with a sense of release—an easing of tension that emerges when one steps into nature. Observing the textures revealed by sunlight, the subtle movements shaped by the wind, and the delicate patterns left on sand, these sensory impressions are translated into garments.</p>
+    <p>Rooted in the emotional flow of nature and a sense of inner ease, the collection deepens simplicity with subtle complexity, expanding AMOMENTO’s quietly distinctive design language. The nuanced contrasts created by varied textures and techniques bring richness to otherwise minimal silhouettes, proposing a sense of effortless calm within everyday life.</p>
+  </section>
+</main>
+
+<script>document.documentElement.style.scrollBehavior='smooth'</script>
+<script src="click.js"></script>
+</body>
+</html>
