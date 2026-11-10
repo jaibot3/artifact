@@ -26,25 +26,21 @@ a{color:inherit;text-decoration:none}
 .season{margin-top:60px;font-size:21px;transition:opacity .2s}
 .season:hover{opacity:.6}
 
-/* ── 사진 3장: 가로로 나란히, 화면 폭 가득 (원본 4:5 비율 그대로, 잘림 없음) ── */
-.hero{display:grid;grid-template-columns:repeat(3,1fr);background:#d9dde0}
-.hero figure{position:relative;overflow:hidden;aspect-ratio:4/5}
-.hero img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+/* ── 사진 3장: 가로로 나란히, 화면 폭 가득 ── */
+.hero{display:grid;grid-template-columns:repeat(3,1fr)}
+.hero img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}   /* 자르지 않고 원본 그대로 */
 
 /* ── 컬렉션 글 ── */
 .text{display:grid;grid-template-columns:148px minmax(0,640px);padding:84px 18px 140px}
 .text h1{grid-column:2;font-size:17px;font-weight:500;margin-bottom:28px}
 .text p{grid-column:2;margin-bottom:1.2em;color:#333}
 
-/* ── 모바일: 사진은 옆으로 넘기기 (한 장씩 꽉 차게) ── */
+/* ── 모바일: 사진은 그대로 3장 나란히, 글자만 조정 ── */
 @media (max-width:740px){
   body{font-size:15px}
   .top{padding:20px 16px 0}
-  .menu{gap:16px}
+  .menu{gap:14px;font-size:13px}
   .season{display:none}
-  .hero{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
-  .hero::-webkit-scrollbar{display:none}
-  .hero figure{flex:0 0 100%;scroll-snap-align:start}
   .text{display:block;padding:48px 16px 96px}
   .text h1{font-size:16px;margin-bottom:20px}
 }
