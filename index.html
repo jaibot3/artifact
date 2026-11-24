@@ -52,12 +52,13 @@ body{background:#fff;color:#080808;font-family:'Instrument Sans','Google Sans','
 .caption small{display:block;margin-top:5px;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#8a7f70}
 .caption small span{text-transform:none;letter-spacing:.02em}
 @media (min-width:741px){.plan{max-width:calc(100vw - 6% - 600px)}.caption{max-width:none}.caption small{white-space:nowrap}}   /* 양옆에 캡션 자리 확보 → 도면은 가운데 */
-@media (max-width:740px){.caption{left:auto;right:0;bottom:auto;top:calc(100% + 28px);max-width:70%}}   /* 모바일: 도면 아래 */
+@media (max-width:740px){.caption{left:auto;right:0;bottom:auto;top:calc(100% + 28px);max-width:70%}.stage{padding-bottom:124px}}   /* 모바일: 도면 아래. 캡션 자리를 아래에 비워 둬서 작은 폰에서도 잘리지 않게 */   /* 모바일: 도면 아래 */
 @media (prefers-reduced-motion:reduce){.nav li.on::before{animation:none}.statue{transition:none}}
 
 
-#petals{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none}   /* 꽃 더미: 클릭은 아래 도면으로 통과 */
-html,body{overscroll-behavior:none}   /* 손가락으로 옆으로 쓸 때 브라우저 뒤로가기·당김 새로고침이 끼어들지 않게 */
+#petals{position:fixed;inset:0;width:100%;height:100%;z-index:20;pointer-events:none}   /* 100vw/100vh 대신 화면 그대로: 아이폰 사파리에서 100vh가 주소창만큼 더 커서 꽃이 늘어나고 손가락 위치와 어긋났음 */   /* 꽃 더미: 클릭은 아래 도면으로 통과 */
+html,body{overscroll-behavior:none;touch-action:manipulation}   /* 꽃을 톡톡 칠 때 두 번 탭 확대가 걸리지 않게 */
+.stage{touch-action:none}   /* 도면 위에서 손가락으로 쓸 때 화면이 끌려가거나 확대되지 않게 */   /* 손가락으로 옆으로 쓸 때 브라우저 뒤로가기·당김 새로고침이 끼어들지 않게 */
 header.nav{position:relative;z-index:30;background:#fff}   /* 메뉴는 꽃 위에, 바탕을 깔아 글씨가 묻히지 않게 */
 </style></head>
 <body>
